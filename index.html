@@ -269,12 +269,39 @@ v4:[
 ]
 };
 function genLit(t,l,i){
- var z=litTemplates[t][i%litTemplates[t].length],prefix=['Nhận biết: ','Thông hiểu: ','Vận dụng: ','Nâng cao: '][l-1];
- var q=prefix+z[0];
- if(l===3)q='Trong một tình huống đọc hiểu, '+z[0].charAt(0).toLowerCase()+z[0].slice(1);
- if(l===4)q='Suy luận từ văn bản: '+z[0];
+ var extra={
+  v1:[
+   ['Vì sao Dế Mèn gây ra hậu quả đáng tiếc?',['Vì bốc đồng và trêu chọc người khác thiếu suy nghĩ','Vì quá nhút nhát','Vì không biết nói','Vì bị lạc đường'],0,'Xét nguyên nhân từ tính cách và hành động.','Sự bốc đồng, kiêu căng khiến Dế Mèn hành động thiếu suy nghĩ.'],
+   ['Lời trăng trối của Dế Choắt có ý nghĩa chủ yếu gì?',['Nhắc nhở phải suy nghĩ trước khi hành động và không sống hung hăng','Khen Dế Mèn khỏe','Rủ Dế Mèn đi chơi','Chỉ kể chuyện cũ'],0,'Tập trung vào bài học nhân sinh.','Đó là lời cảnh tỉnh về cách sống và trách nhiệm.'],
+   ['Chi tiết miêu tả ngoại hình Dế Mèn ban đầu góp phần thể hiện điều gì?',['Sự cường tráng và niềm tự mãn của nhân vật','Sự yếu ớt','Sự buồn bã','Sự già nua'],0,'Ngoại hình gắn với cách nhân vật tự nhìn mình.','Ngoại hình khỏe mạnh làm nổi bật sự tự tin đến tự phụ.'],
+   ['Nếu lược bỏ sự việc với Dế Choắt, bài học của truyện sẽ thế nào?',['Mất đi tình huống khiến Dế Mèn nhận ra sai lầm','Rõ hơn nhiều','Không thay đổi gì','Trở thành văn bản miêu tả cảnh'],0,'Xét vai trò của sự việc bước ngoặt.','Sự việc với Dế Choắt là bước ngoặt tạo nên bài học đường đời.']
+  ],
+  v2:[
+   ['Vì sao người bị bắt nạt cần được bảo vệ và hỗ trợ?',['Vì bắt nạt gây tổn thương và làm mất cảm giác an toàn','Vì người bị bắt nạt luôn yếu','Vì để trả đũa','Vì đó là trò vui'],0,'Xét tác động của bắt nạt.','Bắt nạt có thể gây tổn thương cả thể chất lẫn tinh thần.'],
+   ['Cách phản ứng nào KHÔNG phù hợp với tinh thần bài “Bắt nạt”?',['Hùa theo đám đông để chế giễu','Báo người lớn khi cần','Động viên người bị bắt nạt','Can ngăn an toàn'],0,'Chọn hành vi làm tình hình xấu hơn.','Hùa theo đám đông là tiếp tay cho bắt nạt.'],
+   ['Thông điệp “đừng bắt nạt” có thể áp dụng rõ nhất vào tình huống nào?',['Một bạn bị chế giễu vì khác biệt','Hai bạn cùng làm bài','Cả lớp xếp hàng','Bạn trực nhật lau bảng'],0,'Tìm tình huống có dấu hiệu gây tổn thương người khác.','Chế giễu vì khác biệt là hành vi cần ngăn chặn.'],
+   ['Tác giả dùng lời nhắn trực tiếp tới người bắt nạt nhằm mục đích gì?',['Tác động vào nhận thức và khuyến khích thay đổi hành vi','Kể chuyện phiêu lưu','Miêu tả thiên nhiên','Giải thích luật chơi'],0,'Xét mục đích giao tiếp của lời nhắn.','Lời nhắn trực tiếp hướng người đọc tới thay đổi cách ứng xử.']
+  ],
+  v3:[
+   ['Khi tóm tắt, vì sao không nên chép nguyên văn quá nhiều?',['Vì tóm tắt cần cô đọng bằng lời của người viết','Vì văn bản gốc luôn sai','Vì phải đổi toàn bộ ý','Vì càng ngắn càng tốt dù mất ý'],0,'Nhớ mục tiêu của tóm tắt.','Tóm tắt cần giữ ý chính nhưng diễn đạt cô đọng.'],
+   ['Một chi tiết lặp lại nhiều lần nhưng không làm thay đổi diễn biến nên xử lí thế nào?',['Gom lại hoặc lược bớt','Chép lại đủ mọi lần','Đưa lên đầu bài','Đổi thành ý mới'],0,'Tóm tắt tránh trùng lặp không cần thiết.','Có thể gom hoặc lược để văn bản ngắn gọn.'],
+   ['Muốn kiểm tra bản tóm tắt có đủ ý, nên đối chiếu với gì?',['Các sự việc/ý chính đã xác định trước khi viết','Số chữ của văn bản gốc','Tên tác giả','Màu chữ'],0,'Dùng dàn ý chính làm tiêu chí kiểm tra.','Đối chiếu với danh sách ý chính giúp tránh sót ý.'],
+   ['Hai sự việc có quan hệ nguyên nhân – kết quả nên sắp xếp thế nào?',['Nguyên nhân trước, kết quả sau nếu đúng trình tự văn bản','Kết quả trước mọi trường hợp','Xáo trộn ngẫu nhiên','Tách thành hai bài'],0,'Giữ mạch logic của văn bản.','Sắp xếp theo quan hệ logic giúp bản tóm tắt mạch lạc.']
+  ],
+  v4:[
+   ['Trong câu “Trời mưa nên đường trơn”, từ “nên” biểu thị quan hệ gì?',['Kết quả','Tương phản','Lựa chọn','Liệt kê'],0,'“nên” thường nối nguyên nhân với kết quả.','“nên” biểu thị kết quả.'],
+   ['Cặp quan hệ từ nào phù hợp với hai ý trái ngược?',['tuy... nhưng','vì... nên','nếu... thì','và... với'],0,'Tìm quan hệ tương phản.','“tuy... nhưng” biểu thị sự tương phản.'],
+   ['Câu nào tránh lặp từ tốt hơn?',['Lan thích đọc sách. Bạn ấy thường đến thư viện.','Lan thích đọc sách. Lan thường đến thư viện. Lan thích thư viện.','Lan Lan thích sách.','Đọc sách Lan Lan.'],0,'Dùng từ thay thế hợp lí giúp liên kết.','“Bạn ấy” thay cho “Lan” giúp tránh lặp.'],
+   ['Khi hai câu chưa liên kết, cách sửa nào phù hợp?',['Thêm từ nối hoặc từ thay thế theo quan hệ ý','Đổi tất cả thành câu hỏi','Xóa chủ ngữ mọi câu','Thêm từ bất kì'],0,'Liên kết phải dựa trên quan hệ nội dung.','Từ nối/từ thay thế phù hợp làm đoạn văn mạch lạc.']
+  ]
+ };
+ var pool=(litTemplates[t]||[]).concat(extra[t]||[]),z=pool[(i+(l-1)*2)%pool.length],q=z[0];
+ if(l===2)q='Thông hiểu: '+q;
+ if(l===3)q='Vận dụng: '+q;
+ if(l===4)q='Suy luận: '+q;
  return mk('g'+t+l+'_'+i,'lit',t,l,q,z[1],z[2],z[3],z[4]);
 }
+
 var engTemplates={
 e1:[
 ['Choose the correct simple present sentence.',['I go to school every day.','I am go to school every day.','I goes to school every day.','I going to school every day.'],0,'Use the simple present with I/you/we/they.','“I go to school every day.” is correct.'],
@@ -308,12 +335,45 @@ e5:[
 ]
 };
 function genEng(t,l,i){
- var z=engTemplates[t][i%engTemplates[t].length],q=z[0];
+ var extra={
+  e1:[
+   ['Choose the correct sentence about a timetable.',['We have Maths on Tuesday.','We has Maths on Tuesday.','We having Maths Tuesday.','We are have Maths.'],0,'Use the simple present with “We”.','“We have Maths on Tuesday.” is correct.'],
+   ['Which word is NOT a school subject?',['bedroom','English','Science','History'],0,'Three options are school subjects.','“bedroom” is not a school subject.'],
+   ['Complete: My classmates ___ very friendly.',['are','is','am','be'],0,'“classmates” is plural.','Use “are” with a plural subject.'],
+   ['Which question asks about a school routine?',['What time do you go to school?','Where is your sofa?','How tall is the mountain?','What is in the fridge?'],0,'Look for a question about daily school life.','The first question asks about a school routine.']
+  ],
+  e2:[
+   ['Choose the correct preposition: The cat is ___ the table. It is below it.',['under','on','between','behind'],0,'“below” gives the meaning.','The cat is under the table.'],
+   ['Which sentence correctly describes two rooms?',['There are two bedrooms upstairs.','There is two bedrooms upstairs.','There are a bedroom upstairs.','There two bedrooms are.'],0,'Use “There are” with plural nouns.','“There are two bedrooms upstairs.” is correct.'],
+   ['Which item is usually found in a kitchen?',['fridge','pillow','wardrobe','shower'],0,'Think about household rooms.','A fridge is usually in a kitchen.'],
+   ['Complete: The books are ___ the shelf.',['on','at','from','of'],0,'Books rest on a shelf.','Use “on the shelf”.']
+  ],
+  e3:[
+   ['Which adjective best describes someone who makes people laugh?',['funny','narrow','heavy','ancient'],0,'Think about personality.','“funny” describes a person who makes others laugh.'],
+   ['Complete: Listen! The children ___ in the music room.',['are singing','sing','sings','is singing'],0,'“Listen!” signals an action happening now.','Use present continuous: are singing.'],
+   ['Choose the correct negative sentence.',['Nam is not playing football now.','Nam not is playing football now.','Nam does not playing now.','Nam are not playing now.'],0,'Present continuous negative: be + not + V-ing.','“Nam is not playing...” is correct.'],
+   ['Which sentence contrasts habit and action now correctly?',['Mai usually walks, but today she is cycling.','Mai usually is walking, but today she cycles now.','Mai walk every day and cycling now.','Mai is usually walk.'],0,'Use simple present for habits and present continuous for now.','Sentence A uses both tenses correctly.']
+  ],
+  e4:[
+   ['Choose the comparative form of “noisy”.',['noisier','more noisyer','noisiest','noise'],0,'Adjectives ending in -y change y to i + er.','“noisier” is correct.'],
+   ['Which direction phrase is correct?',['Turn left at the corner.','Turn left in the sky.','Go straight under Tuesday.','Cross between the homework.'],0,'Choose a natural direction instruction.','“Turn left at the corner.” is correct.'],
+   ['Complete: The park is ___ than the market.',['quieter','quietest','more quieter','quiet'],0,'Use a comparative before “than”.','“quieter” is correct.'],
+   ['Which place is most likely in a neighbourhood?',['post office','volcano','ocean trench','space station'],0,'Think about local facilities.','A post office is a neighbourhood place.']
+  ],
+  e5:[
+   ['Which word has final -s pronounced /z/?',['games','books','maps','cats'],0,'After voiced /m/, -s is /z/.','“games” ends in /z/.'],
+   ['Which word has final -s pronounced /s/?',['desks','rooms','pens','dogs'],0,'After voiceless /k/, -s is /s/.','“desks” ends in /s/.'],
+   ['Choose the correct advice for a mountain trip.',['You should wear strong shoes.','You should wear slippers on rocks.','You should not bring water.','You should throw rubbish.'],0,'Choose safe and responsible advice.','Strong shoes are suitable for a mountain trip.'],
+   ['Which natural wonder is a large hole or chamber in rock?',['cave','market','palace','classroom'],0,'Think about natural landforms.','A cave is a natural rock chamber.']
+  ]
+ };
+ var pool=(engTemplates[t]||[]).concat(extra[t]||[]),z=pool[(i+(l-1)*2)%pool.length],q=z[0];
  if(l===2)q='Practice: '+q;
- if(l===3)q='Apply the rule: '+q;
+ if(l===3)q='Apply: '+q;
  if(l===4)q='Challenge: '+q;
  return mk('g'+t+l+'_'+i,'eng',t,l,q,z[1],z[2],z[3],z[4]);
 }
+
 function genOne(s,t,l,i){if(s==='math')return genMath(t,l,i);if(s==='lit')return genLit(t,l,i);return genEng(t,l,i)}
 function questionPool(s,t,l){
  var base=Q.filter(function(x){return x.s===s&&x.t===t&&x.l===l}),out=base.slice(),i=0,seen={};
