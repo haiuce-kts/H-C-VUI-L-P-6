@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Học vui lớp 6</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#172033;--muted:#697386;--line:#e5eaf1;--blue:#2563eb;--green:#16a34a;--orange:#ea580c;--violet:#7c3aed;--red:#dc2626}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}button,select{font:inherit}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}.side{background:#111827;color:white;padding:22px 16px}.brand{font-size:21px;font-weight:900}.brand small{display:block;font-size:12px;color:#aab4c8;margin-top:4px}.student{margin:20px 0;background:#1f2937;padding:12px;border-radius:14px}.student select{width:100%;margin-top:7px;padding:9px;border-radius:10px;background:#111827;color:white;border:1px solid #475569}.nav button{display:block;width:100%;padding:11px;border:0;border-radius:10px;background:transparent;color:#dbe4f0;text-align:left;cursor:pointer;margin:3px 0}.nav button.active,.nav button:hover{background:#263247;color:#fff}.main{padding:26px;max-width:1200px;width:100%;margin:auto}.section{display:none}.section.active{display:block}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px}.top h1{margin:0;font-size:28px}.muted{color:var(--muted)}.tag{background:#e9efff;color:#1d4ed8;border-radius:999px;padding:7px 11px;font-weight:800;font-size:12px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:15px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(20,30,50,.06)}.hero{grid-column:span 8}.stats{grid-column:span 4}.subject{grid-column:span 4;cursor:pointer}.challenge{grid-column:span 12;background:linear-gradient(135deg,#24133f,#4c1d95);color:white}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.btn{border:0;border-radius:12px;padding:11px 15px;font-weight:800;cursor:pointer}.btn.primary{background:var(--blue);color:#fff}.btn.soft{background:#eef2ff;color:#3730a3}.btn.warn{background:#fff1f2;color:#991b1b}.btn:disabled{opacity:.45;cursor:not-allowed}.big{font-size:34px}.xp{font-size:34px;font-weight:900}.progress{height:9px;background:#edf1f6;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:var(--blue);width:0}.topicbar{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0 18px}.pill{border:1px solid var(--line);background:white;padding:9px 12px;border-radius:999px;cursor:pointer}.pill.active{background:#111827;color:white}.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.level{background:white;border:1px solid var(--line);border-radius:16px;padding:15px}.level h3{margin:8px 0}.badge{padding:4px 8px;border-radius:999px;font-size:12px;font-weight:900}.b1{background:#e8f0ff;color:#1d4ed8}.b2{background:#eaf8ef;color:#166534}.b3{background:#fff4e6;color:#9a3412}.b4{background:#f3e8ff;color:#6b21a8}.quiz{max-width:820px}.qtext{font-size:21px;font-weight:800;line-height:1.45;margin:18px 0}.answers{display:grid;gap:10px}.answer{border:1.5px solid #d9e0ea;background:white;border-radius:14px;padding:13px;text-align:left;cursor:pointer}.answer.selected{border-color:#2563eb;background:#eff6ff}.answer.correct{border-color:#16a34a;background:#ecfdf3}.answer.wrong{border-color:#dc2626;background:#fff1f2}.hint,.feedback{display:none;margin-top:12px;padding:12px;border-radius:12px}.hint.show{display:block;background:#fffbeb;color:#92400e}.feedback.show{display:block}.feedback.ok{background:#ecfdf3;color:#166534}.feedback.no{background:#fff1f2;color:#991b1b}.report table{width:100%;border-collapse:collapse}.report th,.report td{padding:11px;border-bottom:1px solid var(--line);text-align:left}.toast{position:fixed;right:18px;bottom:18px;background:#111827;color:#fff;padding:12px 16px;border-radius:12px;opacity:0;transition:.2s}.toast.show{opacity:1}
+@media(max-width:900px){.app{grid-template-columns:1fr}.side{padding:16px}.nav{display:flex;overflow:auto}.nav button{min-width:130px}.hero,.stats,.subject,.challenge{grid-column:span 12}.levels{grid-template-columns:1fr 1fr}.main{padding:18px}}
+@media(max-width:560px){.levels{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.qtext{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<div class="brand">🎓 HỌC VUI LỚP 6<small>Toán • Ngữ văn • Tiếng Anh</small></div>
+<div class="student">Người học<select id="student"><option>Học sinh 1</option><option>Học sinh 2</option></select></div>
+<div class="nav">
+<button class="active" data-page="home">🏠 Tổng quan</button>
+<button data-page="math">🔢 Toán</button>
+<button data-page="lit">📖 Ngữ văn</button>
+<button data-page="eng">🇬🇧 Tiếng Anh</button>
+<button data-page="report">📊 Báo cáo</button>
+</div>
+</aside>
+<main class="main">
+<section id="home" class="section active">
+<div class="top"><div><h1>Học hôm nay</h1><div class="muted">Nắm bài → Thành thạo → Vận dụng → Nâng cao</div></div><span class="tag">Lớp 6 • 2026–2027</span></div>
+<div class="grid">
+<div class="card hero"><div class="row"><div><b>Mục tiêu 20 phút</b><h2>3 môn, mỗi ngày một ít nhưng chắc</h2><div class="muted">Sai ở đâu, ôn lại ở đó. Mức 4 chỉ mở khi nền tảng đạt 80%.</div></div><button class="btn primary" onclick="startDaily()">Bắt đầu</button></div></div>
+<div class="card stats"><div class="muted">XP tích lũy</div><div class="xp" id="xp">0</div><div class="progress"><i id="xpbar"></i></div></div>
+<div class="card subject" onclick="go('math')"><div class="big">🔢</div><h3>Toán</h3><div class="muted">Số tự nhiên • lũy thừa • chia hết • phân số</div><div class="progress"><i id="pmath"></i></div></div>
+<div class="card subject" onclick="go('lit')"><div class="big">📖</div><h3>Ngữ văn</h3><div class="muted">Đọc hiểu • tóm tắt • tiếng Việt • viết</div><div class="progress"><i id="plit"></i></div></div>
+<div class="card subject" onclick="go('eng')"><div class="big">🇬🇧</div><h3>Tiếng Anh</h3><div class="muted">Global Success • từ vựng • ngữ pháp • phát âm</div><div class="progress"><i id="peng"></i></div></div>
+<div class="card challenge"><div class="row"><div><h2>🔥 Thử thách Đại ca</h2><div style="color:#ddd6fe">Câu khó hơn nhưng vẫn trong phạm vi kiến thức lớp 6.</div></div><button class="btn soft" onclick="startChallenge()">Thử sức</button></div></div>
+</div>
+</section>
+<section id="math" class="section"></section>
+<section id="lit" class="section"></section>
+<section id="eng" class="section"></section>
+<section id="report" class="section report">
+<div class="top"><div><h1>Báo cáo học tập</h1><div class="muted">Theo dõi từng người học trên thiết bị này.</div></div><button class="btn warn" onclick="resetProgress()">Xóa tiến độ</button></div>
+<div class="card"><table><thead><tr><th>Môn</th><th>Đã làm</th><th>Đúng</th><th>Tỉ lệ</th></tr></thead><tbody id="reportBody"></tbody></table></div>
+<div class="card" style="margin-top:15px"><h3>Câu cần ôn lại</h3><div id="wrongList" class="muted">Chưa có câu sai.</div></div>
+</section>
+<section id="quiz" class="section quiz">
+<div class="top"><div><button class="btn soft" onclick="exitQuiz()">← Quay lại</button><h1 id="quizTitle" style="margin-top:10px">Bài luyện</h1></div><span id="quizLevel" class="badge b1">Mức 1</span></div>
+<div class="card">
+<div class="muted" id="qCount"></div><div class="progress" style="margin-top:9px"><i id="qbar"></i></div>
+<div class="qtext" id="qText"></div><div class="answers" id="answers"></div>
+<div class="hint" id="hint"></div><div class="feedback" id="feedback"></div>
+<div class="row" style="margin-top:15px"><button class="btn soft" onclick="showHint()">💡 Gợi ý</button><button id="checkBtn" class="btn primary" onclick="checkAnswer()">Kiểm tra</button></div>
+</div>
+</section>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+var curriculum={
+math:{name:'Toán',icon:'🔢',topics:[['m1','Tập hợp & số tự nhiên'],['m2','Lũy thừa'],['m3','Tính chia hết'],['m4','Số nguyên'],['m5','Phân số']]},
+lit:{name:'Ngữ văn',icon:'📖',topics:[['v1','Bài học đường đời đầu tiên'],['v2','Bắt nạt'],['v3','Tóm tắt văn bản'],['v4','Thực hành tiếng Việt']]},
+eng:{name:'Tiếng Anh',icon:'🇬🇧',topics:[['e1','My New School'],['e2','My House'],['e3','My Friends'],['e4','Neighbourhood'],['e5','Phát âm /s/ và /z/']]}
+};
+var Q=[
+{id:'m1a',s:'math',t:'m1',l:1,q:'Số 0 có thuộc tập hợp số tự nhiên không?',a:['Có','Không'],c:0,h:'Theo SGK, tập hợp số tự nhiên có số 0.',e:'Đúng: 0 là số tự nhiên.'},
+{id:'m2a',s:'math',t:'m2',l:1,q:'Viết 2 × 2 × 2 × 2 dưới dạng lũy thừa.',a:['2³','2⁴','4²','8²'],c:1,h:'Đếm số thừa số 2.',e:'Có 4 thừa số 2 nên bằng 2⁴.'},
+{id:'m2b',s:'math',t:'m2',l:2,q:'2³ × 2⁵ bằng:',a:['2⁸','4⁸','2¹⁵','2²'],c:0,h:'Nhân hai lũy thừa cùng cơ số thì cộng số mũ.',e:'2³ × 2⁵ = 2⁸.'},
+{id:'m2c',s:'math',t:'m2',l:3,q:'Tìm n: 3ⁿ × 3² = 3⁷.',a:['3','4','5','9'],c:2,h:'Cộng số mũ cùng cơ số.',e:'n + 2 = 7 nên n = 5.'},
+{id:'m2d',s:'math',t:'m2',l:4,q:'Không tính trực tiếp, số nào lớn hơn?',a:['2¹⁰','4⁵','Hai số bằng nhau','Không so sánh được'],c:2,h:'Đưa 4⁵ về cùng cơ số 2.',e:'4⁵ = (2²)⁵ = 2¹⁰, nên bằng nhau.'},
+{id:'m3a',s:'math',t:'m3',l:2,q:'Số nào chia hết cho cả 2 và 5?',a:['35','40','42','55'],c:1,h:'Số chia hết cho 2 và 5 tận cùng bằng 0.',e:'40 tận cùng bằng 0.'},
+{id:'m4a',s:'math',t:'m4',l:3,q:'Tính: -7 + 12.',a:['-19','-5','5','19'],c:2,h:'Hai số trái dấu: lấy 12 - 7.',e:'-7 + 12 = 5.'},
+{id:'m5a',s:'math',t:'m5',l:2,q:'Phân số nào bằng 3/4?',a:['6/8','6/10','9/16','12/20'],c:0,h:'Nhân cả tử và mẫu 3/4 với 2.',e:'3/4 = 6/8.'},
+{id:'v1a',s:'lit',t:'v1',l:1,q:'Trong “Bài học đường đời đầu tiên”, nhân vật kể chuyện chính là ai?',a:['Dế Choắt','Dế Mèn','chị Cốc','Xiến Tóc'],c:1,h:'Nhân vật vừa kể vừa trực tiếp trải qua sự việc.',e:'Dế Mèn là người kể chuyện xưng “tôi”.'},
+{id:'v1b',s:'lit',t:'v1',l:3,q:'Bài học quan trọng nhất Dế Mèn nhận ra sau sự việc với Dế Choắt là gì?',a:['Cần khỏe hơn','Không nên kiêu căng, xốc nổi và phải chịu trách nhiệm','Phải tránh mọi người','Nên trả đũa chị Cốc'],c:1,h:'Tập trung vào nguyên nhân dẫn đến hậu quả.',e:'Dế Mèn nhận ra hậu quả của thói kiêu căng và hành động thiếu suy nghĩ.'},
+{id:'v1c',s:'lit',t:'v1',l:4,q:'Chi tiết nào giúp làm nổi bật sự trưởng thành của Dế Mèn nhất?',a:['Ngoại hình cường tráng','Trêu chị Cốc','Ân hận và tự rút ra bài học','Đào hang đẹp'],c:2,h:'Trưởng thành thể hiện ở thay đổi nhận thức sau sai lầm.',e:'Sự ân hận và tự nhận trách nhiệm cho thấy thay đổi trong nhận thức.'},
+{id:'v2a',s:'lit',t:'v2',l:2,q:'Khi đọc bài thơ “Bắt nạt”, thái độ phù hợp nhất với hành vi bắt nạt là:',a:['Cổ vũ','Im lặng để tránh phiền','Phản đối và bảo vệ người yếu thế','Bắt nạt lại'],c:2,h:'Thông điệp hướng tới lòng nhân ái và ứng xử tích cực.',e:'Bài thơ khuyến khích phản đối bắt nạt và sống tử tế.'},
+{id:'v3a',s:'lit',t:'v3',l:1,q:'Khi tóm tắt một văn bản, bước đầu tiên nên làm là:',a:['Chép nguyên văn','Xác định sự việc/ý chính','Viết cảm nghĩ','Tìm từ khó'],c:1,h:'Tóm tắt cần giữ lại phần cốt lõi.',e:'Trước hết phải xác định ý hoặc sự việc chính.'},
+{id:'v3b',s:'lit',t:'v3',l:3,q:'Cách nào giúp gom nhiều câu chi tiết thành một ý lớn?',a:['Giữ mọi chi tiết','Tìm điểm chung rồi đặt tên cho nhóm ý','Đổi thứ tự tùy ý','Chỉ giữ câu dài nhất'],c:1,h:'Hãy nghĩ xem các câu cùng trả lời một câu hỏi lớn nào.',e:'Nhóm các chi tiết có cùng nội dung rồi khái quát bằng một cụm từ/câu.'},
+{id:'e1a',s:'eng',t:'e1',l:1,q:'Choose the correct sentence.',a:['I am go to school every day.','I go to school every day.','I goes to school every day.','I going to school every day.'],c:1,h:'Use the simple present with “I”.',e:'“I go to school every day.” is correct.'},
+{id:'e2a',s:'eng',t:'e2',l:2,q:'There ___ a sofa in the living room.',a:['are','is','am','be'],c:1,h:'The noun after the blank is singular.',e:'Use “There is” with a singular noun.'},
+{id:'e3a',s:'eng',t:'e3',l:3,q:'Choose the sentence for an action happening now.',a:['He plays football every Sunday.','He is playing football now.','He played football yesterday.','He play football now.'],c:1,h:'“Now” often signals the present continuous.',e:'Use be + V-ing: “He is playing...”'},
+{id:'e4a',s:'eng',t:'e4',l:4,q:'Equivalent to “No building here is taller than this one.”',a:['This is the tallest building here.','This is a taller building here.','All buildings are taller.','This building is shortest.'],c:0,h:'“No ... taller than” expresses the highest degree.',e:'Use the superlative: “the tallest”.'},
+{id:'e5a',s:'eng',t:'e5',l:2,q:'Which word ends with the /z/ sound?',a:['books','cats','pens','maps'],c:2,h:'After a voiced sound, plural -s is often /z/.',e:'“pens” ends with /z/.'}
+];
+var before='home',items=[],qi=0,selected=null,checked=false,ctx={};
+function key(){return 'hocvui6_'+document.getElementById('student').value}
+function state(){return JSON.parse(localStorage.getItem(key())||'{"xp":0,"answers":{}}')}
+function save(x){localStorage.setItem(key(),JSON.stringify(x));renderAll()}
+function go(id){document.querySelectorAll('.section').forEach(function(x){x.classList.remove('active')});document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(function(x){x.classList.toggle('active',x.dataset.page===id)});if(id==='report')renderReport()}
+document.querySelectorAll('.nav button').forEach(function(b){b.onclick=function(){go(b.dataset.page)}});document.getElementById('student').onchange=renderAll;
+function coreScore(s,t){var st=state(),a=Q.filter(function(x){return x.s===s&&x.t===t&&x.l<=3}),d=a.filter(function(x){return st.answers[x.id]});if(!d.length)return 0;return Math.round(d.filter(function(x){return st.answers[x.id].correct}).length/d.length*100)}
+function renderSubject(s){var c=curriculum[s],el=document.getElementById(s);el.innerHTML='<div class="top"><div><h1>'+c.icon+' '+c.name+'</h1><div class="muted">Chọn chủ đề và mức độ luyện tập.</div></div><span class="tag">4 mức độ</span></div><div class="topicbar" id="tb-'+s+'"></div><div class="levels" id="lv-'+s+'"></div>';var tb=document.getElementById('tb-'+s);c.topics.forEach(function(t,i){var b=document.createElement('button');b.className='pill'+(i===0?' active':'');b.textContent=t[1];b.onclick=function(){tb.querySelectorAll('.pill').forEach(function(x){x.classList.remove('active')});b.classList.add('active');renderLevels(s,t[0])};tb.appendChild(b)});renderLevels(s,c.topics[0][0])}
+function renderLevels(s,t){var el=document.getElementById('lv-'+s),score=coreScore(s,t),names=['Nắm bài','Thành thạo','Vận dụng','Nâng cao'];el.innerHTML='';for(var l=1;l<=4;l++){var count=Q.filter(function(x){return x.s===s&&x.t===t&&x.l===l}).length,lock=l===4&&score<80,d=document.createElement('div');d.className='level';d.innerHTML='<span class="badge b'+l+'">Mức '+l+'</span><h3>'+names[l-1]+'</h3><div class="muted">'+(l===4?'Suy luận sâu, không vượt chương trình.':'Luyện chắc kiến thức và kỹ năng.')+'</div><div style="margin:10px 0;font-size:12px;color:#697386">'+count+' câu '+(l===4?'• nền '+score+'%':'')+'</div><button class="btn '+(lock?'soft':'primary')+'" '+((lock||count===0)?'disabled':'')+'>'+(lock?'Cần ≥80% mức 1–3':count?'Luyện ngay':'Đang bổ sung')+'</button>';if(!lock&&count)d.querySelector('button').onclick=function(ll){return function(){startQuiz(s,t,ll)}}(l);el.appendChild(d)}}
+function startQuiz(s,t,l){items=Q.filter(function(x){return x.s===s&&x.t===t&&x.l===l});qi=0;ctx={s:s,t:t,l:l};before=s;go('quiz');renderQuestion()}
+function startDaily(){items=[];['math','lit','eng'].forEach(function(s){var a=Q.filter(function(x){return x.s===s&&x.l<=2});if(a.length)items.push(a[Math.floor(Math.random()*a.length)])});qi=0;ctx={s:'daily'};before='home';go('quiz');renderQuestion()}
+function startChallenge(){items=Q.filter(function(x){return x.l===4});qi=0;ctx={s:'challenge'};before='home';go('quiz');renderQuestion()}
+function renderQuestion(){var q=items[qi];selected=null;checked=false;document.getElementById('quizTitle').textContent=ctx.s==='challenge'?'🔥 Thử thách Đại ca':ctx.s==='daily'?'Bài học hôm nay':curriculum[q.s].name;var bl=document.getElementById('quizLevel');bl.textContent='Mức '+q.l;bl.className='badge b'+q.l;document.getElementById('qCount').textContent='Câu '+(qi+1)+'/'+items.length;document.getElementById('qbar').style.width=(qi/items.length*100)+'%';document.getElementById('qText').textContent=q.q;var an=document.getElementById('answers');an.innerHTML='';q.a.forEach(function(x,i){var b=document.createElement('button');b.className='answer';b.textContent=String.fromCharCode(65+i)+'. '+x;b.onclick=function(){if(checked)return;selected=i;an.querySelectorAll('.answer').forEach(function(y){y.classList.remove('selected')});b.classList.add('selected')};an.appendChild(b)});document.getElementById('hint').className='hint';document.getElementById('hint').textContent='💡 '+q.h;document.getElementById('feedback').className='feedback';document.getElementById('checkBtn').textContent='Kiểm tra'}
+function showHint(){document.getElementById('hint').classList.add('show')}
+function checkAnswer(){var q=items[qi],btn=document.getElementById('checkBtn');if(checked){qi++;if(qi>=items.length){toast('Hoàn thành bài luyện');return go(before)}return renderQuestion()}if(selected===null)return toast('Chọn một đáp án trước.');checked=true;var ok=selected===q.c,ans=document.querySelectorAll('.answer');ans[q.c].classList.add('correct');if(!ok)ans[selected].classList.add('wrong');var f=document.getElementById('feedback');f.className='feedback show '+(ok?'ok':'no');f.innerHTML='<b>'+(ok?'Chính xác! +10 XP':'Chưa đúng.')+'</b><br>'+q.e;btn.textContent=qi===items.length-1?'Hoàn thành':'Câu tiếp theo';var st=state();st.answers[q.id]={correct:ok,subject:q.s};if(ok)st.xp=(st.xp||0)+10;save(st)}
+function exitQuiz(){go(before)}
+function renderReport(){var st=state(),tb=document.getElementById('reportBody');tb.innerHTML='';['math','lit','eng'].forEach(function(s){var all=Q.filter(function(x){return x.s===s}),done=all.filter(function(x){return st.answers[x.id]}),right=done.filter(function(x){return st.answers[x.id].correct}),rate=done.length?Math.round(right.length/done.length*100):0;tb.innerHTML+='<tr><td>'+curriculum[s].icon+' '+curriculum[s].name+'</td><td>'+done.length+'</td><td>'+right.length+'</td><td>'+rate+'%</td></tr>'});var wrong=Q.filter(function(x){return st.answers[x.id]&&!st.answers[x.id].correct});document.getElementById('wrongList').innerHTML=wrong.length?wrong.map(function(x){return '<div style="padding:8px 0;border-bottom:1px solid #eee"><b>'+curriculum[x.s].name+':</b> '+x.q+'</div>'}).join(''):'Chưa có câu sai.'}
+function renderAll(){['math','lit','eng'].forEach(renderSubject);var st=state();document.getElementById('xp').textContent=st.xp||0;document.getElementById('xpbar').style.width=Math.min(100,(st.xp||0)%100)+'%';[['math','pmath'],['lit','plit'],['eng','peng']].forEach(function(p){var all=Q.filter(function(x){return x.s===p[0]}),done=all.filter(function(x){return st.answers[x.id]});document.getElementById(p[1]).style.width=(all.length?done.length/all.length*100:0)+'%'});renderReport()}
+function resetProgress(){if(confirm('Xóa toàn bộ tiến độ của người học đang chọn?')){localStorage.removeItem(key());renderAll();toast('Đã xóa tiến độ.')}}
+function toast(t){var e=document.getElementById('toast');e.textContent=t;e.classList.add('show');setTimeout(function(){e.classList.remove('show')},2200)}
+renderAll();
+</script>
+</body>
+</html>
