@@ -124,6 +124,136 @@ var Q=[
 ,{id:'e5d',s:'eng',t:'e5',l:3,q:'Which group has the SAME plural -s sound?',a:['books, maps','pens, cats','dogs, books','rooms, maps'],c:0,h:'Both end after voiceless consonants.',e:'books /s/ and maps /s/.'}
 
 ];
+
+var MIN_BANK=8;
+function gcd(a,b){while(b){var r=a%b;a=b;b=r}return Math.abs(a)}
+function mk(id,s,t,l,q,a,ci,h,e){return {id:id,s:s,t:t,l:l,q:q,a:a,c:ci,h:h,e:e}}
+function genMath(t,l,i){
+ var n=i+2,a=i+3,b=i+5;
+ if(t==='m1'){
+  if(l===1){var x=10+i;return mk('gm1'+l+'_'+i,'math',t,l,'Số liền sau của '+x+' là:',[String(x-1),String(x+1),String(x+2),String(x)],1,'Số liền sau hơn số đã cho 1 đơn vị.',x+' + 1 = '+(x+1)+'.')}
+  if(l===2){var x=20+i,y=x+7;return mk('gm1'+l+'_'+i,'math',t,l,'So sánh '+x+' và '+y+'.',[''+x+' > '+y,''+x+' < '+y,''+x+' = '+y,'Không so sánh được'],1,'So sánh giá trị hai số tự nhiên.',x+' nhỏ hơn '+y+'.')}
+  if(l===3){var x=12+i;return mk('gm1'+l+'_'+i,'math',t,l,'Một hộp có '+x+' bút, thêm '+(i+4)+' bút rồi chia đều cho 2 bạn. Mỗi bạn nhận bao nhiêu bút?',[String((x+i+4)/2),String(x+i+4),String(Math.floor(x/2)),String(i+4)],0,'Tính tổng số bút rồi chia 2.',x+' + '+(i+4)+' = '+(x+i+4)+', chia 2 được '+((x+i+4)/2)+'.')}
+  var x=40+i;return mk('gm1'+l+'_'+i,'math',t,l,'Tìm số tự nhiên nhỏ nhất lớn hơn '+x+' và chia hết cho 5.',[String(x+1),String(Math.ceil((x+1)/5)*5),String(x+5),String(Math.floor(x/5)*5)],1,'Tìm bội của 5 đầu tiên lớn hơn số đã cho.','Bội phù hợp là '+Math.ceil((x+1)/5)*5+'.')
+ }
+ if(t==='m2'){
+  var base=2+(i%3),p=2+(i%4),q=2+((i+1)%3);
+  if(l===1)return mk('gm2'+l+'_'+i,'math',t,l,'Viết '+base+' × '+base+' × '+base+' dưới dạng lũy thừa.',[base+'²',base+'³','3^'+base,base+'⁴'],1,'Đếm số thừa số bằng nhau.','Có 3 thừa số '+base+' nên bằng '+base+'³.')
+  if(l===2)return mk('gm2'+l+'_'+i,'math',t,l,base+'^'+p+' × '+base+'^'+q+' bằng:',[base+'^'+(p+q),base+'^'+(p*q),(base*2)+'^'+(p+q),base+'^'+Math.abs(p-q)],0,'Nhân lũy thừa cùng cơ số thì cộng số mũ.','Kết quả là '+base+'^'+(p+q)+'.')
+  if(l===3){var e=p+q;return mk('gm2'+l+'_'+i,'math',t,l,'Tìm x: '+base+'^x × '+base+'^'+p+' = '+base+'^'+e+'.',[String(q),String(p),String(e),String(p*q)],0,'Cộng số mũ: x + '+p+' = '+e+'.','x = '+q+'.')}
+  return mk('gm2'+l+'_'+i,'math',t,l,'So sánh '+base+'^'+(2*p)+' và ('+base+'²)^'+p+'.',['Vế trái lớn hơn','Vế phải lớn hơn','Hai vế bằng nhau','Không so sánh được'],2,'Dùng (a^m)^n = a^(m.n).','Hai biểu thức đều bằng '+base+'^'+(2*p)+'.')
+ }
+ if(t==='m3'){
+  var num=120+10*i;
+  if(l===1)return mk('gm3'+l+'_'+i,'math',t,l,'Số nào chia hết cho 2 và 5?',[String(num+3),String(num),String(num+6),String(num+5)],1,'Số chia hết cho 2 và 5 phải tận cùng bằng 0.',num+' tận cùng bằng 0.')
+  if(l===2){var z=300+9*i;return mk('gm3'+l+'_'+i,'math',t,l,'Số '+z+' có chia hết cho 9 không?',['Có','Không'],0,'Tổng chữ số của một bội của 9 cũng chia hết cho 9.',z+' là bội của 9.')}
+  if(l===3){var k=30*(i+4);return mk('gm3'+l+'_'+i,'math',t,l,'Một số chia hết cho 2, 3 và 5. Trong các số sau, số nào phù hợp?',[String(k-5),String(k),String(k+3),String(k+5)],1,'Cần là bội của BCNN(2,3,5)=30.',k+' là bội của 30.')}
+  var x=100+7*i,ans=Math.ceil((x+1)/30)*30;return mk('gm3'+l+'_'+i,'math',t,l,'Tìm số nhỏ nhất lớn hơn '+x+' và chia hết cho 2, 3, 5.',[String(ans-10),String(ans),String(ans+10),String(ans+30)],1,'Tìm bội của 30 đầu tiên lớn hơn '+x+'.','Đáp án là '+ans+'.')
+ }
+ if(t==='m4'){
+  var x=5+i,y=9+i;
+  if(l===1)return mk('gm4'+l+'_'+i,'math',t,l,'Số đối của '+x+' là:',[String(x),String(-x),String(x+1),String(-x-1)],1,'Hai số đối nhau có tổng bằng 0.','Số đối của '+x+' là '+(-x)+'.')
+  if(l===2)return mk('gm4'+l+'_'+i,'math',t,l,'Tính: -'+x+' + '+y+'.',[String(y-x),String(-(x+y)),String(x+y),String(x-y)],0,'Hai số trái dấu: lấy hiệu hai giá trị tuyệt đối.','Kết quả là '+(y-x)+'.')
+  if(l===3)return mk('gm4'+l+'_'+i,'math',t,l,'Nhiệt độ buổi sáng là -'+x+'°C, tăng '+y+'°C. Nhiệt độ mới là:',[(y-x)+'°C',(-x-y)+'°C',y+'°C',x+'°C'],0,'Tăng nhiệt độ nghĩa là cộng số dương.','-'+x+' + '+y+' = '+(y-x)+'°C.')
+  return mk('gm4'+l+'_'+i,'math',t,l,'Giá trị nào lớn hơn?',['-'+x,'-'+y,'Hai số bằng nhau','Không xác định'],0,'Trong hai số âm, số có giá trị tuyệt đối nhỏ hơn thì lớn hơn.','-'+x+' > -'+y+'.')
+ }
+ if(t==='m5'){
+  var den=4+(i%5),num=1+(i%3);
+  if(l===1)return mk('gm5'+l+'_'+i,'math',t,l,'Trong phân số '+num+'/'+den+', mẫu số là:',[String(num),String(den),String(num+den),'1'],1,'Mẫu số nằm dưới gạch phân số.','Mẫu số là '+den+'.')
+  if(l===2)return mk('gm5'+l+'_'+i,'math',t,l,'Phân số nào bằng '+num+'/'+den+'?',[2*num+'/'+(2*den),(num+1)+'/'+den,num+'/'+(den+1),3*num+'/'+(2*den)],0,'Nhân cả tử và mẫu với cùng một số khác 0.','Nhân cả tử và mẫu với 2 được '+(2*num)+'/'+(2*den)+'.')
+  if(l===3){var d1=den,d2=den*2;return mk('gm5'+l+'_'+i,'math',t,l,'So sánh '+num+'/'+d1+' và '+(2*num+1)+'/'+d2+'.',['Phân số thứ nhất lớn hơn','Phân số thứ hai lớn hơn','Hai phân số bằng nhau','Không so sánh được'],1,'Quy đồng về cùng mẫu '+d2+'.',num+'/'+d1+' = '+(2*num)+'/'+d2+', nhỏ hơn '+(2*num+1)+'/'+d2+'.')}
+  var k=2+(i%3);return mk('gm5'+l+'_'+i,'math',t,l,'Rút gọn '+(num*k)+'/'+(den*k)+' được:',[num+'/'+den,(num*k)+'/'+den,num+'/'+(den*k),(num+1)+'/'+den],0,'Chia cả tử và mẫu cho '+k+'.','Kết quả là '+num+'/'+den+'.')
+ }
+}
+var litTemplates={
+v1:[
+['Nhân vật kể chuyện trong “Bài học đường đời đầu tiên” là ai?',['Dế Mèn','Dế Choắt','chị Cốc','Xiến Tóc'],0,'Người kể xưng “tôi”.','Dế Mèn là người kể chuyện.'],
+['Dế Mèn ban đầu nổi bật bởi tính cách nào?',['Khiêm tốn, dè dặt','Kiêu căng, tự phụ','Nhút nhát','Lạnh lùng'],1,'Nhớ cách nhân vật nhìn nhận bản thân.','Dế Mèn ban đầu kiêu căng và tự phụ.'],
+['Sự việc với Dế Choắt giúp Dế Mèn thay đổi điều gì?',['Ngoại hình','Nhận thức và cách ứng xử','Nơi ở','Sức khỏe'],1,'Bài học nằm ở nhận thức sau hậu quả.','Dế Mèn thay đổi nhận thức và biết tự chịu trách nhiệm.'],
+['Chi tiết nào thể hiện rõ nhất sự trưởng thành của Dế Mèn?',['Khoe sức mạnh','Ân hận và rút ra bài học','Trêu chị Cốc','Chê Dế Choắt'],1,'Trưởng thành thể hiện ở thay đổi sau sai lầm.','Sự ân hận và rút kinh nghiệm cho thấy trưởng thành.']
+],
+v2:[
+['Bài “Bắt nạt” hướng người đọc tới thái độ nào?',['Cổ vũ bắt nạt','Phản đối bắt nạt và sống tử tế','Im lặng trước mọi việc','Trả đũa'],1,'Xét thông điệp chính của văn bản.','Văn bản phản đối bắt nạt và khuyến khích lòng nhân ái.'],
+['Bằng chứng tốt nhất để nhận xét thái độ của tác giả là gì?',['Từ ngữ, hình ảnh, giọng điệu','Số trang','Tên nhà xuất bản','Cỡ chữ'],0,'Nhận xét văn học cần dựa trên văn bản.','Từ ngữ, hình ảnh, giọng điệu là bằng chứng trực tiếp.'],
+['Khi chứng kiến bắt nạt, cách xử lí phù hợp là:',['Hùa theo','Quay video đăng mạng','Tìm cách can ngăn an toàn và báo người lớn','Bỏ mặc'],2,'Ưu tiên an toàn và hỗ trợ người bị hại.','Can ngăn an toàn và tìm người lớn hỗ trợ là phù hợp.'],
+['Giọng điệu gần gũi có tác dụng gì?',['Làm giảm thông điệp','Giúp người đọc trẻ dễ tiếp nhận','Làm văn bản khó hiểu','Không có tác dụng'],1,'Xét hiệu quả giao tiếp.','Giọng gần gũi giúp thông điệp dễ tiếp nhận.']
+],
+v3:[
+['Bước đầu khi tóm tắt văn bản là gì?',['Chép nguyên văn','Xác định ý/sự việc chính','Viết cảm nghĩ','Đếm số câu'],1,'Tóm tắt phải giữ phần cốt lõi.','Trước hết cần xác định ý chính.'],
+['Chi tiết nào có thể lược bỏ khi tóm tắt?',['Sự việc bước ngoặt','Nguyên nhân chính','Miêu tả phụ không ảnh hưởng mạch chính','Kết quả chính'],2,'Phần phụ có thể lược.','Chi tiết miêu tả phụ thường có thể bỏ.'],
+['Hai câu cùng nói về một đặc điểm nhân vật nên làm gì?',['Giữ nguyên cả hai','Gom thành một ý khái quát','Bỏ hết','Đổi sang cảm nghĩ'],1,'Tìm điểm chung rồi khái quát.','Nên gom thành một ý lớn.'],
+['Bản tóm tắt tốt cần đặc điểm nào?',['Đúng ý chính, ngắn gọn, mạch lạc','Thật dài','Nhiều cảm xúc cá nhân','Chép nhiều câu nguyên văn'],0,'Tóm tắt cần ngắn mà đủ cốt lõi.','Đúng, đủ ý chính và mạch lạc là tiêu chí quan trọng.']
+],
+v4:[
+['Từ “nhưng” thường biểu thị quan hệ gì?',['Tương phản','Nguyên nhân','Liệt kê','Thời gian'],0,'Hai vế thường trái chiều.','“Nhưng” biểu thị quan hệ tương phản.'],
+['Từ nào phù hợp để nối hai ý nguyên nhân – kết quả?',['vì... nên','nhưng','hoặc','tuy nhiên'],0,'Tìm cặp quan hệ từ chỉ nguyên nhân – kết quả.','“vì... nên” phù hợp.'],
+['Câu nào có liên kết rõ?',['Trời mưa nên đường trơn.','Trời mưa hoặc đường trơn vì.','Đường trơn nhưng vì trời.','Trời và mưa đường'],0,'Quan hệ nguyên nhân – kết quả phải hợp lí.','“Trời mưa nên đường trơn” rõ nghĩa.'],
+['Khi viết đoạn văn, từ nối giúp gì?',['Liên kết các ý','Tăng số chữ','Thay dấu câu hoàn toàn','Không có tác dụng'],0,'Xét chức năng liên kết.','Từ nối giúp các câu và ý mạch lạc.']
+]
+};
+function genLit(t,l,i){
+ var z=litTemplates[t][i%litTemplates[t].length],prefix=['Nhận biết: ','Thông hiểu: ','Vận dụng: ','Nâng cao: '][l-1];
+ var q=prefix+z[0];
+ if(l===3)q='Trong một tình huống đọc hiểu, '+z[0].charAt(0).toLowerCase()+z[0].slice(1);
+ if(l===4)q='Suy luận từ văn bản: '+z[0];
+ return mk('g'+t+l+'_'+i,'lit',t,l,q,z[1],z[2],z[3],z[4]);
+}
+var engTemplates={
+e1:[
+['Choose the correct simple present sentence.',['I go to school every day.','I am go to school every day.','I goes to school every day.','I going to school every day.'],0,'Use the simple present with I/you/we/they.','“I go to school every day.” is correct.'],
+['My school ___ a big library.',['have','has','having','is have'],1,'Subject “My school” is singular.','Use “has” with a singular subject.'],
+['We ___ English on Monday.',['study','studies','are study','studying'],0,'Use base verb with “We”.','“We study English on Monday.” is correct.'],
+['Which word is about school?',['classroom','sofa','mountain','market'],0,'Think about places at school.','A classroom is part of a school.']
+],
+e2:[
+['There ___ a desk in my room.',['is','are','am','be'],0,'Use “There is” with a singular noun.','“There is a desk...” is correct.'],
+['There ___ two windows in the bedroom.',['is','are','am','be'],1,'Use “There are” with plural nouns.','“There are two windows...” is correct.'],
+['The picture is ___ the wall.',['on','under','between','from'],0,'A picture is usually attached to a wall.','“on the wall” is correct.'],
+['Which word is furniture?',['sofa','river','teacher','friendly'],0,'Furniture is used in a house.','A sofa is furniture.']
+],
+e3:[
+['Look! Nam ___ football.',['plays','is playing','play','are playing'],1,'“Look!” signals an action happening now.','Use present continuous: is playing.'],
+['Which adjective describes a helpful person?',['kind','narrow','expensive','noisy'],0,'Think about personality.','“kind” describes a caring person.'],
+['They ___ homework now.',['do','does','are doing','is doing'],2,'They + are + V-ing.','“They are doing...” is correct.'],
+['My best friend is very ___. She always helps me.',['helpful','tallest','between','kitchen'],0,'Choose a personality adjective.','“helpful” fits the meaning.']
+],
+e4:[
+['This street is ___ than that street.',['wide','wider','widest','more wide'],1,'Use comparative adjective with “than”.','“wider” is correct.'],
+['No building here is taller than this one. This is the ___ building.',['tall','taller','tallest','more tall'],2,'Use the superlative.','“the tallest” is correct.'],
+['The supermarket is ___ the bank and the school.',['between','on','in','to'],0,'Use “between A and B”.','“between” is correct.'],
+['Which place can you buy food from?',['supermarket','bedroom','classroom','river'],0,'Think about neighbourhood places.','A supermarket sells food.']
+],
+e5:[
+['Which word ends with /s/?',['books','dogs','pens','rooms'],0,'After a voiceless sound like /k/, -s is /s/.','“books” ends with /s/.'],
+['Which word ends with /z/?',['cats','maps','bags','books'],2,'After a voiced sound like /g/, -s is /z/.','“bags” ends with /z/.'],
+['Which pair has the same final -s sound?',['books, maps','pens, cats','dogs, books','rooms, maps'],0,'Both /k/ and /p/ are voiceless.','books and maps both end with /s/.'],
+['The plural -s in “rooms” is pronounced:',['/s/','/z/','/ɪz/','silent'],1,'The final /m/ is voiced.','After voiced /m/, plural -s is /z/.']
+]
+};
+function genEng(t,l,i){
+ var z=engTemplates[t][i%engTemplates[t].length],q=z[0];
+ if(l===2)q='Practice: '+q;
+ if(l===3)q='Apply the rule: '+q;
+ if(l===4)q='Challenge: '+q;
+ return mk('g'+t+l+'_'+i,'eng',t,l,q,z[1],z[2],z[3],z[4]);
+}
+function genOne(s,t,l,i){if(s==='math')return genMath(t,l,i);if(s==='lit')return genLit(t,l,i);return genEng(t,l,i)}
+function questionPool(s,t,l){
+ var base=Q.filter(function(x){return x.s===s&&x.t===t&&x.l===l}),out=base.slice(),i=0,seen={};
+ out.forEach(function(x){seen[x.id]=1});
+ while(out.length<MIN_BANK&&i<30){var g=genOne(s,t,l,i++);if(g&&!seen[g.id]){seen[g.id]=1;out.push(g)}}
+ return out;
+}
+function topicPool(s,t,maxLevel){
+ var out=[];for(var l=1;l<=maxLevel;l++)out=out.concat(questionPool(s,t,l));return out
+}
+function allPoolsForSubject(s){
+ var out=[];curriculum[s].topics.forEach(function(t){for(var l=1;l<=4;l++)out=out.concat(questionPool(s,t[0],l))});return out
+}
+function poolsForTopics(s,topics,levels){
+ var out=[];topics.forEach(function(t){levels.forEach(function(l){out=out.concat(questionPool(s,t,l))})});return out
+}
+
 var before='home',items=[],qi=0,selected=null,checked=false,ctx={};
 
 var schoolStart=new Date(2026,8,7);
@@ -164,40 +294,40 @@ function state(){return JSON.parse(localStorage.getItem(key())||'{"xp":0,"answer
 function save(x){localStorage.setItem(key(),JSON.stringify(x));renderAll()}
 function go(id){document.querySelectorAll('.section').forEach(function(x){x.classList.remove('active')});document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(function(x){x.classList.toggle('active',x.dataset.page===id)});if(id==='report')renderReport()}
 document.querySelectorAll('.nav button').forEach(function(b){b.onclick=function(){go(b.dataset.page)}});document.getElementById('student').onchange=renderAll;
-function coreScore(s,t){var st=state(),a=Q.filter(function(x){return x.s===s&&x.t===t&&x.l<=3}),d=a.filter(function(x){return st.answers[x.id]});if(!d.length)return 0;return Math.round(d.filter(function(x){return st.answers[x.id].correct}).length/d.length*100)}
+function coreScore(s,t){var st=state(),a=topicPool(s,t,3),d=a.filter(function(x){return st.answers[x.id]});if(!d.length)return 0;return Math.round(d.filter(function(x){return st.answers[x.id].correct}).length/d.length*100)}
 function renderSubject(s){var c=curriculum[s],el=document.getElementById(s);el.innerHTML='<div class="top"><div><h1>'+c.icon+' '+c.name+'</h1><div class="muted">Chọn chủ đề và mức độ luyện tập.</div></div><span class="tag">4 mức độ</span></div><div class="topicbar" id="tb-'+s+'"></div><div class="levels" id="lv-'+s+'"></div>';var tb=document.getElementById('tb-'+s);c.topics.forEach(function(t,i){var b=document.createElement('button');b.className='pill'+(i===0?' active':'');b.textContent=t[1];b.onclick=function(){tb.querySelectorAll('.pill').forEach(function(x){x.classList.remove('active')});b.classList.add('active');renderLevels(s,t[0])};tb.appendChild(b)});renderLevels(s,c.topics[0][0])}
-function renderLevels(s,t){var el=document.getElementById('lv-'+s),score=coreScore(s,t),names=['Nắm bài','Thành thạo','Vận dụng','Nâng cao'];el.innerHTML='';for(var l=1;l<=4;l++){var count=Q.filter(function(x){return x.s===s&&x.t===t&&x.l===l}).length,lock=l===4&&score<80,d=document.createElement('div');d.className='level';d.innerHTML='<span class="badge b'+l+'">Mức '+l+'</span><h3>'+names[l-1]+'</h3><div class="muted">'+(l===4?'Suy luận sâu, không vượt chương trình.':'Luyện chắc kiến thức và kỹ năng.')+'</div><div style="margin:10px 0;font-size:12px;color:#697386">'+count+' câu '+(l===4?'• nền '+score+'%':'')+'</div><button class="btn '+(lock?'soft':'primary')+'" '+((lock||count===0)?'disabled':'')+'>'+(lock?'Cần ≥80% mức 1–3':count?'Luyện ngay':'Đang bổ sung')+'</button>';if(!lock&&count)d.querySelector('button').onclick=function(ll){return function(){startQuiz(s,t,ll)}}(l);el.appendChild(d)}}
-function startQuiz(s,t,l){items=Q.filter(function(x){return x.s===s&&x.t===t&&x.l===l});qi=0;ctx={s:s,t:t,l:l};before=s;go('quiz');renderQuestion()}
+function renderLevels(s,t){var el=document.getElementById('lv-'+s),score=coreScore(s,t),names=['Nắm bài','Thành thạo','Vận dụng','Nâng cao'];el.innerHTML='';for(var l=1;l<=4;l++){var count=questionPool(s,t,l).length,lock=l===4&&score<80,d=document.createElement('div');d.className='level';d.innerHTML='<span class="badge b'+l+'">Mức '+l+'</span><h3>'+names[l-1]+'</h3><div class="muted">'+(l===4?'Suy luận sâu, không vượt chương trình.':'Luyện chắc kiến thức và kỹ năng.')+'</div><div style="margin:10px 0;font-size:12px;color:#697386">'+count+' câu '+(l===4?'• nền '+score+'%':'')+'</div><button class="btn '+(lock?'soft':'primary')+'" '+((lock||count===0)?'disabled':'')+'>'+(lock?'Cần ≥80% mức 1–3':count?'Luyện ngay':'Đang bổ sung')+'</button>';if(!lock&&count)d.querySelector('button').onclick=function(ll){return function(){startQuiz(s,t,ll)}}(l);el.appendChild(d)}}
+function startQuiz(s,t,l){items=questionPool(s,t,l).slice();qi=0;ctx={s:s,t:t,l:l};before=s;go('quiz');renderQuestion()}
 function startDaily(){
  var w=currentWeek(),p=planFor(w),prev=planFor(Math.max(1,w-1)),prev2=planFor(Math.max(1,w-2)),next=planFor(w+1),day=new Date().getDay(),salt=dateLabel()+document.getElementById('student').value,used={},out=[];
  ['math','lit','eng'].forEach(function(s){
-   var cur=Q.filter(function(x){return x.s===s&&p[s].indexOf(x.t)>=0&&x.l<=2});
+   var cur=poolsForTopics(s,p[s],[1,2]);
    addPicked(out,cur,4,salt+s+'cur',used);
    var oldTopics=(prev[s]||[]).concat(prev2[s]||[]);
-   var old=Q.filter(function(x){return x.s===s&&oldTopics.indexOf(x.t)>=0&&x.l<=2});
+   var old=poolsForTopics(s,oldTopics,[1,2]);
    addPicked(out,old,2,salt+s+'old',used);
  })
- var apply=Q.filter(function(x){return p[x.s]&&p[x.s].indexOf(x.t)>=0&&x.l===3});
+ var apply=[];['math','lit','eng'].forEach(function(s){apply=apply.concat(poolsForTopics(s,p[s],[3]))});
  addPicked(out,apply,4,salt+'apply',used);
- var hard=Q.filter(function(x){return p[x.s]&&p[x.s].indexOf(x.t)>=0&&x.l===4});
+ var hard=[];['math','lit','eng'].forEach(function(s){hard=hard.concat(poolsForTopics(s,p[s],[4]))});
  addPicked(out,hard,2,salt+'hard',used);
  if(day===0){
-   var preview=Q.filter(function(x){return next[x.s]&&next[x.s].indexOf(x.t)>=0&&x.l===1});
+   var preview=[];['math','lit','eng'].forEach(function(s){preview=preview.concat(poolsForTopics(s,next[s],[1]))});
    addPicked(out,preview,3,salt+'preview',used);
  }
  if(out.length<24){
-   var fill=Q.filter(function(x){return x.l<=3});
+   var fill=[];['math','lit','eng'].forEach(function(s){curriculum[s].topics.forEach(function(t){fill=fill.concat(topicPool(s,t[0],3))})});
    addPicked(out,fill,24-out.length,salt+'fill',used);
  }
  items=out.slice(0,24);qi=0;ctx={s:'daily',week:w};before='home';go('quiz');renderQuestion()
 }
-function startChallenge(){items=Q.filter(function(x){return x.l===4});qi=0;ctx={s:'challenge'};before='home';go('quiz');renderQuestion()}
+function startChallenge(){items=[];['math','lit','eng'].forEach(function(s){curriculum[s].topics.forEach(function(t){items=items.concat(questionPool(s,t[0],4))})});items=stablePick(items,18,dateLabel()+'challenge',{});qi=0;ctx={s:'challenge'};before='home';go('quiz');renderQuestion()}
 function renderQuestion(){var q=items[qi];selected=null;checked=false;document.getElementById('quizTitle').textContent=ctx.s==='challenge'?'🔥 Thử thách Đại ca':ctx.s==='daily'?'Bài học hôm nay':curriculum[q.s].name;var bl=document.getElementById('quizLevel');bl.textContent='Mức '+q.l;bl.className='badge b'+q.l;document.getElementById('qCount').textContent='Câu '+(qi+1)+'/'+items.length;document.getElementById('qbar').style.width=(qi/items.length*100)+'%';document.getElementById('qText').textContent=q.q;var an=document.getElementById('answers');an.innerHTML='';q.a.forEach(function(x,i){var b=document.createElement('button');b.className='answer';b.textContent=String.fromCharCode(65+i)+'. '+x;b.onclick=function(){if(checked)return;selected=i;an.querySelectorAll('.answer').forEach(function(y){y.classList.remove('selected')});b.classList.add('selected')};an.appendChild(b)});document.getElementById('hint').className='hint';document.getElementById('hint').textContent='💡 '+q.h;document.getElementById('feedback').className='feedback';document.getElementById('checkBtn').textContent='Kiểm tra'}
 function showHint(){document.getElementById('hint').classList.add('show')}
 function checkAnswer(){var q=items[qi],btn=document.getElementById('checkBtn');if(checked){qi++;if(qi>=items.length){toast('Hoàn thành bài luyện');return go(before)}return renderQuestion()}if(selected===null)return toast('Chọn một đáp án trước.');checked=true;var ok=selected===q.c,ans=document.querySelectorAll('.answer');ans[q.c].classList.add('correct');if(!ok)ans[selected].classList.add('wrong');var f=document.getElementById('feedback');f.className='feedback show '+(ok?'ok':'no');f.innerHTML='<b>'+(ok?'Chính xác! +10 XP':'Chưa đúng.')+'</b><br>'+q.e;btn.textContent=qi===items.length-1?'Hoàn thành':'Câu tiếp theo';var st=state();st.answers[q.id]={correct:ok,subject:q.s};if(ok)st.xp=(st.xp||0)+10;save(st)}
 function exitQuiz(){go(before)}
-function renderReport(){var st=state(),tb=document.getElementById('reportBody');tb.innerHTML='';['math','lit','eng'].forEach(function(s){var all=Q.filter(function(x){return x.s===s}),done=all.filter(function(x){return st.answers[x.id]}),right=done.filter(function(x){return st.answers[x.id].correct}),rate=done.length?Math.round(right.length/done.length*100):0;tb.innerHTML+='<tr><td>'+curriculum[s].icon+' '+curriculum[s].name+'</td><td>'+done.length+'</td><td>'+right.length+'</td><td>'+rate+'%</td></tr>'});var wrong=Q.filter(function(x){return st.answers[x.id]&&!st.answers[x.id].correct});document.getElementById('wrongList').innerHTML=wrong.length?wrong.map(function(x){return '<div style="padding:8px 0;border-bottom:1px solid #eee"><b>'+curriculum[x.s].name+':</b> '+x.q+'</div>'}).join(''):'Chưa có câu sai.'}
-function renderAll(){['math','lit','eng'].forEach(renderSubject);renderToday();var st=state();document.getElementById('xp').textContent=st.xp||0;document.getElementById('xpbar').style.width=Math.min(100,(st.xp||0)%100)+'%';[['math','pmath'],['lit','plit'],['eng','peng']].forEach(function(p){var all=Q.filter(function(x){return x.s===p[0]}),done=all.filter(function(x){return st.answers[x.id]});document.getElementById(p[1]).style.width=(all.length?done.length/all.length*100:0)+'%'});renderReport()}
+function renderReport(){var st=state(),tb=document.getElementById('reportBody');tb.innerHTML='';['math','lit','eng'].forEach(function(s){var all=allPoolsForSubject(s),done=all.filter(function(x){return st.answers[x.id]}),right=done.filter(function(x){return st.answers[x.id].correct}),rate=done.length?Math.round(right.length/done.length*100):0;tb.innerHTML+='<tr><td>'+curriculum[s].icon+' '+curriculum[s].name+'</td><td>'+done.length+'</td><td>'+right.length+'</td><td>'+rate+'%</td></tr>'});var allQ=[];['math','lit','eng'].forEach(function(s){allQ=allQ.concat(allPoolsForSubject(s))});var wrong=allQ.filter(function(x){return st.answers[x.id]&&!st.answers[x.id].correct});document.getElementById('wrongList').innerHTML=wrong.length?wrong.map(function(x){return '<div style="padding:8px 0;border-bottom:1px solid #eee"><b>'+curriculum[x.s].name+':</b> '+x.q+'</div>'}).join(''):'Chưa có câu sai.'}
+function renderAll(){['math','lit','eng'].forEach(renderSubject);renderToday();var st=state();document.getElementById('xp').textContent=st.xp||0;document.getElementById('xpbar').style.width=Math.min(100,(st.xp||0)%100)+'%';[['math','pmath'],['lit','plit'],['eng','peng']].forEach(function(p){var all=allPoolsForSubject(p[0]),done=all.filter(function(x){return st.answers[x.id]});document.getElementById(p[1]).style.width=(all.length?done.length/all.length*100:0)+'%'});renderReport()}
 function resetProgress(){if(confirm('Xóa toàn bộ tiến độ của người học đang chọn?')){localStorage.removeItem(key());renderAll();toast('Đã xóa tiến độ.')}}
 function toast(t){var e=document.getElementById('toast');e.textContent=t;e.classList.add('show');setTimeout(function(){e.classList.remove('show')},2200)}
 renderAll();
