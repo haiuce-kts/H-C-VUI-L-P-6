@@ -19,6 +19,24 @@
 .resultscore{font-size:44px;font-weight:900}.resultgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .resultbox{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:14px}
 .historytable{width:100%;border-collapse:collapse}.historytable th,.historytable td{padding:10px;border-bottom:1px solid var(--line);text-align:left;font-size:14px}
+
+.ioe-banner{margin:0 0 16px;background:linear-gradient(135deg,#eff6ff,#f5f3ff);border:1px solid #c7d2fe}
+.ioe-banner .ioe-logo{font-size:28px;font-weight:950;letter-spacing:-.5px}
+.ioe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px}
+.ioe-card{background:white;border:1px solid var(--line);border-radius:18px;padding:17px;position:relative}
+.ioe-card h3{margin:8px 0 6px}.ioe-card .ico{font-size:28px}.ioe-card .ioe-meta{font-size:12px;color:var(--muted);line-height:1.55;min-height:56px}
+.ioe-skills{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}.ioe-skill{padding:7px 10px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:12px;font-weight:800}
+.ioe-hud{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.ioe-hud span{padding:7px 10px;border-radius:10px;background:#f8fafc;border:1px solid var(--line);font-weight:800}
+.ioe-question{font-size:21px;font-weight:800;line-height:1.45;margin:18px 0}
+.ioe-choices{display:grid;gap:10px}.ioe-choice{border:1.5px solid #d9e0ea;background:white;border-radius:14px;padding:13px;text-align:left;cursor:pointer}
+.ioe-choice.selected{border-color:#2563eb;background:#eff6ff}.ioe-choice.ok{border-color:#16a34a;background:#ecfdf3}.ioe-choice.no{border-color:#dc2626;background:#fff1f2}
+.ioe-input{width:100%;font-size:20px;padding:13px 14px;border:1.5px solid #d9e0ea;border-radius:14px;outline:none}.ioe-input:focus{border-color:#2563eb}
+.ioe-wordbank,.ioe-order{display:flex;gap:8px;flex-wrap:wrap;min-height:48px;padding:10px;border-radius:14px;background:#f8fafc;border:1px dashed #cbd5e1;margin:10px 0}
+.ioe-word{border:1px solid #cbd5e1;background:white;border-radius:10px;padding:9px 11px;cursor:pointer;font-weight:800}.ioe-word.used{opacity:.35}
+.ioe-listen{font-size:18px;padding:13px 17px;border-radius:14px;border:0;background:#111827;color:white;cursor:pointer}
+.ioe-feedback{display:none;margin-top:12px;padding:12px;border-radius:12px}.ioe-feedback.show{display:block}.ioe-feedback.good{background:#ecfdf3;color:#166534}.ioe-feedback.bad{background:#fff1f2;color:#991b1b}
+.ioe-history{width:100%;border-collapse:collapse}.ioe-history th,.ioe-history td{padding:9px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}
+
 .toast{position:fixed;right:18px;bottom:18px;background:#111827;color:#fff;padding:12px 16px;border-radius:12px;opacity:0;transition:.2s}.toast.show{opacity:1}
 @media(max-width:900px){.app{grid-template-columns:1fr}.side{padding:16px}.nav{display:flex;overflow:auto}.nav button{min-width:130px}.hero,.stats,.subject,.challenge{grid-column:span 12}.todayplan{grid-template-columns:1fr}.levels{grid-template-columns:1fr 1fr}.testgrid{grid-template-columns:1fr 1fr}.resultgrid{grid-template-columns:1fr 1fr}.main{padding:18px}}
 @media(max-width:560px){.levels{grid-template-columns:1fr}.testgrid,.resultgrid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.qtext{font-size:18px}}
@@ -54,6 +72,31 @@
 <section id="math" class="section"></section>
 <section id="lit" class="section"></section>
 <section id="eng" class="section"></section>
+<section id="ioe" class="section">
+<div class="top"><div><button class="btn soft" onclick="go('eng')">← Tiếng Anh</button><h1 style="margin-top:10px">⚡ Luyện IOE · Tiếng Anh lớp 6</h1><div class="muted">Từ vựng • ngữ pháp • phát âm • nghe • đọc • biến đổi câu</div></div><span class="tag" id="ioeWeekTag">Tuần hiện tại</span></div>
+<div class="card" style="margin-bottom:15px"><div class="row"><div><b id="ioeScopeTitle">Phạm vi tuần</b><div class="muted" id="ioeScopeText"></div></div><div><b id="ioeBest">0%</b><div class="mini">Tốt nhất gần đây</div></div></div></div>
+<div class="ioe-skills"><span class="ioe-skill">⚡ Chọn nhanh</span><span class="ioe-skill">⌨️ Điền từ</span><span class="ioe-skill">🧩 Xếp từ</span><span class="ioe-skill">🔊 Nghe – chọn</span><span class="ioe-skill">🔎 Khác nhóm</span><span class="ioe-skill">🔗 Nối nghĩa</span></div>
+<div class="ioe-grid">
+<div class="ioe-card"><div class="ico">🏁</div><h3>Vòng tự luyện tuần</h3><div class="ioe-meta">20 câu • 15 phút<br>Trộn đủ các dạng, bám bài đang học.</div><button class="btn primary" onclick="startIOE('weekly')">Bắt đầu vòng</button></div>
+<div class="ioe-card"><div class="ico">⚡</div><h3>Đua tốc độ</h3><div class="ioe-meta">12 câu • 6 phút<br>Chọn nhanh, điền nhanh, thưởng chuỗi đúng.</div><button class="btn primary" onclick="startIOE('sprint')">Đua ngay</button></div>
+<div class="ioe-card"><div class="ico">🔊</div><h3>Nghe siêu tốc</h3><div class="ioe-meta">12 câu • 8 phút<br>Bấm loa, nghe từ/câu rồi chọn đáp án.</div><button class="btn primary" onclick="startIOE('listen')">Luyện nghe</button></div>
+<div class="ioe-card"><div class="ico">🧩</div><h3>Xếp từ & điền từ</h3><div class="ioe-meta">15 câu • 10 phút<br>Khôi phục câu, điền từ và nối nghĩa.</div><button class="btn primary" onclick="startIOE('words')">Luyện dạng khó</button></div>
+<div class="ioe-card"><div class="ico">🏆</div><h3>Thi thử</h3><div class="ioe-meta">30 câu • 20 phút<br>Không mất mạng; chấm tổng khi kết thúc.</div><button class="btn primary" onclick="startIOE('mock')">Thi thử</button></div>
+</div>
+<div class="card" style="margin-top:16px"><h3>Lịch sử luyện IOE</h3><div style="overflow:auto"><table class="ioe-history"><thead><tr><th>Ngày</th><th>Vòng</th><th>Đúng</th><th>Điểm</th><th>Chuỗi</th></tr></thead><tbody id="ioeHistoryBody"></tbody></table></div></div>
+</section>
+<section id="ioeGame" class="section quiz">
+<div class="top"><div><button class="btn soft" onclick="abortIOE()">← Thoát vòng</button><h1 id="ioeGameTitle" style="margin-top:10px">Luyện IOE</h1><div class="muted" id="ioeGameScope"></div></div><div class="ioe-hud"><span id="ioeLives">❤️❤️❤️</span><span id="ioeStreak">🔥 0</span><span id="ioePoints">⭐ 0</span><span class="timer" id="ioeTimer">00:00</span></div></div>
+<div class="card">
+<div class="row"><div class="muted" id="ioeCount"></div><span class="tag" id="ioeType">Chọn nhanh</span></div>
+<div class="progress" style="margin-top:9px"><i id="ioeBar"></i></div>
+<div class="ioe-question" id="ioeQuestion"></div>
+<div id="ioeAnswerArea"></div>
+<div class="ioe-feedback" id="ioeFeedback"></div>
+<div class="row" style="margin-top:15px"><div class="mini">Đúng liên tiếp được cộng điểm thưởng.</div><button class="btn primary" id="ioeCheckBtn" onclick="checkIOE()">Kiểm tra</button></div>
+</div>
+</section>
+
 <section id="tests" class="section">
 <div class="top"><div><h1>📝 Kiểm tra kiến thức</h1><div class="muted">Đề tự bám thời gian thực và phạm vi kiến thức đã học.</div></div><span class="tag" id="testPeriodTag">Đánh giá định kỳ</span></div>
 <div id="latestTestResult"></div>
@@ -326,10 +369,10 @@ function addPicked(out,arr,n,salt,used){stablePick(arr,n,salt,used).forEach(func
 function key(){return 'hocvui6_'+document.getElementById('student').value}
 function state(){var s=JSON.parse(localStorage.getItem(key())||'{"xp":0,"answers":{},"tests":[]}');if(!s.answers)s.answers={};if(!s.tests)s.tests=[];return s}
 function save(x){localStorage.setItem(key(),JSON.stringify(x));renderAll()}
-function go(id){document.querySelectorAll('.section').forEach(function(x){x.classList.remove('active')});document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(function(x){x.classList.toggle('active',x.dataset.page===id)});if(id==='report')renderReport();if(id==='tests')renderTests()}
+function go(id){document.querySelectorAll('.section').forEach(function(x){x.classList.remove('active')});document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(function(x){x.classList.toggle('active',x.dataset.page===id)});if(id==='report')renderReport();if(id==='tests')renderTests();if(id==='ioe')renderIOEHome()}
 document.querySelectorAll('.nav button').forEach(function(b){b.onclick=function(){go(b.dataset.page)}});document.getElementById('student').onchange=renderAll;
 function coreScore(s,t){var st=state(),a=topicPool(s,t,3),d=a.filter(function(x){return st.answers[x.id]});if(!d.length)return 0;return Math.round(d.filter(function(x){return st.answers[x.id].correct}).length/d.length*100)}
-function renderSubject(s){var c=curriculum[s],el=document.getElementById(s);el.innerHTML='<div class="top"><div><h1>'+c.icon+' '+c.name+'</h1><div class="muted">Chọn chủ đề và mức độ luyện tập.</div></div><span class="tag">4 mức độ</span></div><div class="topicbar" id="tb-'+s+'"></div><div class="levels" id="lv-'+s+'"></div>';var tb=document.getElementById('tb-'+s);c.topics.forEach(function(t,i){var b=document.createElement('button');b.className='pill'+(i===0?' active':'');b.textContent=t[1];b.onclick=function(){tb.querySelectorAll('.pill').forEach(function(x){x.classList.remove('active')});b.classList.add('active');renderLevels(s,t[0])};tb.appendChild(b)});renderLevels(s,c.topics[0][0])}
+function renderSubject(s){var c=curriculum[s],el=document.getElementById(s),extra=s==='eng'?'<div class="card ioe-banner"><div class="row"><div><div class="ioe-logo">⚡ Luyện IOE</div><div class="muted">Luyện theo dạng thi: chọn nhanh • điền từ • xếp từ • nghe • nối nghĩa.</div></div><button class="btn primary" onclick="go(\'ioe\');renderIOEHome()">Vào luyện IOE</button></div></div>':'';el.innerHTML='<div class="top"><div><h1>'+c.icon+' '+c.name+'</h1><div class="muted">Chọn chủ đề và mức độ luyện tập.</div></div><span class="tag">4 mức độ</span></div>'+extra+'<div class="topicbar" id="tb-'+s+'"></div><div class="levels" id="lv-'+s+'"></div>';var tb=document.getElementById('tb-'+s);c.topics.forEach(function(t,i){var b=document.createElement('button');b.className='pill'+(i===0?' active':'');b.textContent=t[1];b.onclick=function(){tb.querySelectorAll('.pill').forEach(function(x){x.classList.remove('active')});b.classList.add('active');renderLevels(s,t[0])};tb.appendChild(b)});renderLevels(s,c.topics[0][0])}
 function renderLevels(s,t){var el=document.getElementById('lv-'+s),score=coreScore(s,t),names=['Nắm bài','Thành thạo','Vận dụng','Nâng cao'];el.innerHTML='';for(var l=1;l<=4;l++){var count=questionPool(s,t,l).length,lock=l===4&&score<80,d=document.createElement('div');d.className='level';d.innerHTML='<span class="badge b'+l+'">Mức '+l+'</span><h3>'+names[l-1]+'</h3><div class="muted">'+(l===4?'Suy luận sâu, không vượt chương trình.':'Luyện chắc kiến thức và kỹ năng.')+'</div><div style="margin:10px 0;font-size:12px;color:#697386">'+count+' câu '+(l===4?'• nền '+score+'%':'')+'</div><button class="btn '+(lock?'soft':'primary')+'" '+((lock||count===0)?'disabled':'')+'>'+(lock?'Cần ≥80% mức 1–3':count?'Luyện ngay':'Đang bổ sung')+'</button>';if(!lock&&count)d.querySelector('button').onclick=function(ll){return function(){startQuiz(s,t,ll)}}(l);el.appendChild(d)}}
 function startQuiz(s,t,l){items=questionPool(s,t,l).slice();qi=0;ctx={s:s,t:t,l:l};before=s;go('quiz');renderQuestion()}
 function startDaily(){
@@ -484,6 +527,167 @@ function renderTests(){
  var tb=document.getElementById('testHistoryBody');if(!tb)return;tb.innerHTML='';
  if(!hist.length){tb.innerHTML='<tr><td colspan="7" class="muted">Chưa có bài kiểm tra nào.</td></tr>';return}
  hist.forEach(function(r){var d=new Date(r.date);tb.innerHTML+='<tr><td>'+d.toLocaleDateString('vi-VN')+'</td><td>'+r.label+'</td><td><b>'+r.score.toFixed(2)+'</b></td><td>'+r.bySubject.math+'%</td><td>'+r.bySubject.lit+'%</td><td>'+r.bySubject.eng+'%</td><td>'+r.grade+'</td></tr>'})
+}
+
+
+var IOE_GRADE=6;
+var IOE_DATA={"e1":{"title":"Unit 1 · My New School","words":[["school","trường học"],["classroom","lớp học"],["subject","môn học"],["homework","bài tập về nhà"]],"sentences":["I go to school every day.","My school has a big library."]},"e2":{"title":"Unit 2 · My House","words":[["bedroom","phòng ngủ"],["kitchen","nhà bếp"],["living room","phòng khách"],["bathroom","phòng tắm"]],"sentences":["There is a sofa in the living room.","The picture is on the wall."]},"e3":{"title":"Unit 3 · My Friends","words":[["kind","tốt bụng"],["helpful","hay giúp đỡ"],["clever","thông minh"],["friendly","thân thiện"]],"sentences":["Lan is reading a book now.","My best friend is kind and helpful."]},"e4":{"title":"Unit 4 · My Neighbourhood","words":[["supermarket","siêu thị"],["square","quảng trường"],["street","đường phố"],["market","chợ"]],"sentences":["This street is wider than that street.","The supermarket is between the bank and the school."]},"e5":{"title":"Unit 5 · Natural Wonders of Viet Nam","words":[["mountain","núi"],["cave","hang động"],["waterfall","thác nước"],["beach","bãi biển"]],"sentences":["You should bring water.","This mountain is higher than that hill."]},"e6":{"title":"Unit 6 · Our Tet Holiday","words":[["lucky money","tiền mừng tuổi"],["fireworks","pháo hoa"],["relatives","họ hàng"],["peach blossoms","hoa đào"]],"sentences":["Children receive lucky money at Tet.","You should not break things at Tet."]},"e7":{"title":"Unit 7 · Television","words":[["programme","chương trình"],["cartoon","phim hoạt hình"],["channel","kênh"],["viewer","người xem"]],"sentences":["I watch cartoons after school.","What is your favourite TV programme?"]},"e8":{"title":"Unit 8 · Sports and Games","words":[["football","bóng đá"],["badminton","cầu lông"],["racket","vợt"],["champion","nhà vô địch"]],"sentences":["I play badminton twice a week.","He is a good football player."]},"e9":{"title":"Unit 9 · Cities of the World","words":[["capital","thủ đô"],["landmark","địa danh"],["crowded","đông đúc"],["palace","cung điện"]],"sentences":["Ha Noi is the capital of Viet Nam.","This city is more crowded than my town."]},"e10":{"title":"Unit 10 · Our Houses in the Future","words":[["robot","rô-bốt"],["appliance","thiết bị"],["solar","thuộc năng lượng mặt trời"],["future","tương lai"]],"sentences":["Robots will help us with housework.","My future house will use solar energy."]},"e11":{"title":"Unit 11 · Our Greener World","words":[["recycle","tái chế"],["rubbish","rác"],["reusable","có thể tái sử dụng"],["environment","môi trường"]],"sentences":["We should recycle plastic bottles.","Do not throw rubbish on the street."]},"e12":{"title":"Unit 12 · Robots","words":[["robot","rô-bốt"],["repair","sửa chữa"],["lift","nâng"],["understand","hiểu"]],"sentences":["Robots can lift heavy things.","A home robot can help with housework."]}};
+var IOE_MODES={
+ weekly:{label:'Vòng tự luyện',count:20,minutes:15,types:['choice','fill','order','listen','odd','match'],lives:3},
+ sprint:{label:'Đua tốc độ',count:12,minutes:6,types:['choice','odd','fill'],lives:3},
+ listen:{label:'Nghe siêu tốc',count:12,minutes:8,types:['listen','listen','choice'],lives:3},
+ words:{label:'Xếp từ & điền từ',count:15,minutes:10,types:['order','fill','match','odd'],lives:3},
+ mock:{label:'Thi thử',count:30,minutes:20,types:['choice','fill','order','listen','odd','match'],lives:0}
+};
+var ioeSession=null,ioeItems=[],ioeIndex=0,ioeSelected=null,ioeOrder=[],ioeChecked=false,ioeCorrect=0,ioePoints=0,ioeStreak=0,ioeBestStreak=0,ioeHearts=3,ioeDeadline=0,ioeTimerId=null,ioeQuestionStarted=0;
+
+function ioeResolveTopics(ts){
+ var out=[];
+ ts.forEach(function(t){
+  if(IOE_GRADE===2){
+   var m={f1:['e1','e2'],r1:['e1','e2','e3','e4'],f2:['e5','e6'],r2:['e5','e6','e7','e8'],f3:['e9','e10'],r3:['e9','e10','e11','e12'],f4:['e13','e14'],r4:['e13','e14','e15','e16']};
+   if(m[t])out=out.concat(m[t]);else if(IOE_DATA[t])out.push(t)
+  }else if(IOE_DATA[t])out.push(t)
+ });
+ return out.filter(function(x,i){return out.indexOf(x)===i})
+}
+function ioeActiveTopics(){
+ var w=currentWeek();
+ if(IOE_GRADE===2){var p=planFor(w),ts=p&&p.eng?p.eng:['e1'];return ioeResolveTopics(ts)}
+ if(w<=2)return['e1'];if(w<=4)return['e2','e3'];if(w<=6)return['e3'];if(w<=8)return['e4'];if(w<=10)return['e5'];if(w<=12)return['e6'];
+ if(w<=18)return['e1','e2','e3','e4','e5','e6'];if(w<=20)return['e7'];if(w<=22)return['e8'];if(w<=24)return['e9'];if(w<=26)return['e10'];if(w<=28)return['e11'];if(w<=30)return['e12'];return['e7','e8','e9','e10','e11','e12']
+}
+function ioeScopeText(){
+ var ts=ioeActiveTopics();return ts.map(function(t){return IOE_DATA[t]?IOE_DATA[t].title:t}).join(' • ')
+}
+function ioeAllWords(){
+ var a=[];Object.keys(IOE_DATA).forEach(function(k){IOE_DATA[k].words.forEach(function(w){a.push({w:w[0],vi:w[1],topic:k})})});return a
+}
+function ioeChoicePack(correct,distractors,seed){
+ var arr=[correct].concat(distractors.filter(function(x){return x!==correct}).slice(0,3));
+ while(arr.length<4)arr.push('—');
+ var shift=seed%arr.length,rot=arr.slice(shift).concat(arr.slice(0,shift));
+ return {a:rot,c:rot.indexOf(correct)}
+}
+function ioeDistractors(topic,i,field){
+ var all=ioeAllWords().filter(function(x){return x.topic!==topic}),out=[];
+ for(var j=0;j<all.length&&out.length<3;j++){var z=all[(i*5+j*7)%all.length],v=field==='vi'?z.vi:z.w;if(out.indexOf(v)<0)out.push(v)}
+ return out
+}
+function ioeShuffleWords(words,seed){
+ var a=words.slice();for(var i=a.length-1;i>0;i--){var j=(seed*7+i*3)% (i+1),tmp=a[i];a[i]=a[j];a[j]=tmp}return a
+}
+function ioeGen(topic,type,i){
+ var d=IOE_DATA[topic]||IOE_DATA[Object.keys(IOE_DATA)[0]],pair=d.words[i%d.words.length],word=pair[0],vi=pair[1],pack,sent=d.sentences[i%d.sentences.length];
+ if(type==='choice'){
+  pack=ioeChoicePack(word,ioeDistractors(topic,i,'w'),i+1);
+  return {type:type,q:'Choose the word that belongs to “'+d.title+'”.',a:pack.a,c:pack.c,ex:'“'+word+'” thuộc chủ đề này.'}
+ }
+ if(type==='fill'){
+  return {type:type,q:'Điền từ tiếng Anh: “'+vi+'” = ______',answer:word,ex:'Đáp án: '+word+'.'}
+ }
+ if(type==='order'){
+  var words=sent.split(' '),shuf=ioeShuffleWords(words,i+3);
+  return {type:type,q:'Sắp xếp các từ thành câu đúng.',words:shuf,answer:sent,ex:'Câu đúng: '+sent}
+ }
+ if(type==='listen'){
+  pack=ioeChoicePack(word,ioeDistractors(topic,i+2,'w'),i+2);
+  return {type:type,q:'Bấm loa, nghe và chọn từ đúng.',audio:word,a:pack.a,c:pack.c,ex:'Từ nghe được là “'+word+'”.'}
+ }
+ if(type==='odd'){
+  var own=[d.words[0][0],d.words[1%d.words.length][0],d.words[2%d.words.length][0]],odd=ioeDistractors(topic,i+4,'w')[0]||'computer';
+  pack=ioeChoicePack(odd,own,i+4);
+  return {type:type,q:'Chọn từ KHÁC nhóm.',a:pack.a,c:pack.c,ex:'“'+odd+'” không cùng chủ đề với các từ còn lại.'}
+ }
+ pack=ioeChoicePack(vi,ioeDistractors(topic,i+5,'vi'),i+5);
+ return {type:'match',q:'Nối nghĩa đúng: “'+word+'” nghĩa là gì?',a:pack.a,c:pack.c,ex:'“'+word+'” = “'+vi+'”.'}
+}
+function buildIOERound(mode){
+ var cfg=IOE_MODES[mode],topics=ioeActiveTopics(),items=[];
+ for(var i=0;i<cfg.count;i++){var type=cfg.types[i%cfg.types.length],topic=topics[i%topics.length];items.push(ioeGen(topic,type,i))}
+ return items
+}
+function renderIOEHome(){
+ var w=currentWeek(),st=state(),hist=st.ioe||[],best=hist.length?Math.max.apply(null,hist.map(function(x){return x.percent||0})):0;
+ var a=document.getElementById('ioeWeekTag');if(!a)return;a.textContent='Tuần '+w;
+ document.getElementById('ioeScopeTitle').textContent='Phạm vi luyện tuần '+w;
+ document.getElementById('ioeScopeText').textContent=ioeScopeText();
+ document.getElementById('ioeBest').textContent=best+'%';
+ var tb=document.getElementById('ioeHistoryBody');tb.innerHTML='';
+ if(!hist.length){tb.innerHTML='<tr><td colspan="5" class="muted">Chưa có lượt luyện IOE.</td></tr>';return}
+ hist.slice(0,10).forEach(function(r){var d=new Date(r.date);tb.innerHTML+='<tr><td>'+d.toLocaleDateString('vi-VN')+'</td><td>'+r.label+'</td><td>'+r.correct+'/'+r.total+'</td><td><b>'+r.percent+'%</b> · '+r.points+'⭐</td><td>'+r.bestStreak+'</td></tr>'})
+}
+function startIOE(mode){
+ var cfg=IOE_MODES[mode];ioeSession={mode:mode,label:cfg.label,scope:ioeScopeText(),total:cfg.count,lives:cfg.lives,startedAt:Date.now()};
+ ioeItems=buildIOERound(mode);ioeIndex=0;ioeSelected=null;ioeOrder=[];ioeChecked=false;ioeCorrect=0;ioePoints=0;ioeStreak=0;ioeBestStreak=0;ioeHearts=cfg.lives||999;ioeDeadline=Date.now()+cfg.minutes*60000;
+ go('ioeGame');document.getElementById('ioeGameTitle').textContent='⚡ '+cfg.label;document.getElementById('ioeGameScope').textContent='Tuần '+currentWeek()+' • '+ioeSession.scope;
+ if(ioeTimerId)clearInterval(ioeTimerId);ioeTimerId=setInterval(updateIOETimer,1000);updateIOETimer();renderIOEQuestion()
+}
+function ioeTypeName(t){return {choice:'Chọn nhanh',fill:'Điền từ',order:'Xếp từ',listen:'Nghe – chọn',odd:'Khác nhóm',match:'Nối nghĩa'}[t]||t}
+function normalizeIOE(s){return String(s||'').toLowerCase().replace(/[.,!?]/g,'').replace(/\s+/g,' ').trim()}
+function renderIOEQuestion(){
+ var q=ioeItems[ioeIndex];ioeSelected=null;ioeOrder=[];ioeChecked=false;ioeQuestionStarted=Date.now();
+ document.getElementById('ioeCount').textContent='Câu '+(ioeIndex+1)+'/'+ioeItems.length;
+ document.getElementById('ioeType').textContent=ioeTypeName(q.type);
+ document.getElementById('ioeBar').style.width=((ioeIndex)/ioeItems.length*100)+'%';
+ document.getElementById('ioeQuestion').textContent=q.q;
+ document.getElementById('ioeFeedback').className='ioe-feedback';
+ document.getElementById('ioeCheckBtn').textContent='Kiểm tra';
+ updateIOEHUD();
+ var area=document.getElementById('ioeAnswerArea');area.innerHTML='';
+ if(['choice','listen','odd','match'].indexOf(q.type)>=0){
+   if(q.type==='listen'){var sp=document.createElement('button');sp.className='ioe-listen';sp.textContent='🔊 Nghe';sp.onclick=function(){speakIOE(q.audio)};area.appendChild(sp)}
+   var box=document.createElement('div');box.className='ioe-choices';box.style.marginTop='10px';
+   q.a.forEach(function(x,i){var b=document.createElement('button');b.className='ioe-choice';b.textContent=String.fromCharCode(65+i)+'. '+x;b.onclick=function(){if(ioeChecked)return;ioeSelected=i;box.querySelectorAll('.ioe-choice').forEach(function(y){y.classList.remove('selected')});b.classList.add('selected')};box.appendChild(b)});area.appendChild(box)
+ }else if(q.type==='fill'){
+   var inp=document.createElement('input');inp.id='ioeFill';inp.className='ioe-input';inp.placeholder='Gõ đáp án tiếng Anh…';inp.autocomplete='off';inp.onkeydown=function(e){if(e.key==='Enter')checkIOE()};area.appendChild(inp)
+ }else if(q.type==='order'){
+   var target=document.createElement('div');target.id='ioeOrderTarget';target.className='ioe-order';target.innerHTML='<span class="muted">Câu của em sẽ hiện ở đây…</span>';area.appendChild(target);
+   var bank=document.createElement('div');bank.className='ioe-wordbank';
+   q.words.forEach(function(w,i){var b=document.createElement('button');b.className='ioe-word';b.textContent=w;b.onclick=function(){if(ioeChecked||b.classList.contains('used'))return;b.classList.add('used');ioeOrder.push(w);renderIOEOrder()};bank.appendChild(b)});area.appendChild(bank);
+   var reset=document.createElement('button');reset.className='btn soft';reset.textContent='Làm lại câu';reset.onclick=function(){ioeOrder=[];bank.querySelectorAll('.ioe-word').forEach(function(x){x.classList.remove('used')});renderIOEOrder()};area.appendChild(reset)
+ }
+}
+function renderIOEOrder(){var t=document.getElementById('ioeOrderTarget');if(t)t.textContent=ioeOrder.length?ioeOrder.join(' '):'Câu của em sẽ hiện ở đây…'}
+function speakIOE(text){
+ if(!('speechSynthesis' in window)){toast('Thiết bị chưa hỗ trợ phát âm tự động.');return}
+ speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=IOE_GRADE===2?.72:.88;speechSynthesis.speak(u)
+}
+function checkIOE(){
+ var q=ioeItems[ioeIndex],btn=document.getElementById('ioeCheckBtn');
+ if(ioeChecked){ioeIndex++;if(ioeIndex>=ioeItems.length)return finishIOE(false);renderIOEQuestion();return}
+ var ok=false;
+ if(['choice','listen','odd','match'].indexOf(q.type)>=0){if(ioeSelected===null)return toast('Chọn một đáp án trước.');ok=ioeSelected===q.c}
+ else if(q.type==='fill'){var inp=document.getElementById('ioeFill');if(!inp.value.trim())return toast('Gõ đáp án trước.');ok=normalizeIOE(inp.value)===normalizeIOE(q.answer)}
+ else if(q.type==='order'){if(!ioeOrder.length)return toast('Hãy xếp các từ trước.');ok=normalizeIOE(ioeOrder.join(' '))===normalizeIOE(q.answer)}
+ ioeChecked=true;var fb=document.getElementById('ioeFeedback');
+ if(ok){
+   ioeCorrect++;var sec=(Date.now()-ioeQuestionStarted)/1000,speed=Math.max(0,5-Math.floor(sec/4)),gain=10+Math.min(10,ioeStreak*2)+speed;ioeStreak++;ioeBestStreak=Math.max(ioeBestStreak,ioeStreak);ioePoints+=gain;
+   fb.className='ioe-feedback show good';fb.innerHTML='<b>✓ Chính xác! +'+gain+' điểm</b><br>'+q.ex
+ }else{
+   ioeStreak=0;if(ioeSession.lives>0)ioeHearts--;fb.className='ioe-feedback show bad';fb.innerHTML='<b>✗ Chưa đúng.</b><br>'+q.ex
+ }
+ updateIOEHUD();btn.textContent=(ioeIndex===ioeItems.length-1||ioeHearts<=0)?'Xem kết quả':'Câu tiếp theo';
+ if(ioeHearts<=0)setTimeout(function(){finishIOE(false)},700)
+}
+function updateIOEHUD(){
+ var lives=document.getElementById('ioeLives');if(!lives)return;
+ lives.textContent=ioeSession&&ioeSession.lives>0?('❤️'.repeat(Math.max(0,ioeHearts))+'🤍'.repeat(Math.max(0,ioeSession.lives-ioeHearts))):'🏆 Thi thử';
+ document.getElementById('ioeStreak').textContent='🔥 '+ioeStreak;document.getElementById('ioePoints').textContent='⭐ '+ioePoints
+}
+function updateIOETimer(){
+ var ms=Math.max(0,ioeDeadline-Date.now()),m=Math.floor(ms/60000),s=Math.floor((ms%60000)/1000),el=document.getElementById('ioeTimer');if(el)el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');if(ms<=0&&ioeSession)finishIOE(true)
+}
+function finishIOE(timeout){
+ if(!ioeSession)return;if(ioeTimerId){clearInterval(ioeTimerId);ioeTimerId=null}
+ var percent=Math.round(ioeCorrect/ioeItems.length*100),st=state();st.ioe=st.ioe||[];
+ st.ioe.unshift({date:new Date().toISOString(),mode:ioeSession.mode,label:ioeSession.label,scope:ioeSession.scope,correct:ioeCorrect,total:ioeItems.length,percent:percent,points:ioePoints,bestStreak:ioeBestStreak});
+ st.ioe=st.ioe.slice(0,30);st.xp=(st.xp||0)+ioeCorrect*5;localStorage.setItem(key(),JSON.stringify(st));
+ var msg=(timeout?'Hết giờ. ':'')+'Kết quả: '+percent+'% • '+ioeCorrect+'/'+ioeItems.length+' câu đúng • '+ioePoints+' điểm.';
+ ioeSession=null;ioeItems=[];go('ioe');renderIOEHome();toast(msg)
+}
+function abortIOE(){
+ if(!ioeSession)return go('ioe');if(confirm('Thoát vòng luyện? Kết quả hiện tại sẽ không được lưu.')){if(ioeTimerId)clearInterval(ioeTimerId);ioeTimerId=null;ioeSession=null;go('ioe');renderIOEHome()}
 }
 
 function renderReport(){var st=state(),tb=document.getElementById('reportBody');tb.innerHTML='';['math','lit','eng'].forEach(function(s){var all=allPoolsForSubject(s),done=all.filter(function(x){return st.answers[x.id]}),right=done.filter(function(x){return st.answers[x.id].correct}),rate=done.length?Math.round(right.length/done.length*100):0;tb.innerHTML+='<tr><td>'+curriculum[s].icon+' '+curriculum[s].name+'</td><td>'+done.length+'</td><td>'+right.length+'</td><td>'+rate+'%</td></tr>'});var allQ=[];['math','lit','eng'].forEach(function(s){allQ=allQ.concat(allPoolsForSubject(s))});var wrong=allQ.filter(function(x){return st.answers[x.id]&&!st.answers[x.id].correct});document.getElementById('wrongList').innerHTML=wrong.length?wrong.map(function(x){return '<div style="padding:8px 0;border-bottom:1px solid #eee"><b>'+curriculum[x.s].name+':</b> '+x.q+'</div>'}).join(''):'Chưa có câu sai.'}
