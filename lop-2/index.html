@@ -252,16 +252,59 @@ function tvTheme(t){
 function genLit(t,l,i){
  var theme=tvTheme(t),w=parseInt(t.replace('tv',''));
  var passages=[
-  'Buổi sáng, Minh tự gấp chăn rồi chuẩn bị sách vở. Em vui vì mình làm được nhiều việc hơn trước.',
-  'Giờ ra chơi, các bạn cùng chơi kéo co. Ai cũng cổ vũ và biết nhường nhau.',
-  'Mẹ tưới cây ngoài hiên. Bé lấy chiếc ca nhỏ giúp mẹ tưới những chậu hoa.',
-  'Trên sân trường, Lan nhặt một mẩu giấy và bỏ vào thùng rác. Sân trường lại sạch đẹp.'
+  ['Buổi sáng, Minh tự gấp chăn rồi chuẩn bị sách vở. Em vui vì mình làm được nhiều việc hơn trước.','Minh','gấp chăn và chuẩn bị sách vở','buổi sáng','vui'],
+  ['Giờ ra chơi, các bạn cùng chơi kéo co. Ai cũng cổ vũ và biết nhường nhau.','các bạn','chơi kéo co','giờ ra chơi','vui vẻ'],
+  ['Mẹ tưới cây ngoài hiên. Bé lấy chiếc ca nhỏ giúp mẹ tưới những chậu hoa.','bé','giúp mẹ tưới hoa','ngoài hiên','chăm chỉ'],
+  ['Trên sân trường, Lan nhặt một mẩu giấy và bỏ vào thùng rác. Sân trường lại sạch đẹp.','Lan','nhặt rác bỏ vào thùng','sân trường','có ý thức'],
+  ['Nam đến thư viện, chọn một cuốn truyện rồi ngồi đọc thật chăm chú.','Nam','đọc truyện','thư viện','chăm chú'],
+  ['Chiều chủ nhật, hai chị em cùng xếp quần áo và lau bàn học.','hai chị em','xếp quần áo và lau bàn','ở nhà','gọn gàng'],
+  ['Hoa thấy bạn quên bút nên nhẹ nhàng cho bạn mượn một chiếc bút chì.','Hoa','cho bạn mượn bút','lớp học','tốt bụng'],
+  ['Trời mưa, bố che ô đưa bé qua đường. Bé nắm tay bố thật chặt.','bé và bố','đi qua đường dưới ô','ngoài đường','an toàn']
  ];
- var p=passages[(w+i)%passages.length];
- if(l===1)return mk('g'+t+l+'_'+i,'lit',t,l,'Đọc: “'+p+'” Nhân vật đang làm việc gì?', ['Một hoạt động được nêu trong câu','Đi ngủ','Đi xa','Không làm gì'],0,'Tìm động từ hoặc việc làm của nhân vật.','Cần nhận ra hoạt động chính được kể trong đoạn.');
- if(l===2)return mk('g'+t+l+'_'+i,'lit',t,l,'Chủ điểm “'+theme+'”. Từ nào là từ chỉ hoạt động?', ['chạy','quả bóng','sân trường','chiếc cặp'],0,'Từ chỉ hoạt động trả lời “làm gì?”.','“chạy” là từ chỉ hoạt động.');
- if(l===3)return mk('g'+t+l+'_'+i,'lit',t,l,'Câu nào được viết đúng và rõ ý?', ['Em cùng các bạn đọc sách ở thư viện.','em Cùng bạn đọc sách','Đọc sách bạn em cùng.','Thư viện em cùng.'],0,'Câu cần viết hoa đầu câu, đúng trật tự và có dấu câu.','Câu A đầy đủ và đúng cách viết.');
- return mk('g'+t+l+'_'+i,'lit',t,l,'Khi viết 3–4 câu theo chủ điểm “'+theme+'”, cách làm tốt nhất là:', ['Nêu sự việc chính, thêm 1–2 chi tiết và cảm nghĩ','Chép lặp một câu nhiều lần','Chỉ viết các từ rời rạc','Không cần dấu câu'],0,'Đoạn văn ngắn vẫn cần mạch ý.','Nêu sự việc, chi tiết và cảm nghĩ giúp đoạn văn rõ ràng.');
+ var z=passages[(w+i)%passages.length],p=z[0],kind=i%4;
+ if(l===1){
+   if(kind===0)return mk('g'+t+l+'_'+i,'lit',t,l,'Đọc: “'+p+'” Ai là nhân vật chính được nhắc tới?',[z[1],'một người khác','không có ai','không xác định'],0,'Tìm người thực hiện hoạt động chính.','Nhân vật chính là '+z[1]+'.');
+   if(kind===1)return mk('g'+t+l+'_'+i,'lit',t,l,'Đọc: “'+p+'” Nhân vật làm gì?',[z[2],'đi ngủ','đi mua hàng','không làm gì'],0,'Tìm hoạt động được kể trong đoạn.','Hoạt động chính: '+z[2]+'.');
+   if(kind===2)return mk('g'+t+l+'_'+i,'lit',t,l,'Đọc: “'+p+'” Sự việc diễn ra ở đâu/khi nào gần đúng nhất?',[z[3],'trên máy bay','ngoài biển','không rõ'],0,'Dựa vào từ ngữ chỉ nơi chốn hoặc thời gian.','Đáp án phù hợp: '+z[3]+'.');
+   return mk('g'+t+l+'_'+i,'lit',t,l,'Đọc: “'+p+'” Từ nào gần nhất với thái độ của nhân vật?',[z[4],'giận dữ','lười biếng','sợ hãi'],0,'Dựa vào hành động và cách cư xử.','Có thể nhận xét nhân vật '+z[4]+'.');
+ }
+ if(l===2){
+   var sets=[
+    ['Từ nào là từ chỉ hoạt động?',['chạy','quả bóng','sân trường','chiếc cặp'],0,'“chạy” nói một hoạt động.'],
+    ['Từ nào là từ chỉ đặc điểm?',['chăm chỉ','học bài','cây bút','sân trường'],0,'“chăm chỉ” nêu đặc điểm.'],
+    ['Câu nào kết thúc đúng bằng dấu chấm?',['Em đang đọc sách.','Em đang đọc sách?','Em đang đọc sách!','em đang đọc sách'],0,'Câu kể thông thường kết thúc bằng dấu chấm.'],
+    ['Nhóm nào gồm toàn từ chỉ sự vật?',['bút, vở, bàn','đọc, viết, chạy','đẹp, cao, tốt','nhanh, chậm, vui'],0,'Bút, vở, bàn đều là sự vật.'],
+    ['Câu hỏi nào phù hợp để hỏi về hoạt động?',['Bạn đang làm gì?','Bạn tên gì.','Cái bàn ở đâu!','Màu xanh rất đẹp.'],0,'“Làm gì?” dùng hỏi hoạt động.'],
+    ['Từ nào có thể thay cho “vui” trong nhiều trường hợp?',['vui vẻ','cái bàn','đi học','rất'],0,'“vui vẻ” có nghĩa gần với “vui”.'],
+    ['Cặp từ nào cùng chỉ hoạt động học tập?',['đọc – viết','bàn – ghế','đẹp – xinh','cao – thấp'],0,'Đọc và viết đều là hoạt động học tập.'],
+    ['Câu nào có đủ bộ phận nói “ai làm gì”?',['Lan đọc sách.','Lan rất ngoan.','Quyển sách mới.','Ở thư viện.'],0,'“Lan” là người, “đọc sách” là hoạt động.']
+   ],a=sets[i%sets.length];
+   return mk('g'+t+l+'_'+i,'lit',t,l,a[0],a[1],a[2],'Đọc kĩ yêu cầu về từ và câu.',a[3]);
+ }
+ if(l===3){
+   var qs=[
+    ['Câu nào được viết đúng và rõ ý?',['Em cùng các bạn đọc sách ở thư viện.','em Cùng bạn đọc sách','Đọc sách bạn em cùng.','Thư viện em cùng.'],0],
+    ['Chọn câu phù hợp nhất để kể một việc tốt.',['Em nhặt được bút và trả lại cho bạn.','Chiếc bút màu xanh.','Sân trường rộng.','Hôm nay trời nắng.'],0],
+    ['Câu nào sắp xếp từ đúng?',['Buổi sáng, em đi học đúng giờ.','Đi học em buổi sáng đúng giờ.','Đúng giờ buổi em sáng đi học.','Học đúng em đi giờ.'],0],
+    ['Câu nào nối hai ý hợp lí?',['Em làm xong bài nên em được nghỉ.','Em làm xong bài nhưng vì.','Em làm và nên bài.','Nên em bài làm xong.'],0],
+    ['Câu nào phù hợp với chủ điểm “'+theme+'”?',['Em cố gắng làm việc tốt mỗi ngày.','Một con tàu vũ trụ bay xa.','Máy móc trong nhà xưởng.','Bản đồ thế giới rất lớn.'],0],
+    ['Muốn kể việc đã làm sau giờ học, câu mở đầu nào tự nhiên?',['Sau giờ học, em cùng mẹ tưới cây.','Tưới cây sau em học.','Cây tưới em sau.','Mẹ em cây.'],0],
+    ['Câu nào có lời kể và cảm nghĩ?',['Em tự gấp quần áo và thấy rất vui.','Quần áo ở trong tủ.','Em có áo mới.','Tủ màu nâu.'],0],
+    ['Câu nào dùng từ chỉ hoạt động chính xác?',['Bạn Nam đá bóng ngoài sân.','Bạn Nam xanh ngoài sân.','Bạn Nam chiếc bóng.','Bạn Nam rất sân.'],0]
+   ],q=qs[i%qs.length];
+   return mk('g'+t+l+'_'+i,'lit',t,l,q[0],q[1],q[2],'Chọn câu đúng ngữ pháp và đúng tình huống.','Đáp án A diễn đạt rõ và đúng.');
+ }
+ var adv=[
+  ['Đoạn 3–4 câu tốt nên có gì?',['Một ý chính, vài chi tiết và cảm nghĩ','Lặp một câu nhiều lần','Chỉ liệt kê từ','Không cần dấu câu'],0],
+  ['Khi kể một việc em đã làm, thứ tự nào dễ hiểu nhất?',['Thời gian/nơi chốn → việc làm → kết quả/cảm nghĩ','Cảm nghĩ → bỏ việc làm','Chỉ nêu tên người','Viết các câu không liên quan'],0],
+  ['Đọc một đoạn ngắn, muốn tìm ý chính em nên làm gì?',['Xem các câu cùng nói nhiều nhất về điều gì','Chỉ đọc câu cuối','Đếm số chữ','Tìm từ dài nhất'],0],
+  ['Nếu hai câu cùng nói một việc, cách viết tốt hơn là:',['Gom ý và tránh lặp từ không cần thiết','Chép lại nguyên hai câu','Thêm nhiều từ không liên quan','Bỏ hết nội dung'],0],
+  ['Câu nào thể hiện cách ứng xử đẹp?',['Thấy bạn ngã, em đỡ bạn dậy.','Thấy bạn ngã, em bỏ đi.','Em giấu đồ của bạn.','Em cười khi bạn buồn.'],0],
+  ['Đặt tiêu đề cho đoạn kể về việc giữ lớp sạch, tiêu đề nào hợp nhất?',['Giữ lớp học sạch đẹp','Một ngày mưa','Chiếc xe mới','Con mèo nhỏ'],0],
+  ['Muốn đoạn văn mạch lạc, các câu cần:',['Cùng hướng vào một nội dung và sắp xếp hợp lí','Mỗi câu nói một chuyện khác nhau','Không cần liên kết','Chỉ dùng câu rất dài'],0],
+  ['Sau khi viết xong đoạn văn, việc nên làm là:',['Đọc lại, sửa lỗi và kiểm tra dấu câu','Nộp ngay không đọc','Xóa hết dấu câu','Viết thêm câu bất kì'],0]
+ ],q=adv[i%adv.length];
+ return mk('g'+t+l+'_'+i,'lit',t,l,q[0],q[1],q[2],'Đây là bước vận dụng kĩ năng đọc – viết.',q[1][q[2]]+' là lựa chọn phù hợp.');
 }
 
 var engData={
@@ -274,33 +317,56 @@ r1:'Review 1',r2:'Review 2',r3:'Review 3',r4:'Review 4'
 };
 function genEng(t,l,i){
  var title=engData[t]||'Review';
- if(t==='e1'){
-   var qs=[
-    ['Which word begins with P/p?',['pizza','kite','bike','kitten'],0,'Unit 1 practises P/p.','pizza begins with /p/.'],
-    ['Complete: The pizza is ___.',['yummy','kite','bike','green'],0,'Use the Unit 1 sentence pattern.','The pizza is yummy.']
-   ],z=qs[i%2]; return mk('g'+t+l+'_'+i,'eng',t,l,(l>=3?'Challenge: ':'')+z[0],z[1],z[2],z[3],z[4]);
- }
- if(t==='e2'){
-   var qs=[
-    ['Which word belongs to “In the backyard”?',['kite','pizza','pasta','popcorn'],0,'Think of Unit 2 words.','kite belongs to Unit 2.'],
-    ['Complete: Is she flying a kite? – Yes, she ___.',['is','are','am','do'],0,'Use the short answer with “she”.','Yes, she is.']
-   ],z=qs[i%2]; return mk('g'+t+l+'_'+i,'eng',t,l,(l>=3?'Challenge: ':'')+z[0],z[1],z[2],z[3],z[4]);
- }
- if(t[0]==='f'||t[0]==='r'){
-   return mk('g'+t+l+'_'+i,'eng',t,l,'Review task: Which instruction means “chọn đáp án đúng”?',['Choose the correct answer.','Stand up.','Open the door.','Good night.'],0,'This is a review of classroom English.','“Choose the correct answer.” means chọn đáp án đúng.');
- }
- var contextWords={
-  e3:['sea','sand','sail'],e4:['river','road','rainbow'],e5:['classroom','desk','book'],e6:['farm','cow','hen'],
-  e7:['kitchen','cup','food'],e8:['village','road','house'],e9:['shop','food','bag'],e10:['zoo','animal','monkey'],
-  e11:['playground','ball','slide'],e12:['café','drink','cake'],e13:['eleven','thirteen','fifteen'],e14:['brother','sister','grandmother'],
-  e15:['shirt','dress','clothes'],e16:['tent','camp','campsite']
+ var wordsMap={
+  e1:[['pizza','bánh pizza'],['pasta','mì Ý'],['popcorn','bỏng ngô'],['party','bữa tiệc']],
+  e2:[['kite','diều'],['bike','xe đạp'],['kitten','mèo con'],['backyard','sân sau']],
+  e3:[['sea','biển'],['sand','cát'],['sail','cánh buồm'],['sun','mặt trời']],
+  e4:[['river','sông'],['road','con đường'],['rabbit','con thỏ'],['rainbow','cầu vồng']],
+  e5:[['classroom','lớp học'],['desk','bàn học'],['book','sách'],['pen','bút']],
+  e6:[['farm','nông trại'],['cow','con bò'],['hen','gà mái'],['goat','con dê']],
+  e7:[['kitchen','nhà bếp'],['cup','cốc'],['cake','bánh'],['cook','nấu ăn']],
+  e8:[['village','làng'],['road','con đường'],['house','ngôi nhà'],['field','cánh đồng']],
+  e9:[['shop','cửa hàng'],['rice','gạo'],['milk','sữa'],['bag','túi']],
+  e10:[['zoo','sở thú'],['animal','động vật'],['monkey','con khỉ'],['tiger','con hổ']],
+  e11:[['playground','sân chơi'],['ball','quả bóng'],['slide','cầu trượt'],['swing','xích đu']],
+  e12:[['cafe','quán cà phê'],['drink','đồ uống'],['cake','bánh'],['juice','nước ép']],
+  e13:[['eleven','mười một'],['twelve','mười hai'],['thirteen','mười ba'],['fourteen','mười bốn']],
+  e14:[['brother','anh/em trai'],['sister','chị/em gái'],['mother','mẹ'],['father','bố']],
+  e15:[['shirt','áo sơ mi'],['dress','váy'],['skirt','chân váy'],['shoes','giày']],
+  e16:[['tent','lều'],['camp','cắm trại'],['tree','cây'],['lake','hồ']]
  };
- var words=contextWords[t]||['book','pen','school'],good=words[i%words.length];
- if(l===1)return mk('g'+t+l+'_'+i,'eng',t,l,'Which word fits the topic “'+title+'”?',[good,'airplane','hospital','computer'],0,'Think about the place/topic name.','“'+good+'” fits the topic.');
- if(l===2)return mk('g'+t+l+'_'+i,'eng',t,l,'Choose the correctly written word for “'+title+'”.',[good,good+'x','x'+good,good+'oo'],0,'Look carefully at the spelling.','The correct word is “'+good+'”.');
- if(l===3)return mk('g'+t+l+'_'+i,'eng',t,l,'Choose a simple sentence that can match “'+title+'”.',['I can see a '+good+'.','Yesterday had been complicated.','The equation is quadratic.','None'],0,'Grade 2 uses short, familiar sentence patterns.','“I can see a '+good+'.” is suitable.');
- return mk('g'+t+l+'_'+i,'eng',t,l,'Challenge: Which word is most closely connected with “'+title+'”?',[good,'rocket','factory','violin'],0,'Use the topic context.','“'+good+'” is the closest match.');
+ var review={f1:['e1','e2'],r1:['e1','e2','e3','e4'],f2:['e5','e6'],r2:['e5','e6','e7','e8'],f3:['e9','e10'],r3:['e9','e10','e11','e12'],f4:['e13','e14'],r4:['e13','e14','e15','e16']};
+ var base=t;
+ if(review[t])base=review[t][i%review[t].length];
+ var ws=wordsMap[base]||[['book','sách'],['pen','bút'],['school','trường học'],['friend','bạn']],z=ws[i%ws.length],other=ws[(i+1)%ws.length],kind=i%4;
+ if(l===1){
+   if(kind===0)return mk('g'+t+l+'_'+i,'eng',t,l,'Which word fits “'+engData[base]+'”?',[z[0],'hospital','rocket','factory'],0,'Think about the topic.','“'+z[0]+'” fits the topic.');
+   if(kind===1)return mk('g'+t+l+'_'+i,'eng',t,l,'Choose the English word for “'+z[1]+'”.',[z[0],other[0],'school','teacher'],0,'Match the meaning.','“'+z[1]+'” = “'+z[0]+'”.');
+   if(kind===2)return mk('g'+t+l+'_'+i,'eng',t,l,'Which word begins with “'+z[0].charAt(0).toUpperCase()+'”?',[z[0],other[0],'apple','orange'],0,'Look at the first letter.','The answer is “'+z[0]+'”.');
+   return mk('g'+t+l+'_'+i,'eng',t,l,'Choose the correctly spelled word.',[z[0],z[0]+'x','x'+z[0],z[0].slice(1)],0,'Look carefully at the spelling.','Correct spelling: '+z[0]+'.');
+ }
+ if(l===2){
+   if(kind===0)return mk('g'+t+l+'_'+i,'eng',t,l,'Complete: I can see a ___.',[z[0],other[0]+'s','very','is'],0,'Choose a noun.','I can see a '+z[0]+'.');
+   if(kind===1)return mk('g'+t+l+'_'+i,'eng',t,l,'Which pair matches correctly?',[z[0]+' – '+z[1],z[0]+' – '+other[1],other[0]+' – '+z[1],'None'],0,'Match word and meaning.','Correct pair: '+z[0]+' – '+z[1]+'.');
+   if(kind===2)return mk('g'+t+l+'_'+i,'eng',t,l,'Which word is different from the others?',[z[0],'car','plane','train'],0,'Three words are transport words.','“'+z[0]+'” is the different word here.');
+   return mk('g'+t+l+'_'+i,'eng',t,l,'Choose the correct short sentence.',['This is a '+z[0]+'.','This a '+z[0]+'.','Is this '+z[0]+' a.','This are '+z[0]+'.'],0,'Use “This is a/an …”.','“This is a '+z[0]+'.” is correct.');
+ }
+ if(l===3){
+   var qs=[
+    ['Choose the best answer: “What can you see?”',['I can see a '+z[0]+'.','I am seven.','Good night.','My name is Nam.'],0],
+    ['Choose the correct question.',['Is this a '+z[0]+'?','This is a '+z[0]+'?','A '+z[0]+' this is?','Is a this '+z[0]+'?'],0],
+    ['Which sentence has the correct word order?',['I like the '+z[0]+'.','Like I '+z[0]+' the.','The like '+z[0]+' I.','I the '+z[0]+' like.'],0],
+    ['Choose a sentence that matches the topic “'+engData[base]+'”.',['I can see a '+z[0]+'.','The spaceship is on Mars.','The doctor is in hospital.','The train is very long.'],0]
+   ],q=qs[kind];return mk('g'+t+l+'_'+i,'eng',t,l,q[0],q[1],q[2],'Read the whole sentence.',q[1][q[2]]+' is correct.');
+ }
+ var adv=[
+  ['Which sentence is correct?',['This is my '+z[0]+'.','This my is '+z[0]+'.','My '+z[0]+' this.','Is my this '+z[0]+'.'],0],
+  ['If “'+z[0]+'” means “'+z[1]+'”, which pair is also from the same topic?',[other[0]+' – '+other[1],'teacher – bác sĩ','car – máy bay','sun – quyển vở'],0],
+  ['Choose the best response to “Is this a '+z[0]+'?”',['Yes, it is.','Yes, I am.','No, she does.','It are.'],0],
+  ['Which mini-dialogue is correct?',['What is this? – It is a '+z[0]+'.','What this? – A '+z[0]+' is.','How old? – '+z[0]+'.','Goodbye? – A '+z[0]+'.'],0]
+ ],q=adv[kind];return mk('g'+t+l+'_'+i,'eng',t,l,q[0],q[1],q[2],'Use familiar Grade 2 sentence patterns.',q[1][q[2]]+' is the best answer.');
 }
+
 function genOne(s,t,l,i){if(s==='math')return genMath(t,l,i);if(s==='lit')return genLit(t,l,i);return genEng(t,l,i)}
 function questionPool(s,t,l){
  var base=Q.filter(function(x){return x.s===s&&x.t===t&&x.l===l}),out=base.slice(),i=0,seen={};
