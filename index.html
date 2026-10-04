@@ -453,30 +453,63 @@ function allocateCounts(total,weights){
  while(left>0){var best=0,bv=-1;for(var i=0;i<raw.length;i++){var v=raw[i]-a[i];if(v>bv){bv=v;best=i}}a[best]++;raw[best]=a[best];left--}
  return a
 }
+function testCoreText(q){
+ var s=String(q.q||'').toLowerCase();
+ s=s.replace(/^(nhận biết|thông hiểu|vận dụng|nâng cao|practice|apply the rule|challenge|suy luận từ văn bản)\s*:\s*/i,'');
+ s=s.replace(/^trong một tình huống đọc hiểu,\s*/i,'');
+ return s.replace(/\s+/g,' ').trim()
+}
+function testFamily(q){
+ var s=testCoreText(q);
+ if(q.s==='math')s=s.replace(/\d+[.,]?\d*/g,'#').replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]+/g,'^#');
+ if(q.s==='eng')s=s.replace(/“[^”]+”/g,'“#”').replace(/"[^"]+"/g,'"#"');
+ return q.s+'|'+q.t+'|'+s
+}
+function testPick(out,pool,n,salt,guard,recent){
+ var sorted=pool.slice().sort(function(a,b){return hashStr(a.id+salt)-hashStr(b.id+salt)});
+ function pass(relaxRecent,relaxFamily){
+   for(var i=0;i<sorted.length&&n>0;i++){
+     var q=sorted[i],core=testCoreText(q),fam=testFamily(q);
+     if(guard.ids[q.id]||guard.core[core])continue;
+     if(!relaxRecent&&recent[q.id])continue;
+     if(!relaxFamily&&(guard.family[fam]||0)>=2)continue;
+     out.push(q);guard.ids[q.id]=1;guard.core[core]=1;guard.family[fam]=(guard.family[fam]||0)+1;n--
+   }
+ }
+ pass(false,false);if(n>0)pass(true,false);if(n>0)pass(true,true);
+ return n
+}
 function buildTest(type){
- var cfg=testConfig[type],weeks=testScopeWeeks(type),period=testPeriodKey(type),student=document.getElementById('student').value;
- var subjects=['math','lit','eng'],perSub=Math.floor(cfg.count/3),remainder=cfg.count%3,out=[],used={};
- subjects.forEach(function(s,si){
-   var need=perSub+(si<remainder?1:0),lvCounts=allocateCounts(need,cfg.weights),topics=topicsFromWeeks(s,weeks);
-   if(!topics.length)topics=curriculum[s].topics.map(function(t){return t[0]});
+ var cfg=testConfig[type],weeks=testScopeWeeks(type),period=testPeriodKey(type),student=document.getElementById('student').value,st=state();
+ var same=(st.tests||[]).filter(function(r){return r.type===type&&r.period===period}),attempt=same.length+1;
+ var recent={},recentTests=(st.tests||[]).filter(function(r){return r.type===type}).slice(0,3);
+ recentTests.forEach(function(r){(r.questionIds||[]).forEach(function(id){recent[id]=1})});
+ var subjects=['math','lit','eng'],perSub=Math.floor(cfg.count/3),remainder=cfg.count%3,out=[],guard={ids:{},core:{},family:{}};
+ subjects.forEach(function(sub,si){
+   var need=perSub+(si<remainder?1:0),lvCounts=allocateCounts(need,cfg.weights),topics=topicsFromWeeks(sub,weeks);
+   if(type==='daily'){
+     var pw=planFor(Math.max(1,currentWeek()-1));if(pw&&pw[sub])topics=unique(topics.concat(pw[sub]))
+   }
+   if(!topics.length)topics=curriculum[sub].topics.map(function(t){return t[0]});
    for(var l=1;l<=4;l++){
-     var pool=poolsForTopics(s,topics,[l]);
-     if(!pool.length)pool=allPoolsForSubject(s).filter(function(q){return q.l===l});
-     addPicked(out,pool,lvCounts[l-1],type+period+student+s+'L'+l,used)
+     var pool=poolsForTopics(sub,topics,[l]);
+     if(!pool.length)pool=allPoolsForSubject(sub).filter(function(q){return q.l===l});
+     testPick(out,pool,lvCounts[l-1],type+period+student+'A'+attempt+sub+'L'+l,guard,recent)
    }
  });
  if(out.length<cfg.count){
-   var fill=[];subjects.forEach(function(s){fill=fill.concat(allPoolsForSubject(s))});
-   addPicked(out,fill,cfg.count-out.length,type+period+student+'fill',used)
+   var fill=[];subjects.forEach(function(sub){fill=fill.concat(allPoolsForSubject(sub))});
+   testPick(out,fill,cfg.count-out.length,type+period+student+'A'+attempt+'fill',guard,recent)
  }
- return {items:out.slice(0,cfg.count),weeks:weeks,scope:scopeLabel(type,weeks)}
+ out=out.slice().sort(function(a,b){return hashStr(a.id+period+'A'+attempt+'mix')-hashStr(b.id+period+'A'+attempt+'mix')});
+ return {items:out.slice(0,cfg.count),weeks:weeks,scope:scopeLabel(type,weeks),period:period,attempt:attempt}
 }
 function startTest(type){
  var built=buildTest(type),cfg=testConfig[type];
- activeTest={type:type,label:cfg.label,scope:built.scope,startedAt:Date.now(),minutes:cfg.minutes};
+ activeTest={type:type,label:cfg.label,scope:built.scope,period:built.period,attempt:built.attempt,startedAt:Date.now(),minutes:cfg.minutes};
  testItems=built.items;testIndex=0;testAnswers={};testDeadline=Date.now()+cfg.minutes*60000;
  go('testQuiz');document.getElementById('testTitle').textContent='Kiểm tra '+cfg.label.toLowerCase();
- document.getElementById('testScope').textContent=built.scope+' • '+cfg.count+' câu • '+cfg.minutes+' phút';
+ document.getElementById('testScope').textContent=built.scope+' • Đề số '+built.attempt+' • '+cfg.count+' câu • '+cfg.minutes+' phút';
  if(testTimerId)clearInterval(testTimerId);testTimerId=setInterval(updateTestTimer,1000);updateTestTimer();renderTestQuestion()
 }
 function renderTestQuestion(){
@@ -505,7 +538,7 @@ function finishTest(autoSubmit){
  var correct=0,by={math:{c:0,n:0},lit:{c:0,n:0},eng:{c:0,n:0}};
  testItems.forEach(function(q){by[q.s].n++;if(testAnswers[q.id]===q.c){correct++;by[q.s].c++}});
  var score=Math.round(correct/testItems.length*1000)/100,rec={
-   type:activeTest.type,label:activeTest.label,date:new Date().toISOString(),score:score,correct:correct,total:testItems.length,
+   type:activeTest.type,label:activeTest.label,date:new Date().toISOString(),period:activeTest.period,attempt:activeTest.attempt,questionIds:testItems.map(function(q){return q.id}),score:score,correct:correct,total:testItems.length,
    grade:classify(score),scope:activeTest.scope,
    bySubject:{
      math:Math.round(by.math.c/Math.max(1,by.math.n)*100),
