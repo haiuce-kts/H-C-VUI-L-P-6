@@ -1,1 +1,1 @@
-# H-C-VUI-L-P-6
+# HOC VUI LOP 6
