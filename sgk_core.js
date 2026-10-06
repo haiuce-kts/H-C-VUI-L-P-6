@@ -138,7 +138,7 @@ function find(s,id){return flat(s).find(function(x){return x.id===id})}
 function studentKey(){return 'sgk_'+G+'_'+document.getElementById('student').value}
 function pg(){var st=state();st.sgkProgress=st.sgkProgress||{};return st}
 function getP(s){var st=pg();return st.sgkProgress[s]||''}
-function saveP(s,id){var st=pg();st.sgkProgress[s]=id;save(st);renderExact(s);toast('Đã lưu đúng bài SGK của '+N[s]+'.')}
+function saveP(s,id){var st=pg();st.sgkProgress[s]=id;save(st);renderExact(s);decorateExactHome();toast('Đã lưu đúng bài SGK của '+N[s]+'.')}
 function suggestedIndex(s){
  var w=Math.max(1,currentWeek()),a=flat(s);
  if(G===2&&s==='math'){var m=[2,4,6,7,8,10,12,14,16,18,20,22,24,26,28,30,32,36,38,40,42,45,47,49,51,54,56,58,60,62,64,66,68,72,75];return Math.min(a.length-1,(m[Math.min(34,w-1)]||75)-1)}
