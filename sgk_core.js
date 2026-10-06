@@ -341,11 +341,25 @@ function overrideTests(){
   items=out.slice(0,total);qi=0;ctx={s:'daily'};before='home';go('quiz');renderQuestion()
  }
 }
+function decorateExactHome(){
+ var box=document.getElementById('todayPlan');if(box){
+  var cards=box.querySelectorAll('.focuscard'),subs=['math','lit','eng'];
+  subs.forEach(function(s,k){if(!cards[k])return;var les=find(s,currentId(s)),saved=getP(s);cards[k].innerHTML='<h3>'+({math:'🔢 Toán',lit:G===2?'📖 Tiếng Việt':'📖 Ngữ văn',eng:'🇬🇧 Tiếng Anh'}[s])+'</h3><div><b>'+esc(les.title)+'</b></div><div class="mini" style="margin-top:7px">'+(saved?'✓ Theo tiến độ thực tế đã lưu':'Gợi ý theo tuần – hãy xác nhận trong môn học')+'</div>'})
+ }
+ var bd=document.getElementById('todayBreakdown');if(bd)bd.textContent=(G===2?'18':'24')+' câu • chỉ lấy trong các bài SGK đã học • không lấy kiến thức tương lai';
+ var metas=[
+  ['.testcard.daily .testmeta','Bài hiện tại + bài ngay trước<br>Chỉ kiểm tra nội dung SGK đã học'],
+  ['.testcard.weekly .testmeta','Các bài SGK gần nhất đã học<br>Không lấy bài chưa học'],
+  ['.testcard.monthly .testmeta','Tổng hợp các bài đã học gần đây<br>Phạm vi khóa theo tiến độ thực tế'],
+  ['.testcard.semester .testmeta','Từ đầu học kỳ đến đúng bài đã học<br>Không lấy kiến thức tương lai']
+ ];
+ metas.forEach(function(x){var e=document.querySelector(x[0]);if(e)e.innerHTML=x[1]})
+}
 function install(){
  var old=window.renderSubject;window.renderSubject=function(s){old(s);renderExact(s)};
  ['math','lit','eng'].forEach(function(s){window.renderSubject(s)});
  overrideTests();
- var bd=document.getElementById('todayBreakdown');if(bd)bd.textContent=(G===2?'18':'24')+' câu • chỉ lấy trong các bài SGK đã học • không lấy kiến thức tương lai';
+ decorateExactHome();
 }
 var css=document.createElement('style');css.textContent='.sgk-exact{margin:0 0 18px;border-top:5px solid #2563eb}.sgk-head{display:flex;justify-content:space-between;gap:14px}.sgk-head h2{margin:7px 0}.sgk-head p{margin:0;color:var(--muted)}.sgk-badge{font-size:12px;font-weight:900;color:#1d4ed8}.sgk-select{display:flex;gap:10px;margin:14px 0}.sgk-select select{flex:1;min-width:220px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;font:inherit}.sgk-now{display:grid;grid-template-columns:1fr 1fr;gap:10px}.sgk-now>div{background:#f8fafc;border:1px solid var(--line);padding:12px;border-radius:12px;display:flex;flex-direction:column;gap:5px}.sgk-now small{color:var(--muted);font-weight:800}.sgk-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.sgk-levels{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.sgk-levels button{border:1px solid #cbd5e1;background:#fff;padding:10px;border-radius:11px;font-weight:800;cursor:pointer}.sgk-catalog{margin-top:14px}.sgk-catalog>summary,.sgk-group>summary{cursor:pointer;font-weight:800;padding:9px 0}.sgk-group{border-top:1px solid #e5e7eb}.sgk-group summary span{float:right;color:var(--muted);font-size:12px}.sgk-row{display:flex;gap:8px;padding:8px;border-radius:9px}.sgk-row.now{background:#eff6ff}.sgk-row small{display:block;color:var(--muted);margin-top:3px}@media(max-width:700px){.sgk-head{flex-direction:column}.sgk-select{flex-direction:column}.sgk-now{grid-template-columns:1fr}.sgk-levels{grid-template-columns:1fr 1fr}}';document.head.appendChild(css);
 window.addEventListener('load',install);
