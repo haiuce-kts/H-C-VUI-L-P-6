@@ -368,10 +368,41 @@ function genEng(t,l,i){
 }
 
 function genOne(s,t,l,i){if(s==='math')return genMath(t,l,i);if(s==='lit')return genLit(t,l,i);return genEng(t,l,i)}
+
+function advancedTestBank(s,t,l){
+ var a=[];
+ function q(id,text,opts,ci,ex,d){a.push({id:'adv2_'+id,s:s,t:t,l:l,q:text,a:opts,c:ci,h:'',e:ex,d:d||3})}
+ if(s==='math'){
+  if(t==='m2'){
+   if(l>=2)q('m2a_'+l,'Lan có 8 viên bi, được cho thêm một số viên để có 15 viên. Lan được cho thêm bao nhiêu viên?',['5','6','7','8'],2,'15-8=7.',2);
+   if(l>=3)q('m2b_'+l,'Mai có 9 bông hoa, An có nhiều hơn Mai 5 bông. Cả hai bạn có tất cả bao nhiêu bông hoa?',['14','18','23','25'],2,'An có 14; cả hai có 9+14=23.',3);
+   if(l>=3)q('m2c_'+l,'Tìm số thích hợp: 7 + ? - 3 = 12.',['6','7','8','9'],2,'7+x-3=12 ⇒ x=8.',3);
+   if(l>=4)q('m2d_'+l,'Có 18 quả bóng. Cho em 7 quả, sau đó được tặng thêm 5 quả. Còn/tất cả bao nhiêu quả?',['14','16','20','30'],1,'18-7+5=16.',3);
+   if(l>=4)q('m2e_'+l,'Hai số có tổng bằng 17. Số lớn hơn số bé 3 đơn vị. Hai số là:',['7 và 10','6 và 11','8 và 9','5 và 12'],0,'7+10=17 và 10-7=3.',3);
+  }
+  if(t==='m1'&&l>=3)q('m1a_'+l,'Số có 6 chục, lớn hơn 64 nhưng bé hơn 67 là:',['64','65','66','65 và 66'],3,'Cả 65 và 66 đều thỏa mãn.',3);
+  if(t==='m3'&&l>=3)q('m3a_'+l,'Can A có 8 lít, can B ít hơn A 3 lít. Cả hai can có:',['5 l','11 l','13 l','16 l'],2,'Can B có 5 l; tổng 13 l.',3);
+  if(t==='m4'&&l>=3)q('m4a_'+l,'Tìm số còn thiếu: 46 + ? = 73.',['17','27','29','37'],1,'73-46=27.',3);
+  if(t==='m8'&&l>=3)q('m8a_'+l,'Có 5 túi, mỗi túi 2 quả cam. Ăn 3 quả. Còn lại bao nhiêu quả?',['7','10','13','2'],0,'5×2=10; 10-3=7.',3);
+  if(t==='m10'&&l>=3)q('m10a_'+l,'Số nào thỏa mãn: lớn hơn 398, bé hơn 405 và có chữ số hàng đơn vị là 2?',['399','402','412','392'],1,'402 nằm trong khoảng và tận cùng 2.',3);
+ }
+ if(s==='lit'){
+  if(l>=2)q('tv_a_'+t+'_'+l,'Đọc: “Lan thấy bạn làm rơi hộp bút. Em nhặt lên và gọi bạn quay lại.” Vì sao có thể nói Lan biết quan tâm đến bạn?',['Vì Lan nhặt và trả lại đồ cho bạn','Vì Lan có hộp bút','Vì Lan chạy nhanh','Vì bạn quay lại'],0,'Hành động nhặt và trả đồ thể hiện sự quan tâm.',2);
+  if(l>=3)q('tv_b_'+t+'_'+l,'Đọc: “Trời sắp mưa. Nam thấy mẹ đang phơi quần áo nên chạy ra giúp mẹ cất vào.” Điều gì có thể xảy ra nếu Nam không giúp?',['Quần áo có thể bị ướt','Quần áo tự khô ngay','Trời chắc chắn nắng','Mẹ đi ngủ'],0,'Cần suy luận từ tình huống trời sắp mưa.',3);
+  if(l>=4)q('tv_c_'+t+'_'+l,'Câu nào vừa kể việc làm vừa cho thấy cảm xúc của người viết?',['Em tự gấp chăn và thấy rất vui vì đã giúp mẹ.','Chiếc chăn màu xanh.','Mẹ đang ở nhà.','Buổi sáng có nắng.'],0,'Câu A có hành động và cảm xúc.',3);
+ }
+ if(s==='eng'){
+  if(l>=2)q('e_a_'+t+'_'+l,'Choose the best mini-dialogue.',['What is this? – It is a kite.','What this? – Kite it.','Is this? – A kite yes.','What are? – Kite.'],0,'The first dialogue has correct word order.',2);
+  if(l>=3)q('e_b_'+t+'_'+l,'Choose the sentence with correct word order.',['I can see a red kite.','I red can kite see a.','A kite I can red see.','Can I a see kite red.'],0,'English word order is subject + verb + object/complement.',3);
+  if(l>=4)q('e_c_'+t+'_'+l,'Read: “Mai has a kite. The kite is blue. She is flying it in the backyard.” What is Mai doing?',['She is flying a kite.','She is riding a bike.','She is eating pizza.','She is reading.'],0,'The answer requires reading the short context.',3);
+ }
+ return a
+}
 function questionPool(s,t,l){
- var base=Q.filter(function(x){return x.s===s&&x.t===t&&x.l===l}),out=base.slice(),i=0,seen={};
+ var base=Q.filter(function(x){return x.s===s&&x.t===t&&x.l===l}),out=base.concat(advancedTestBank(s,t,l)),i=0,seen={};
  out.forEach(function(x){seen[x.id]=1});
  while(out.length<MIN_BANK&&i<40){var g=genOne(s,t,l,i++);if(g&&!seen[g.id]){seen[g.id]=1;out.push(g)}}
+ out.forEach(function(q,ix){if(!q.d)q.d=1+(ix%3)});
  return out;
 }
 function topicPool(s,t,maxLevel){var out=[];for(var l=1;l<=maxLevel;l++)out=out.concat(questionPool(s,t,l));return out}
@@ -467,10 +498,10 @@ function checkAnswer(){var q=items[qi],btn=document.getElementById('checkBtn');i
 function exitQuiz(){go(before)}
 
 var testConfig={
- daily:{label:'Hàng ngày',count:10,minutes:12,weights:[.45,.35,.15,.05]},
- weekly:{label:'Hàng tuần',count:20,minutes:25,weights:[.35,.35,.20,.10]},
- monthly:{label:'Hàng tháng',count:30,minutes:40,weights:[.30,.35,.25,.10]},
- semester:{label:'Học kỳ',count:40,minutes:55,weights:[.25,.35,.25,.15]}
+ daily:{label:'Hàng ngày',count:10,minutes:15,weights:[.25,.35,.25,.15]},
+ weekly:{label:'Hàng tuần',count:20,minutes:30,weights:[.20,.30,.30,.20]},
+ monthly:{label:'Hàng tháng',count:30,minutes:45,weights:[.15,.30,.30,.25]},
+ semester:{label:'Học kỳ',count:40,minutes:60,weights:[.15,.25,.35,.25]}
 };
 var activeTest=null,testItems=[],testIndex=0,testAnswers={},testDeadline=0,testTimerId=null;
 
@@ -528,18 +559,21 @@ function testFamily(q){
  return q.s+'|'+q.t+'|'+s
 }
 function testPick(out,pool,n,salt,guard,recent){
- var sorted=pool.slice().sort(function(a,b){return hashStr(a.id+salt)-hashStr(b.id+salt)});
- function pass(relaxRecent,relaxFamily){
-   for(var i=0;i<sorted.length&&n>0;i++){
-     var q=sorted[i],core=testCoreText(q),fam=testFamily(q);
+ var tiers=[1,2,3],want=[Math.ceil(n*.30),Math.ceil(n*.35),0];want[2]=Math.max(0,n-want[0]-want[1]);
+ function takeTier(tier,count,relaxRecent){
+   var cand=pool.filter(function(q){return (q.d||1)===tier}).slice().sort(function(a,b){return hashStr(a.id+salt+tier)-hashStr(b.id+salt+tier)});
+   for(var i=0;i<cand.length&&count>0;i++){
+     var q=cand[i],core=testCoreText(q),fam=testFamily(q);
      if(guard.ids[q.id]||guard.core[core])continue;
      if(!relaxRecent&&recent[q.id])continue;
-     if(!relaxFamily&&(guard.family[fam]||0)>=2)continue;
-     out.push(q);guard.ids[q.id]=1;guard.core[core]=1;guard.family[fam]=(guard.family[fam]||0)+1;n--
+     if((guard.family[fam]||0)>=2)continue;
+     out.push(q);guard.ids[q.id]=1;guard.core[core]=1;guard.family[fam]=(guard.family[fam]||0)+1;count--
    }
+   return count
  }
- pass(false,false);if(n>0)pass(true,false);if(n>0)pass(true,true);
- return n
+ var left=0;tiers.forEach(function(t,i){left+=takeTier(t,want[i],false)});
+ if(left>0)tiers.slice().reverse().forEach(function(t){if(left>0)left=takeTier(t,left,true)});
+ return left
 }
 function buildTest(type){
  var cfg=testConfig[type],weeks=testScopeWeeks(type),period=testPeriodKey(type),student=document.getElementById('student').value,st=state();
@@ -563,7 +597,7 @@ function buildTest(type){
    var fill=[];subjects.forEach(function(sub){fill=fill.concat(allPoolsForSubject(sub))});
    testPick(out,fill,cfg.count-out.length,type+period+student+'A'+attempt+'fill',guard,recent)
  }
- out=out.slice().sort(function(a,b){return hashStr(a.id+period+'A'+attempt+'mix')-hashStr(b.id+period+'A'+attempt+'mix')});
+ out=out.slice().sort(function(a,b){var da=(a.l*10+(a.d||1)),db=(b.l*10+(b.d||1));if(da!==db)return da-db;return hashStr(a.id+period+'A'+attempt)-hashStr(b.id+period+'A'+attempt)});
  return {items:out.slice(0,cfg.count),weeks:weeks,scope:scopeLabel(type,weeks),period:period,attempt:attempt}
 }
 function startTest(type){
@@ -577,7 +611,7 @@ function startTest(type){
 function renderTestQuestion(){
  if(!testItems.length)return;
  var q=testItems[testIndex];document.getElementById('testQCount').textContent='Câu '+(testIndex+1)+'/'+testItems.length;
- document.getElementById('testQLevel').textContent='Mức '+q.l;
+ document.getElementById('testQLevel').textContent='Mức '+q.l+' · '+(['','A','B','C'][q.d||1]);
  document.getElementById('testQbar').style.width=((testIndex+1)/testItems.length*100)+'%';
  document.getElementById('testQText').textContent=q.q;
  var an=document.getElementById('testAnswers');an.innerHTML='';
