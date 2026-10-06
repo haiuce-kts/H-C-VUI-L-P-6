@@ -375,10 +375,72 @@ function genEng(t,l,i){
 }
 
 function genOne(s,t,l,i){if(s==='math')return genMath(t,l,i);if(s==='lit')return genLit(t,l,i);return genEng(t,l,i)}
+
+function advancedTestBank(s,t,l){
+ var a=[];
+ function q(id,text,opts,ci,ex,d){a.push({id:'adv6_'+id,s:s,t:t,l:l,q:text,a:opts,c:ci,h:'',e:ex,d:d||3})}
+ if(s==='math'){
+  if(t==='m2'){
+   if(l>=2)q('m2a_'+l,'Không tính trực tiếp, chọn biểu thức bằng 2^12.',['2^5 × 2^7','2^6 + 2^6','4^6 + 2','2^24 : 2'],0,'2^5 × 2^7 = 2^12.',2);
+   if(l>=3)q('m2b_'+l,'Tìm x: 4^x × 2^3 = 2^11.',['2','3','4','5'],2,'4^x = 2^(2x), nên 2x+3=11 ⇒ x=4.',3);
+   if(l>=3)q('m2c_'+l,'Một bạn tính 3^4 × 3^2 = 9^6. Bạn sai ở đâu?',['Phải cộng số mũ: 3^6','Phải nhân số mũ: 3^8','Phải đổi thành 9^3','Không sai'],0,'Cùng cơ số khi nhân thì cộng số mũ.',3);
+   if(l>=4)q('m2d_'+l,'So sánh A=2^10+2^10 và B=2^11.',['A>B','A<B','A=B','Không đủ dữ kiện'],2,'A=2×2^10=2^11.',3);
+   if(l>=4)q('m2e_'+l,'Tìm số tự nhiên n biết 2^n < 100 < 2^(n+1).',['5','6','7','8'],1,'2^6=64 <100<128=2^7.',3);
+  }
+  if(t==='m3'){
+   if(l>=2)q('m3a_'+l,'Số 23a4 chia hết cho 3. Giá trị nào của a phù hợp?',['1','2','4','5'],0,'2+3+a+4=9+a phải chia hết cho 3; a=1 phù hợp.',2);
+   if(l>=3)q('m3b_'+l,'Một số chia hết cho 6 và 15. Số đó chắc chắn chia hết cho số nào?',['10','30','45','90'],1,'BCNN(6,15)=30.',3);
+   if(l>=3)q('m3c_'+l,'Tìm số nhỏ nhất có ba chữ số chia hết đồng thời cho 8 và 15.',['120','105','240','360'],0,'BCNN(8,15)=120, là số có ba chữ số nhỏ nhất phù hợp.',3);
+   if(l>=4)q('m3d_'+l,'Một lớp có thể xếp hàng 6, hàng 8 hoặc hàng 9 đều vừa đủ. Sĩ số nhỏ nhất lớn hơn 40 là:',['48','54','72','96'],2,'BCNN(6,8,9)=72.',3);
+   if(l>=4)q('m3e_'+l,'Có 84 bút đỏ và 126 bút xanh chia thành các phần quà giống hệt nhau, không thừa. Số phần quà nhiều nhất là:',['14','21','42','63'],2,'ƯCLN(84,126)=42.',3);
+  }
+  if(t==='m4'){
+   if(l>=3)q('m4a_'+l,'Tính nhanh: (-18)+35+(-12)+5.',['10','-10','30','-30'],0,'Ghép -18-12=-30 và 35+5=40, kết quả 10.',3);
+   if(l>=4)q('m4b_'+l,'Nhiệt độ lúc 6h là -4°C, trưa tăng 9°C, tối giảm 12°C. Nhiệt độ tối là:',['-7°C','-5°C','5°C','17°C'],0,'-4+9-12=-7.',3);
+  }
+  if(t==='m5'){
+   if(l>=3)q('m5a_'+l,'Tìm x: x/18 = 5/6.',['12','15','16','20'],1,'x=18×5/6=15.',3);
+   if(l>=4)q('m5b_'+l,'Một lớp có 2/5 số HS thích bóng đá, 1/3 thích cầu lông. Phần còn lại thích môn khác. Phần còn lại là:',['4/15','7/15','8/15','11/15'],0,'1-2/5-1/3=15/15-6/15-5/15=4/15.',3);
+  }
+ }
+ if(s==='lit'){
+  if(t==='v1'){
+   if(l>=3)q('v1a_'+l,'Nhận xét nào sâu nhất về sự thay đổi của Dế Mèn sau cái chết của Dế Choắt?',['Chỉ buồn vì mất bạn','Từ tự mãn chuyển sang ý thức trách nhiệm với hành động','Trở nên sợ mọi người','Không thay đổi'],1,'Điểm quan trọng là sự thức tỉnh về trách nhiệm.',3);
+   if(l>=4)q('v1b_'+l,'Nếu Dế Mèn chỉ xin lỗi nhưng không rút ra bài học, ý nghĩa truyện sẽ giảm chủ yếu ở phương diện nào?',['Tính giải trí','Quá trình trưởng thành của nhân vật','Miêu tả ngoại hình','Bối cảnh'],1,'Bài học đường đời nằm ở nhận thức và trưởng thành.',3);
+  }
+  if(t==='v2'){
+   if(l>=3)q('v2a_'+l,'Một bạn nói: “Không đánh ai thì không phải bắt nạt”. Cách phản biện hợp lí nhất là:',['Đúng hoàn toàn','Sai, bắt nạt còn có thể bằng lời nói, cô lập, chế giễu','Chỉ người lớn mới bắt nạt','Không cần quan tâm'],1,'Bắt nạt không chỉ là bạo lực thể chất.',3);
+   if(l>=4)q('v2b_'+l,'Thông điệp của “Bắt nạt” sẽ được vận dụng tốt nhất khi lớp có một bạn thường bị cô lập bằng lời trêu chọc. Hành động nào phù hợp nhất?',['Trêu nhẹ hơn','Im lặng','Chủ động kết nối bạn, dừng lời trêu và báo người lớn khi cần','Đăng lên mạng'],2,'Vận dụng thông điệp phải vừa bảo vệ vừa xây dựng môi trường an toàn.',3);
+  }
+  if(t==='v3'){
+   if(l>=3)q('v3a_'+l,'Khi tóm tắt một truyện, hai sự việc A gây ra B. Cách viết nào tốt nhất?',['Nêu B trước rồi bỏ A','Nêu A rồi B, thể hiện quan hệ nguyên nhân–kết quả','Chỉ nêu A','Chép nguyên văn cả đoạn'],1,'Giữ mạch logic là nguyên tắc quan trọng khi tóm tắt.',3);
+   if(l>=4)q('v3b_'+l,'Một bản tóm tắt đúng mọi chi tiết nhưng dài gần bằng văn bản gốc. Điểm yếu chính là:',['Sai chính tả','Không đạt yêu cầu cô đọng','Thiếu tên tác giả','Thiếu cảm xúc cá nhân'],1,'Tóm tắt phải cô đọng, không chỉ đúng.',3);
+  }
+  if(t==='v4'&&l>=3)q('v4a_'+l,'Chọn cách liên kết tốt nhất: “Nam học rất chăm. ___, kết quả của bạn tiến bộ rõ rệt.”',['Tuy nhiên','Vì vậy','Mặc dù','Hoặc'],1,'Vế sau là kết quả của vế trước.',3);
+ }
+ if(s==='eng'){
+  if(t==='e1'){
+   if(l>=3)q('e1a_'+l,'Choose the sentence with BOTH correct grammar and natural meaning.',['My school have 30 classrooms.','My school has 30 classrooms and a large library.','My school is have 30 classrooms.','My school having a library.'],1,'Singular subject “My school” takes “has”.',3);
+   if(l>=4)q('e1b_'+l,'Find the error: “She go to school at 6:45 every day.”',['She','go','to school','every day'],1,'With she, use goes.',3);
+  }
+  if(t==='e2'){
+   if(l>=3)q('e2a_'+l,'Which sentence describes the room correctly if the lamp is on the desk and the books are under it?',['The lamp is under the desk.','The lamp is on the desk and the books are under the desk.','There are lamp on desk.','The books is under it.'],1,'The sentence must match both positions and grammar.',3);
+   if(l>=4)q('e2b_'+l,'Choose the best correction: “There is two chairs next to the table.”',['There are two chairs next to the table.','There is two chair next to table.','There are two chair next the table.','There be two chairs.'],0,'Plural noun requires “There are”.',3);
+  }
+  if(t==='e3'){
+   if(l>=3)q('e3a_'+l,'Choose the sentence that correctly contrasts a habit and an action now.',['He usually plays football, but now he is reading.','He usually is playing football, but now he reads.','He plays now every day.','He is play football now.'],0,'Habit: present simple; now: present continuous.',3);
+   if(l>=4)q('e3b_'+l,'Which sentence is NOT correct?',['Lan is talking to her friend now.','They are doing homework now.','My brother is usually playing chess every Sunday.','Look! The baby is sleeping.'],2,'“Usually” with a regular habit normally takes present simple.',3);
+  }
+  if(t==='e4'&&l>=3)q('e4a_'+l,'The old street is 6 m wide. The new street is 10 m wide. Choose the best sentence.',['The new street is wider than the old street.','The old street is wider than the new street.','The new street is widest than the old street.','The streets are more wide.'],0,'Use wider than for comparison.',3);
+  if(t==='e5'&&l>=3)q('e5a_'+l,'Which set has the plural endings /s/, /z/, /s/ in that order?',['books – pens – maps','pens – books – dogs','dogs – rooms – cats','maps – cats – bags'],0,'books /s/, pens /z/, maps /s/.',3);
+ }
+ return a
+}
 function questionPool(s,t,l){
- var base=Q.filter(function(x){return x.s===s&&x.t===t&&x.l===l}),out=base.slice(),i=0,seen={};
+ var base=Q.filter(function(x){return x.s===s&&x.t===t&&x.l===l}),out=base.concat(advancedTestBank(s,t,l)),i=0,seen={};
  out.forEach(function(x){seen[x.id]=1});
  while(out.length<MIN_BANK&&i<30){var g=genOne(s,t,l,i++);if(g&&!seen[g.id]){seen[g.id]=1;out.push(g)}}
+ out.forEach(function(q,ix){if(!q.d)q.d=1+(ix%3)});
  return out;
 }
 function topicPool(s,t,maxLevel){
@@ -465,10 +527,10 @@ function checkAnswer(){var q=items[qi],btn=document.getElementById('checkBtn');i
 function exitQuiz(){go(before)}
 
 var testConfig={
- daily:{label:'Hàng ngày',count:15,minutes:15,weights:[.40,.35,.20,.05]},
- weekly:{label:'Hàng tuần',count:30,minutes:35,weights:[.30,.35,.25,.10]},
- monthly:{label:'Hàng tháng',count:45,minutes:60,weights:[.25,.35,.25,.15]},
- semester:{label:'Học kỳ',count:60,minutes:90,weights:[.20,.35,.30,.15]}
+ daily:{label:'Hàng ngày',count:15,minutes:18,weights:[.20,.30,.30,.20]},
+ weekly:{label:'Hàng tuần',count:30,minutes:40,weights:[.15,.30,.30,.25]},
+ monthly:{label:'Hàng tháng',count:45,minutes:65,weights:[.10,.25,.35,.30]},
+ semester:{label:'Học kỳ',count:60,minutes:95,weights:[.10,.20,.35,.35]}
 };
 var activeTest=null,testItems=[],testIndex=0,testAnswers={},testDeadline=0,testTimerId=null;
 
@@ -526,18 +588,21 @@ function testFamily(q){
  return q.s+'|'+q.t+'|'+s
 }
 function testPick(out,pool,n,salt,guard,recent){
- var sorted=pool.slice().sort(function(a,b){return hashStr(a.id+salt)-hashStr(b.id+salt)});
- function pass(relaxRecent,relaxFamily){
-   for(var i=0;i<sorted.length&&n>0;i++){
-     var q=sorted[i],core=testCoreText(q),fam=testFamily(q);
+ var tiers=[1,2,3],want=[Math.ceil(n*.30),Math.ceil(n*.35),0];want[2]=Math.max(0,n-want[0]-want[1]);
+ function takeTier(tier,count,relaxRecent){
+   var cand=pool.filter(function(q){return (q.d||1)===tier}).slice().sort(function(a,b){return hashStr(a.id+salt+tier)-hashStr(b.id+salt+tier)});
+   for(var i=0;i<cand.length&&count>0;i++){
+     var q=cand[i],core=testCoreText(q),fam=testFamily(q);
      if(guard.ids[q.id]||guard.core[core])continue;
      if(!relaxRecent&&recent[q.id])continue;
-     if(!relaxFamily&&(guard.family[fam]||0)>=2)continue;
-     out.push(q);guard.ids[q.id]=1;guard.core[core]=1;guard.family[fam]=(guard.family[fam]||0)+1;n--
+     if((guard.family[fam]||0)>=2)continue;
+     out.push(q);guard.ids[q.id]=1;guard.core[core]=1;guard.family[fam]=(guard.family[fam]||0)+1;count--
    }
+   return count
  }
- pass(false,false);if(n>0)pass(true,false);if(n>0)pass(true,true);
- return n
+ var left=0;tiers.forEach(function(t,i){left+=takeTier(t,want[i],false)});
+ if(left>0)tiers.slice().reverse().forEach(function(t){if(left>0)left=takeTier(t,left,true)});
+ return left
 }
 function buildTest(type){
  var cfg=testConfig[type],weeks=testScopeWeeks(type),period=testPeriodKey(type),student=document.getElementById('student').value,st=state();
@@ -561,7 +626,7 @@ function buildTest(type){
    var fill=[];subjects.forEach(function(sub){fill=fill.concat(allPoolsForSubject(sub))});
    testPick(out,fill,cfg.count-out.length,type+period+student+'A'+attempt+'fill',guard,recent)
  }
- out=out.slice().sort(function(a,b){return hashStr(a.id+period+'A'+attempt+'mix')-hashStr(b.id+period+'A'+attempt+'mix')});
+ out=out.slice().sort(function(a,b){var da=(a.l*10+(a.d||1)),db=(b.l*10+(b.d||1));if(da!==db)return da-db;return hashStr(a.id+period+'A'+attempt)-hashStr(b.id+period+'A'+attempt)});
  return {items:out.slice(0,cfg.count),weeks:weeks,scope:scopeLabel(type,weeks),period:period,attempt:attempt}
 }
 function startTest(type){
@@ -575,7 +640,7 @@ function startTest(type){
 function renderTestQuestion(){
  if(!testItems.length)return;
  var q=testItems[testIndex];document.getElementById('testQCount').textContent='Câu '+(testIndex+1)+'/'+testItems.length;
- document.getElementById('testQLevel').textContent='Mức '+q.l;
+ document.getElementById('testQLevel').textContent='Mức '+q.l+' · '+(['','A','B','C'][q.d||1]);
  document.getElementById('testQbar').style.width=((testIndex+1)/testItems.length*100)+'%';
  document.getElementById('testQText').textContent=q.q;
  var an=document.getElementById('testAnswers');an.innerHTML='';
