@@ -144,8 +144,9 @@ function suggestedIndex(s){
  if(G===2&&s==='math'){var m=[2,4,6,7,8,10,12,14,16,18,20,22,24,26,28,30,32,36,38,40,42,45,47,49,51,54,56,58,60,62,64,66,68,72,75];return Math.min(a.length-1,(m[Math.min(34,w-1)]||75)-1)}
  if(G===2&&s==='lit')return Math.min(a.length-1,w*2-1);
  if(G===2&&s==='eng')return Math.min(a.length-1,Math.floor((w-1)*24/35));
- if(G===6&&s==='math')return Math.min(a.length-1,Math.floor((w-1)*43/35)+1);
- if(G===6&&s==='lit')return Math.min(a.length-1,Math.floor((w-1)*10/35));
+ if(G===6&&s==='math'){var mm=[2,5,7,8,10,12,13,14,15,16,17,18];return Math.min(a.length-1,(mm[Math.min(mm.length-1,w-1)]||Math.floor((w-1)*43/35)+1)-1)}
+ if(G===6&&s==='lit'){var vv=[1,1,1,1,2,2,2,3,3,3,3,4];return Math.min(a.length-1,(vv[Math.min(vv.length-1,w-1)]||Math.floor((w-1)*10/35)+1)-1)}
+ if(G===6&&s==='eng'){var ee=[1,1,2,2,3,3,4,5,5,6,6,7];return Math.min(a.length-1,(ee[Math.min(ee.length-1,w-1)]||Math.floor((w-1)*16/35)+1)-1)}
  return Math.min(a.length-1,Math.floor((w-1)*16/35));
 }
 function currentId(s){var p=getP(s),a=flat(s);return p&&find(s,p)?p:a[suggestedIndex(s)].id}
@@ -272,11 +273,46 @@ var P2=[
 ];
 function litQ(les,l,i){
  if(G===2){
+  var title=les.title||'';
+  if(title.indexOf('Cô giáo lớp em')>=0){
+   if(l===1)return make(les.id,'lit',les.id,l,i,'Bài “Cô giáo lớp em” thuộc chủ điểm nào gần nhất?','Tình cảm với thầy cô, trường lớp',['Thiên nhiên hoang dã','Giao thông','Mua bán'],'Bài học hướng đến tình cảm trường lớp và cô giáo.');
+   if(l===2)return make(les.id,'lit',les.id,l,i,'Khi nói về cô giáo, từ nào là từ chỉ đặc điểm?','dịu dàng',['giảng bài','bảng lớp','học sinh'],'“dịu dàng” nêu đặc điểm.');
+   if(l===3)return make(les.id,'lit',les.id,l,i,'Câu nào vừa đúng ngữ pháp vừa thể hiện tình cảm với cô giáo?','Em rất yêu quý cô vì cô luôn tận tình dạy chúng em.',['Cô giáo bảng phấn.','Em cô giáo rất.','Cô là và lớp học.'],'Câu trả lời cần có đủ ý và thể hiện tình cảm.');
+   return make(les.id,'lit',les.id,l,i,'Muốn viết 3 câu về cô giáo, trình tự nào rõ nhất?','Giới thiệu cô → nêu một đặc điểm/việc làm → nói tình cảm của em',['Chỉ liệt kê đồ vật','Lặp tên cô ba lần','Viết ba câu không liên quan'],'Đoạn ngắn cần có trình tự và một ý chính.');
+  }
+  if(title.indexOf('Thời khóa biểu')>=0){
+   if(l===1)return make(les.id,'lit',les.id,l,i,'Thời khóa biểu dùng để làm gì?','Cho biết các môn học theo ngày/tiết',['Kể một câu chuyện','Tả một con vật','Ghi giá đồ dùng'],'Đây là văn bản thông tin giúp theo dõi lịch học.');
+   if(l===2)return make(les.id,'lit',les.id,l,i,'Một thời khóa biểu ghi: Thứ Hai – tiết 1 Toán, tiết 2 Tiếng Việt. Tiết 2 học môn gì?','Tiếng Việt',['Toán','Tiếng Anh','Mĩ thuật'],'Đọc đúng hàng Thứ Hai và cột tiết 2.');
+   if(l===3)return make(les.id,'lit',les.id,l,i,'Nếu ngày mai có Toán và Tiếng Việt, việc chuẩn bị hợp lí nhất là:','Xem thời khóa biểu và soạn đúng sách vở hai môn',['Mang tất cả sách','Không cần chuẩn bị','Chỉ mang vở vẽ'],'Biết dùng thông tin từ thời khóa biểu vào thực tế.');
+   return make(les.id,'lit',les.id,l,i,'Vì sao cần đọc đúng hàng và cột của thời khóa biểu?','Để không nhầm ngày, tiết và môn học',['Để bảng dài hơn','Để viết nhiều chữ hơn','Không có lý do'],'Văn bản dạng bảng phải đọc theo hàng/cột.');
+  }
+  if(title.indexOf('Cây xấu hổ')>=0||title.indexOf('Cầu thủ dự bị')>=0){
+   if(l===1)return make(les.id,'lit',les.id,l,i,'Khi đọc một câu chuyện, việc đầu tiên để hiểu bài là:','Xác định nhân vật và sự việc chính',['Đếm số chữ','Chép cả bài','Tìm từ dài nhất'],'Nhân vật và sự việc chính là khung của câu chuyện.');
+   if(l===2)return make(les.id,'lit',les.id,l,i,'Câu hỏi nào giúp tìm nguyên nhân của một sự việc?','Vì sao việc đó xảy ra?',['Ai cao hơn?','Có bao nhiêu chữ?','Trang sách màu gì?'],'“Vì sao?” giúp tìm nguyên nhân.');
+   if(l===3)return make(les.id,'lit',les.id,l,i,'Sau khi đọc, cách kể lại tốt nhất là:','Nói 2–3 câu theo thứ tự sự việc chính',['Chép nguyên văn','Kể thêm việc không có','Chỉ nói tên bài'],'Kể lại cần đúng trình tự và giữ ý chính.');
+   return make(les.id,'lit',les.id,l,i,'Một chi tiết làm nhân vật thay đổi suy nghĩ được gọi là chi tiết quan trọng vì:','Nó ảnh hưởng đến diễn biến và ý nghĩa câu chuyện',['Nó luôn dài nhất','Nó có nhiều dấu phẩy','Nó nằm ở trang đầu'],'Chi tiết quan trọng tác động tới mạch truyện.');
+  }
   var z=P2[(i+(les.week||0))%P2.length];
   if(l===1)return make(les.id,'lit',les.id,l,i,'Đọc: “'+z[0]+'” Nhân vật chính là ai?',z[1],['mẹ','cô giáo','không có nhân vật'],'Tìm người thực hiện việc chính.');
   if(l===2)return make(les.id,'lit',les.id,l,i,'Đọc: “'+z[0]+'” Nhân vật làm gì?',z[2],['đi ngủ','đi mua hàng','không làm gì'],'Tìm từ/cụm từ chỉ hoạt động.');
   if(l===3)return make(les.id,'lit',les.id,l,i,'Từ việc làm trong đoạn, em hiểu điều gì?',z[3],['Nhân vật rất lười.','Không thể biết gì.','Nhân vật đang tức giận.'],'Suy luận từ hành động.');
   return make(les.id,'lit',les.id,l,i,'Cách kể lại ngắn gọn nhất là:','Nêu ai – làm gì – kết quả/ý nghĩa.',['Chép nguyên đoạn.','Chỉ kể một từ.','Thêm nhiều việc không có trong đoạn.'],'Nói được ý chính trước khi viết.');
+ }
+ if(les.id==='g6v1'){
+  var b1=[
+   ['Trong “Bài học đường đời đầu tiên”, sự thay đổi quan trọng của Dế Mèn là gì?','Từ tự phụ, bốc đồng đến biết ân hận và chịu trách nhiệm',['Từ yếu thành khỏe','Từ vui thành buồn mà không thay đổi nhận thức','Từ nhút nhát thành hung dữ'],'Sự việc với Dế Choắt khiến Dế Mèn nhận ra hậu quả của thói kiêu căng.'],
+   ['“Bắt nạt” hướng người đọc đến cách ứng xử nào?','Tôn trọng, bảo vệ người yếu thế và không tiếp tay bắt nạt',['Hùa theo số đông','Im lặng trong mọi trường hợp','Trả đũa bằng bạo lực'],'Thông điệp chính là phản đối bắt nạt và sống tử tế.'],
+   ['Khi nhận xét Dế Mèn “bốc đồng”, cách trả lời tốt nhất là:','Nêu nhận xét, dẫn chi tiết hành động và giải thích hậu quả',['Chỉ viết “em thấy vậy”','Kể lại toàn bộ truyện','Chỉ chép tên nhân vật'],'Nhận xét văn học cần có dẫn chứng và giải thích.'],
+   ['Hai văn bản trong cùng Bài 1 cùng giúp em suy nghĩ nhiều về điều gì?','Cách ứng xử với người khác và trách nhiệm trong tình bạn',['Cách tính diện tích','Luật giao thông','Các hiện tượng thời tiết'],'Bài 1 tập trung vào quan hệ bạn bè và cách ứng xử.']
+  ],z=b1[(i+l-1)%b1.length];return make(les.id,'lit',les.id,l,i,z[0],z[1],z[2],z[3])
+ }
+ if(les.id==='g6v2'){
+  var b2=[
+   ['Điểm chung nổi bật của “Mây và sóng” và các văn bản trong Bài 2 là gì?','Khám phá tình cảm gia đình và thế giới nội tâm',['Giải thích công thức toán','Miêu tả luật thi đấu','Thống kê số liệu'],'Bài 2 hướng tới tình cảm, yêu thương và đời sống nội tâm.'],
+   ['Khi phân tích tình cảm của nhân vật trữ tình trong một bài thơ, bằng chứng nên lấy từ đâu?','Hình ảnh, từ ngữ và lời nói trong bài thơ',['Tên nhà xuất bản','Số trang','Ý đoán không có căn cứ'],'Phân tích phải bám chi tiết của văn bản.'],
+   ['Trong truyện về quan hệ anh/chị/em, sự thay đổi cách nhìn của nhân vật thường được nhận ra qua:','Hành động, suy nghĩ và cách ứng xử trước – sau sự việc',['Chỉ ngoại hình','Chỉ tên nhân vật','Số đoạn văn'],'So sánh trước và sau giúp thấy sự thay đổi nhận thức.'],
+   ['Câu trả lời nào thể hiện suy luận tốt hơn?','Nêu chi tiết rồi giải thích chi tiết đó cho thấy tình cảm gì',['Chép một câu bất kì','Chỉ nói “rất hay”','Kể lại hết văn bản'],'Suy luận phải nối bằng chứng với kết luận.']
+  ],z=b2[(i+l-1)%b2.length];return make(les.id,'lit',les.id,l,i,z[0],z[1],z[2],z[3])
  }
  var passages=[
   ['Một bạn vì muốn chứng tỏ mình giỏi nên hành động vội vàng, khiến người khác chịu hậu quả. Sau đó bạn nhận ra lỗi và thay đổi.','sự bốc đồng và bài học trách nhiệm'],
@@ -331,6 +367,15 @@ function sgkBuildTest(type){
 }
 function overrideTests(){
  window.buildTest=sgkBuildTest;
+ var oldStartTest=window.startTest;
+ window.startTest=function(type){
+  var missing=['math','lit','eng'].filter(function(s){return !getP(s)});
+  if(missing.length){
+   alert('Để đề kiểm tra bám đúng SGK, con cần chọn “đã học đến bài nào” ở: '+missing.map(function(s){return N[s]}).join(', ')+'.');
+   go(missing[0]);setTimeout(function(){renderExact(missing[0])},0);return
+  }
+  oldStartTest(type)
+ };
  window.startDaily=function(){
   var subs=['math','lit','eng'],out=[],used={},student=document.getElementById('student').value,total=G===2?18:24;
   subs.forEach(function(s){
