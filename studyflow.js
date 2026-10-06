@@ -53,16 +53,64 @@ var EN2={
  e15:['shirt, dress, shoes','I like this shirt.'],e16:['tent, camp, lake','The tent is near the lake.']
 };
 
+function easyLitGuide(id,label){
+ if(G===2){
+  return{
+   goal:'Con chỉ cần hiểu 3 việc trước: ai/điều gì đang được nói tới – đang làm gì – con thấy điều gì quan trọng.',
+   steps:[
+    'Chỉ đọc 1–2 câu, chưa đọc cả bài. Gạch tên người/vật được nhắc tới.',
+    'Hỏi thật ngắn: “Ai?” và “Làm gì?”. Trả lời mỗi câu bằng 2–5 từ.',
+    'Khoanh 2–3 từ khóa quan trọng nhất. Không khoanh cả câu.',
+    'Dùng từ khóa kể lại bằng MỘT câu của con.',
+    'Sau đó mới tìm từ chỉ sự vật – hoạt động – đặc điểm hoặc dấu câu.',
+    'Cuối cùng viết 2–4 câu theo khung có sẵn.'
+   ],
+   example:'Ví dụ: “Lan nhặt rác và bỏ vào thùng.” → Ai? Lan. → Làm gì? nhặt rác. → Từ khóa: Lan / nhặt rác / thùng rác. → Nói lại: Lan giữ sân trường sạch bằng cách nhặt rác.',
+   tip:'NÓI ĐƯỢC rồi mới VIẾT. Nếu con chưa nói lại được bằng 1 câu thì chưa chuyển sang phần viết.',
+   mistake:'Đọc cả trang một lúc, cố nhớ nguyên văn hoặc viết ngay khi chưa hiểu ý.',
+   frames:[
+    'Ai? → ________',
+    'Làm gì? → ________',
+    'Ở đâu/khi nào? → ________',
+    'Con hiểu ý chính: “________.”'
+   ],
+   micro:[
+    'Câu 1 rất dễ: Nhân vật/sự vật chính là ai?',
+    'Câu 2: Nhân vật làm gì?',
+    'Câu 3: Việc đó cho con biết điều gì?'
+   ]
+  }
+ }
+ return{
+  goal:'Con không cần “cảm thụ” ngay. Trước hết phải tìm được: sự việc chính – chi tiết làm bằng chứng – ý nghĩa của chi tiết đó.',
+  steps:[
+   'Đọc từng đoạn ngắn và đặt tên cho đoạn bằng 3–6 từ.',
+   'Gạch đúng 1–2 chi tiết làm bằng chứng, không gạch cả đoạn.',
+   'Gom các chi tiết cùng nói một điều thành MỘT ý lớn.',
+   'Trả lời theo công thức: NHẬN XÉT → DẪN CHỨNG → GIẢI THÍCH.',
+   'Tóm tắt bằng cách giữ nguyên nhân – sự việc chính – kết quả; bỏ miêu tả phụ.',
+   'Cuối cùng mới làm câu suy luận hoặc liên hệ.'
+  ],
+  example:'Ví dụ: “Dế Mèn trêu chị Cốc, Dế Choắt chịu hậu quả.” → Nhận xét: Dế Mèn bốc đồng. → Dẫn chứng: trêu chị Cốc rồi để Dế Choắt gánh hậu quả. → Giải thích: hành động thiếu suy nghĩ gây tổn thương cho người khác.',
+  tip:'Mỗi câu Văn phải có “vì sao”. Nếu con nói một nhận xét mà không chỉ được chi tiết nào chứng minh, câu đó chưa đủ.',
+  mistake:'Kể lại toàn bộ câu chuyện thay vì trả lời đúng điều câu hỏi hỏi.',
+  frames:[
+   'Em nhận thấy ________.',
+   'Chi tiết “________” cho thấy điều đó.',
+   'Vì vậy, có thể hiểu rằng ________.',
+   'Ý chính của đoạn là ________.'
+  ],
+  micro:[
+   'Câu 1: Đoạn này xảy ra việc gì?',
+   'Câu 2: Chi tiết nào chứng minh nhận xét của em?',
+   'Câu 3: Từ chi tiết đó, em rút ra điều gì?'
+  ]
+ }
+}
 function genericGuide(s,id,label){
+ if(s==='lit')return easyLitGuide(id,label);
  if(G===6&&G6[s]&&G6[s][id])return G6[s][id];
  if(G===2&&s==='math'&&G2M[id]){var x=G2M[id];return{goal:x[0],steps:x[1],example:x[2],tip:x[3],mistake:x[4]}}
- if(G===2&&s==='lit'){
-   return{goal:'Chuẩn bị '+label+' bằng cách đọc hiểu, luyện từ và câu, rồi tập viết/nói ngắn.',
-    steps:['Đọc thành tiếng chậm và rõ 2 lần.','Sau mỗi đoạn, tự kể lại bằng 1 câu ngắn.','Khoanh từ chưa hiểu và tìm từ chỉ sự vật, hoạt động, đặc điểm.','Tập viết 3–4 câu đúng dấu câu về chủ điểm của tuần.'],
-    example:'Cách học dễ: đọc → kể lại → tìm từ → viết 3 câu → đọc lại sửa lỗi.',
-    tip:'Mỗi lần chỉ học một việc nhỏ, xong mới chuyển sang việc tiếp theo.',
-    mistake:'Đọc hết bài nhưng không tự kể lại bằng lời của mình.'}
- }
  if(G===2&&s==='eng'){
    var base=id,rev={f1:'e2',r1:'e4',f2:'e6',r2:'e8',f3:'e10',r3:'e12',f4:'e14',r4:'e16'};if(rev[id])base=rev[id];
    var x=EN2[base]||['4–6 từ mới của bài','I can see it.'];
@@ -93,7 +141,7 @@ function addProgressCard(s){
  var opts=curriculum[s].topics.map(function(t){return'<option value="'+t[0]+'" '+(t[0]===chosen?'selected':'')+'>'+t[1]+'</option>'}).join('');
  d.innerHTML='<div class="progress-head"><div><b>🎯 Tiến độ thực tế</b><h3>Con đã học '+SUBS[s]+' đến bài/chủ đề nào rồi?</h3><div class="muted">'+(saved?'Đã lưu tiến độ của con.':'Hệ thống đang gợi ý theo tuần '+currentWeek()+': '+topicLabel(s,sug))+'</div></div><span class="tag">'+(saved?'Theo học sinh':'Gợi ý')+'</span></div>'+
  '<div class="progress-actions"><select class="progress-select" id="actual-'+s+'">'+opts+'</select><button class="btn primary" onclick="saveActualProgress(\''+s+'\')">Lưu tiến độ</button></div>'+
- '<div class="coach-actions"><button class="btn soft" onclick="openReviewCoach(\''+s+'\')">🔁 Ôn kiến thức đã học</button><button class="btn primary" onclick="openNextCoach(\''+s+'\')">🌱 Học bài kế tiếp thật dễ</button></div>';
+ '<div class="coach-actions"><button class="btn soft" onclick="openReviewCoach(\''+s+'\')">🔁 Ôn kiến thức đã học</button><button class="btn primary" onclick="openNextCoach(\''+s+'\')">🌱 Học bài kế tiếp thật dễ</button>'+(s==='lit'?'<span class="easyvi-mini">Ưu tiên chế độ Tiếng Việt thật dễ</span>':'')+'</div>';
  top.parentNode.insertBefore(d,top.nextSibling)
 }
 window.saveActualProgress=function(s){var e=document.getElementById('actual-'+s);if(e)setProgress(s,e.value)};
@@ -101,6 +149,19 @@ function ensureCoach(){
  if(document.getElementById('studyCoach'))return;
  var sec=document.createElement('section');sec.id='studyCoach';sec.className='section';sec.innerHTML='<div class="top"><div><button class="btn soft" id="coachBack">← Quay lại môn học</button><h1 id="coachTitle" style="margin-top:10px"></h1><div class="muted" id="coachSub"></div></div><span class="tag">Gia sư theo tiến độ</span></div><div id="coachBody"></div>';
  var tests=document.getElementById('tests');tests.parentNode.insertBefore(sec,tests)
+}
+function speakVi(text){
+ if(!('speechSynthesis' in window)){toast('Thiết bị chưa hỗ trợ đọc thành tiếng.');return}
+ speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.lang='vi-VN';u.rate=G===2?.72:.88;speechSynthesis.speak(u)
+}
+window.speakEasyVietnamese=function(){var el=document.getElementById('easyViExample');if(el)speakVi(el.textContent)}
+function easyLitHtml(g){
+ return '<div class="easyvi-hero"><div><span class="easyvi-tag">📖 TIẾNG VIỆT THẬT DỄ</span><h2>Học ít một – hiểu đến đâu chắc đến đó</h2><p>'+g.goal+'</p></div><div class="easyvi-rule">Quy tắc vàng<br><b>HIỂU → NÓI → VIẾT</b></div></div>'+
+ '<div class="easyvi-steps">'+g.steps.map(function(x,i){return'<div class="easyvi-step"><span>'+(i+1)+'</span><div><b>'+(['Đọc ít','Hỏi ngắn','Tìm từ khóa','Nói lại','Luyện từ/câu','Viết ngắn'][i]||('Bước '+(i+1)))+'</b><p>'+x+'</p></div></div>'}).join('')+'</div>'+
+ '<div class="coach-grid"><div class="coach-box"><h3>🧩 Ví dụ mẫu</h3><p class="coach-example" id="easyViExample">'+g.example+'</p><button class="btn soft" onclick="speakEasyVietnamese()">🔊 Nghe đọc mẫu</button></div>'+
+ '<div class="coach-box"><h3>📝 Khung trả lời</h3>'+g.frames.map(function(x){return'<div class="sentence-frame">'+x+'</div>'}).join('')+'</div>'+
+ '<div class="coach-box"><h3>🎯 3 câu phải tự trả lời</h3><ol>'+g.micro.map(function(x){return'<li>'+x+'</li>'}).join('')+'</ol></div>'+
+ '<div class="coach-box"><h3>💡 Mẹo nhớ</h3><p>'+g.tip+'</p><div class="warn">⚠️ Hay sai: '+g.mistake+'</div></div></div>'
 }
 function guideHtml(g){
  return '<div class="coach-grid">'+
@@ -113,13 +174,13 @@ window.openReviewCoach=function(s){
  ensureCoach();var saved=getProgress(s)||suggestedTopic(s),idx=topicIndex(s,saved),g=genericGuide(s,saved,topicLabel(s,saved));
  go('studyCoach');document.getElementById('coachBack').onclick=function(){go(s)};document.getElementById('coachTitle').textContent='🔁 Ôn '+SUBS[s]+' đến: '+topicLabel(s,saved);
  document.getElementById('coachSub').textContent='Ôn theo tiến độ thực tế của học sinh, không chạy theo lịch dự kiến.';
- document.getElementById('coachBody').innerHTML=guideHtml(g)+'<div class="card coach-cta"><div><b>Kiểm tra xem con còn nhớ không</b><div class="muted">Đề ôn lấy từ tất cả phần đã học đến bài này, ưu tiên phần gần nhất.</div></div><button class="btn primary" onclick="startProgressReview(\''+s+'\')">Làm '+(G===2?12:15)+' câu ôn tập</button></div>'
+ document.getElementById('coachBody').innerHTML=(s==='lit'?easyLitHtml(g):guideHtml(g))+'<div class="card coach-cta"><div><b>Kiểm tra xem con còn nhớ không</b><div class="muted">Đề ôn lấy từ tất cả phần đã học đến bài này, ưu tiên phần gần nhất.</div></div><button class="btn primary" onclick="startProgressReview(\''+s+'\')">Làm '+(G===2?12:15)+' câu ôn tập</button></div>'
 };
 window.openNextCoach=function(s){
  ensureCoach();var saved=getProgress(s)||suggestedTopic(s),idx=topicIndex(s,saved),next=Math.min(idx+1,curriculum[s].topics.length-1),id=curriculum[s].topics[next][0],same=next===idx,g=genericGuide(s,id,topicLabel(s,id));
  go('studyCoach');document.getElementById('coachBack').onclick=function(){go(s)};document.getElementById('coachTitle').textContent=same?'🌟 Con đã đến phần cuối hiện có':'🌱 Bài kế tiếp: '+topicLabel(s,id);
  document.getElementById('coachSub').textContent=same?'Hãy củng cố thật chắc phần này trước.':'Học trước nhẹ nhàng để khi vào lớp con thấy bài quen thuộc.';
- document.getElementById('coachBody').innerHTML=guideHtml(g)+'<div class="card coach-cta"><div><b>Thử ngay sau khi hiểu</b><div class="muted">Chỉ dùng câu mức cơ bản để kiểm tra xem con đã “bắt được” ý bài mới chưa.</div></div><button class="btn primary" onclick="startPreviewQuiz(\''+s+'\',\''+id+'\')">Làm 6 câu khởi động</button></div>'
+ document.getElementById('coachBody').innerHTML=(s==='lit'?easyLitHtml(g):guideHtml(g))+'<div class="card coach-cta"><div><b>Thử ngay sau khi hiểu</b><div class="muted">Chỉ dùng câu mức cơ bản để kiểm tra xem con đã “bắt được” ý bài mới chưa.</div></div><button class="btn primary" onclick="startPreviewQuiz(\''+s+'\',\''+id+'\')">Làm 6 câu khởi động</button></div>'
 };
 window.startProgressReview=function(s){
  var id=getProgress(s)||suggestedTopic(s),idx=topicIndex(s,id),topics=curriculum[s].topics.slice(0,idx+1).map(function(t){return t[0]}),pool=poolsForTopics(s,topics,[1,2,3]),used={},n=G===2?12:15;
@@ -156,6 +217,6 @@ function install(){
  window.renderSubject=function(s){old(s);addProgressCard(s)};
  ['math','lit','eng'].forEach(function(s){window.renderSubject(s)});decorateToday()
 }
-var st=document.createElement('style');st.textContent='.actual-progress{margin:0 0 16px;border-left:5px solid #2563eb}.progress-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.progress-head h3{margin:5px 0}.progress-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}.progress-select{flex:1;min-width:240px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:white;font:inherit}.coach-actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}.coach-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.coach-box{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;position:relative}.coach-box h3{margin:2px 0 10px}.coach-box li{margin:8px 0;line-height:1.5}.coach-num{display:inline-flex;width:28px;height:28px;border-radius:50%;align-items:center;justify-content:center;background:#dbeafe;color:#1d4ed8;font-weight:900}.coach-example{font-size:18px;font-weight:750;line-height:1.55;background:#f8fafc;padding:12px;border-radius:12px}.warn{margin-top:12px;padding:10px;border-radius:10px;background:#fff7ed;color:#9a3412}.coach-cta{margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:12px}.actual-chip{margin-top:8px;font-size:12px;font-weight:800;color:#166534;background:#ecfdf3;padding:5px 8px;border-radius:999px;display:inline-block}@media(max-width:700px){.coach-grid{grid-template-columns:1fr}.coach-cta,.progress-head{align-items:stretch;flex-direction:column}}';document.head.appendChild(st);
+var st=document.createElement('style');st.textContent='.actual-progress{margin:0 0 16px;border-left:5px solid #2563eb}.progress-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.progress-head h3{margin:5px 0}.progress-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}.progress-select{flex:1;min-width:240px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:white;font:inherit}.coach-actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}.coach-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.coach-box{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;position:relative}.coach-box h3{margin:2px 0 10px}.coach-box li{margin:8px 0;line-height:1.5}.coach-num{display:inline-flex;width:28px;height:28px;border-radius:50%;align-items:center;justify-content:center;background:#dbeafe;color:#1d4ed8;font-weight:900}.coach-example{font-size:18px;font-weight:750;line-height:1.55;background:#f8fafc;padding:12px;border-radius:12px}.warn{margin-top:12px;padding:10px;border-radius:10px;background:#fff7ed;color:#9a3412}.coach-cta{margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:12px}.actual-chip{margin-top:8px;font-size:12px;font-weight:800;color:#166534;background:#ecfdf3;padding:5px 8px;border-radius:999px;display:inline-block}.easyvi-hero{display:flex;justify-content:space-between;gap:18px;align-items:center;background:linear-gradient(135deg,#fff7ed,#fefce8);border:1px solid #fed7aa;border-radius:20px;padding:20px;margin-bottom:14px}.easyvi-hero h2{margin:8px 0}.easyvi-tag{font-size:12px;font-weight:900;color:#9a3412}.easyvi-rule{min-width:170px;text-align:center;background:white;border-radius:16px;padding:14px;border:1px solid #fed7aa;line-height:1.5}.easyvi-steps{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}.easyvi-step{display:flex;gap:12px;background:white;border:1px solid var(--line);border-radius:15px;padding:13px}.easyvi-step>span{display:flex;min-width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;background:#ffedd5;color:#9a3412;font-weight:900}.easyvi-step p{margin:4px 0 0;line-height:1.45}.sentence-frame{background:#f8fafc;border-left:4px solid #2563eb;border-radius:8px;padding:10px;margin:8px 0;font-weight:700}.easyvi-mini{font-size:12px;background:#fff7ed;color:#9a3412;padding:7px 9px;border-radius:999px;font-weight:800}@media(max-width:700px){.coach-grid,.easyvi-steps{grid-template-columns:1fr}.easyvi-hero{flex-direction:column;align-items:stretch}.coach-grid{grid-template-columns:1fr}.coach-cta,.progress-head{align-items:stretch;flex-direction:column}}';document.head.appendChild(st);
 window.addEventListener('load',install);
 })();
