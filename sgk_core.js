@@ -171,11 +171,11 @@ function renderExact(s){
 }
 window.saveSgkProgress=function(s){var e=document.getElementById('sgk-select-'+s);if(e)saveP(s,e.value)};
 
-function make(id,s,t,l,i,text,correct,wrong,ex){
+function make(id,s,t,l,i,text,correct,wrong,ex,family){
  var arr=[String(correct)].concat((wrong||[]).map(String).filter(function(x,j,a){return x!==String(correct)&&a.indexOf(x)===j})).slice(0,3);
  while(arr.length<4)arr.push('—');
  var sh=(i+l)%arr.length,rot=arr.slice(sh).concat(arr.slice(0,sh));
- return{id:'sgk_'+G+'_'+id+'_'+l+'_'+i,s:s,t:t,l:l,d:1+(i%3),q:text,a:rot,c:rot.indexOf(String(correct)),h:'',e:ex||('Đáp án: '+correct+'.'),sgkId:id}
+ return{id:'sgk_'+G+'_'+id+'_'+l+'_'+i,s:s,t:t,l:l,d:1+(i%3),q:text,a:rot,c:rot.indexOf(String(correct)),h:'',e:ex||('Đáp án: '+correct+'.'),sgkId:id,family:family||''}
 }
 function nums(ans,i){return[ans+(i%3)+1,Math.max(0,ans-(i%2)-1),ans+3+(i%4)]}
 function math2(les,l,i){
@@ -271,8 +271,74 @@ var P2=[
  ['Buổi sáng, Nam tự gấp chăn và chuẩn bị sách vở trước khi đi học.','Nam','tự gấp chăn và chuẩn bị sách','Nam tự giác, biết tự phục vụ.'],
  ['Mẹ đang tưới cây. Bé lấy chiếc ca nhỏ và cùng mẹ chăm những chậu hoa.','bé','giúp mẹ tưới hoa','Bé biết giúp đỡ gia đình.']
 ];
+
+var TV2_EXACT_BANK={
+ 'Thời khóa biểu':{
+  1:[
+   ['Thời khóa biểu giúp em biết điều gì?','Các môn học theo từng ngày và từng tiết',['Giá tiền sách vở','Nội dung một câu chuyện','Tên các bạn trong lớp'],'Đây là văn bản dạng bảng dùng để theo dõi lịch học.','purpose'],
+   ['Thứ Hai: tiết 1 Toán, tiết 2 Tiếng Việt, tiết 3 Mĩ thuật. Tiết 2 học môn gì?','Tiếng Việt',['Toán','Mĩ thuật','Tiếng Anh'],'Đọc đúng hàng Thứ Hai và vị trí tiết 2.','readcell'],
+   ['Thứ Ba: tiết 1 Tiếng Việt, tiết 2 Toán, tiết 3 Thể dục. Môn học đầu tiên là gì?','Tiếng Việt',['Toán','Thể dục','Mĩ thuật'],'Tiết 1 là môn học đầu tiên.','firstlast'],
+   ['Thứ Tư có Toán, Tiếng Việt, Âm nhạc, Tự nhiên và Xã hội. Có bao nhiêu tiết được nêu?','4',['2','3','5'],'Đếm từng môn được ghi trong ngày.','count'],
+   ['Thứ Năm: tiết 1 Toán, tiết 2 Thể dục, tiết 3 Tiếng Việt. Môn nào học sau Thể dục?','Tiếng Việt',['Toán','Thể dục','Âm nhạc'],'Sau tiết 2 là tiết 3.','sequence'],
+   ['Trong thời khóa biểu, “tiết” dùng để chỉ gì?','Một khoảng thời gian học một môn',['Một ngày nghỉ','Một quyển sách','Một nhóm học sinh'],'Mỗi tiết tương ứng một khoảng thời gian học.','concept']
+  ],
+  2:[
+   ['Thứ Hai có Toán, Tiếng Việt, Mĩ thuật; Thứ Ba có Toán, Thể dục, Âm nhạc. Môn nào có ở cả hai ngày?','Toán',['Tiếng Việt','Mĩ thuật','Âm nhạc'],'So sánh hai hàng và tìm môn xuất hiện ở cả hai.','compare'],
+   ['Ngày mai học Toán, Tiếng Việt và Mĩ thuật. Cách chuẩn bị hợp lí nhất là gì?','Soạn đúng sách vở của ba môn đó',['Mang tất cả sách trong nhà','Chỉ mang vở Toán','Không cần xem thời khóa biểu'],'Biết dùng thời khóa biểu để chuẩn bị đồ dùng học tập.','prepare'],
+   ['Thứ Tư có 4 tiết; Thứ Năm có 3 tiết. Ngày nào có nhiều tiết hơn?','Thứ Tư',['Thứ Năm','Hai ngày bằng nhau','Không xác định'],'So sánh 4 với 3.','comparecount'],
+   ['Thứ Sáu: tiết 1 Toán, tiết 2 Tiếng Việt, tiết 3 Toán. Môn nào xuất hiện hai lần?','Toán',['Tiếng Việt','Mĩ thuật','Thể dục'],'Quan sát các ô trong cùng một ngày.','frequency'],
+   ['Muốn biết “Thứ Ba tiết 3 học gì”, em cần đọc theo cách nào?','Tìm hàng Thứ Ba rồi tìm vị trí tiết 3',['Chỉ đọc cột đầu tiên','Đọc ngẫu nhiên một ô','Chỉ nhìn tên môn Toán'],'Bảng phải được đọc theo đúng hàng và vị trí.','tableskill'],
+   ['Thứ Hai tiết 1 Toán, tiết 2 Tiếng Việt; Thứ Ba tiết 1 Mĩ thuật, tiết 2 Toán. Toán được học vào những tiết nào?','Thứ Hai tiết 1 và Thứ Ba tiết 2',['Cả hai đều tiết 1','Cả hai đều tiết 2','Chỉ Thứ Hai tiết 2'],'Tìm tất cả ô có môn Toán rồi ghi đúng ngày và tiết.','scan']
+  ],
+  3:[
+   ['Thứ Hai học Toán, Tiếng Việt, Mĩ thuật. An chỉ mang sách Toán và Tiếng Việt. An quên đồ dùng môn nào?','Mĩ thuật',['Toán','Tiếng Việt','Không quên môn nào'],'Đối chiếu đồ đã mang với toàn bộ môn trong ngày.','applyprepare'],
+   ['Thời khóa biểu ghi Thứ Ba: tiết 1 Toán, tiết 2 Thể dục, tiết 3 Tiếng Việt. Nhà trường đổi tiết 2 và tiết 3 cho nhau. Tiết 2 mới là môn gì?','Tiếng Việt',['Toán','Thể dục','Âm nhạc'],'Sau khi đổi, Tiếng Việt chuyển từ tiết 3 lên tiết 2.','change'],
+   ['Hai ngày đều có 3 tiết. Thứ Hai có Toán, Tiếng Việt, Âm nhạc; Thứ Ba có Toán, Tiếng Việt, Thể dục. Nhận xét nào đúng?','Hai ngày có 2 môn giống nhau',['Hai ngày giống hệt nhau','Không có môn nào giống nhau','Có 3 môn giống nhau'],'Các môn chung là Toán và Tiếng Việt.','intersection'],
+   ['Thứ Tư có 4 tiết. Em đã biết tiết 1 Toán, tiết 2 Tiếng Việt, tiết 4 Mĩ thuật. Nếu môn còn lại là Thể dục thì Thể dục ở tiết nào?','Tiết 3',['Tiết 1','Tiết 2','Tiết 4'],'Chỉ còn vị trí tiết 3 chưa có môn.','missingcell'],
+   ['Một bạn nói: “Chỉ cần nhớ thời khóa biểu, không cần xem lại khi có thay đổi.” Nhận xét nào hợp lí nhất?','Không đúng, nên kiểm tra lại vì lịch học có thể được điều chỉnh',['Đúng trong mọi trường hợp','Chỉ cần hỏi bạn sau giờ học','Không cần chuẩn bị sách vở'],'Biết vận dụng thông tin và cập nhật khi lịch thay đổi.','evaluate'],
+   ['Thứ Hai có 4 tiết, trong đó Toán 2 tiết; ba môn còn lại mỗi môn 1 tiết là Tiếng Việt và Mĩ thuật. Phát biểu nào chắc chắn đúng?','Có một môn được học lặp lại trong ngày',['Mọi môn đều học hai lần','Không có Toán','Có 5 tiết'],'Toán xuất hiện 2 lần nên có môn lặp.','infer']
+  ],
+  4:[
+   ['Một ngày có 4 tiết gồm Toán, Tiếng Việt, Thể dục, Mĩ thuật. Toán học trước Tiếng Việt; Thể dục là tiết 4; Mĩ thuật là tiết 1. Tiếng Việt ở tiết nào?','Tiết 3',['Tiết 1','Tiết 2','Tiết 4'],'Tiết 1 Mĩ thuật, tiết 4 Thể dục; Toán phải trước Tiếng Việt nên Toán tiết 2, Tiếng Việt tiết 3.','logicorder'],
+   ['Thứ Ba có 3 tiết: Toán, Tiếng Việt, Âm nhạc. Toán không ở tiết 1; Âm nhạc học sau Toán. Thứ tự đúng là:','Tiếng Việt – Toán – Âm nhạc',['Toán – Tiếng Việt – Âm nhạc','Âm nhạc – Toán – Tiếng Việt','Tiếng Việt – Âm nhạc – Toán'],'Toán không thể tiết 1; Âm nhạc phải sau Toán nên Toán tiết 2, Âm nhạc tiết 3.','logicconstraint'],
+   ['Hai ngày có tổng 7 tiết. Thứ Hai có nhiều hơn Thứ Ba 1 tiết. Mỗi ngày có bao nhiêu tiết?','Thứ Hai 4 tiết, Thứ Ba 3 tiết',['Thứ Hai 5, Thứ Ba 2','Mỗi ngày 3 tiết','Thứ Hai 3, Thứ Ba 4'],'Hai số hơn kém nhau 1 và có tổng 7 là 4 và 3.','multistep'],
+   ['Một học sinh cần mang 1 quyển cho mỗi môn khác nhau. Ngày mai có Toán, Toán, Tiếng Việt, Mĩ thuật. Tối thiểu cần chuẩn bị bao nhiêu quyển?','3',['2','4','5'],'Toán lặp hai tiết nhưng vẫn là một môn; có 3 môn khác nhau.','optimize'],
+   ['Bảng bị mất một ô: tiết 1 Toán, tiết 2 ?, tiết 3 Mĩ thuật. Biết Tiếng Việt học ngay sau Toán. Ô bị mất là:','Tiếng Việt',['Thể dục','Âm nhạc','Toán'],'“Ngay sau Toán” nghĩa là tiết 2.','deduce'],
+   ['Phát biểu nào chứng tỏ học sinh hiểu cách đọc thời khóa biểu chứ không chỉ nhớ tên môn?','Em xác định được đúng ngày, đúng tiết và chuẩn bị đồ dùng tương ứng',['Em đọc thuộc tên ba môn','Em nhớ màu của bảng','Em đếm được số chữ trong bảng'],'Hiểu bảng là biết tìm thông tin và sử dụng thông tin đó.','metacog']
+  ]
+ },
+ 'Cô giáo lớp em':{
+  1:[
+   ['Bài học về cô giáo giúp em hướng tới tình cảm nào?','Yêu quý và biết ơn thầy cô',['Sợ hãi thầy cô','Thờ ơ với lớp học','Chỉ quan tâm điểm số'],'Chủ điểm nhấn mạnh tình cảm với thầy cô và trường lớp.','theme'],
+   ['Từ nào dưới đây chỉ đặc điểm của cô giáo?','dịu dàng',['giảng bài','bảng lớp','học sinh'],'“dịu dàng” là từ chỉ đặc điểm.','wordtype'],
+   ['Từ nào dưới đây chỉ hoạt động của cô giáo?','giảng bài',['dịu dàng','xinh xắn','lớp học'],'“giảng bài” là hoạt động.','activity'],
+   ['Câu nào là câu kể đúng?','Cô giáo đang hướng dẫn cả lớp đọc bài.',['Cô giáo hướng dẫn?','Cô giáo ơi!','Hướng dẫn cô giáo lớp.'],'Câu kể có trật tự từ rõ ràng và diễn đạt trọn ý.','sentence']
+  ],
+  2:[
+   ['Câu nào dùng từ chỉ đặc điểm hợp lí nhất?','Cô giáo có giọng nói ấm áp.',['Cô giáo giọng nói chạy.','Cô giáo là bảng.','Ấm áp viết bài.'],'“ấm áp” bổ sung đặc điểm cho giọng nói.','applyword'],
+   ['Muốn nói lời cảm ơn cô giáo, câu nào phù hợp nhất?','Em cảm ơn cô đã luôn tận tình dạy chúng em.',['Cô phải cho em điểm cao.','Em không cần học bài.','Cô giáo có cái bảng.'],'Lời cảm ơn cần lịch sự và đúng nội dung.','communication'],
+   ['Trong câu “Cô nhẹ nhàng sửa bài cho em”, từ chỉ hoạt động chính là:','sửa',['nhẹ nhàng','cô','em'],'“sửa” biểu thị hoạt động.','grammar']
+  ],
+  3:[
+   ['Câu nào vừa nêu việc làm vừa thể hiện tình cảm?','Cô kiên nhẫn giảng lại bài nên em càng quý cô.',['Cô có phấn trắng.','Lớp có nhiều bàn.','Sân trường rộng.'],'Câu có việc làm của cô và cảm xúc của học sinh.','inferfeeling'],
+   ['Muốn viết 3 câu về cô giáo, trình tự nào rõ nhất?','Giới thiệu cô → nêu việc làm/đặc điểm → nói tình cảm',['Liệt kê đồ vật → đổi chủ đề → kết thúc','Lặp tên cô ba lần','Viết ba câu không liên quan'],'Đoạn văn ngắn cần một mạch ý rõ.','writingplan']
+  ],
+  4:[
+   ['Chi tiết nào thuyết phục nhất khi em viết “Cô giáo rất tận tình”?','Cô ở lại hướng dẫn em làm lại bài chưa hiểu',['Cô có chiếc bút xanh','Cô đứng gần bảng','Lớp học có cửa sổ'],'Dẫn chứng phải trực tiếp chứng minh nhận xét.','evidence'],
+   ['Cách sửa nào làm câu “Cô giáo tốt. Cô giáo dạy em. Cô giáo em quý.” tự nhiên hơn?','Cô giáo rất tận tình dạy em, vì thế em luôn yêu quý cô.',['Cô giáo cô giáo cô giáo.','Dạy em tốt quý.','Em bảng lớp cô.'],'Gom ý, tránh lặp và dùng từ nối hợp lí.','rewrite']
+  ]
+ }
+};
+function exactTv2(les,l,i){
+ var title=les.title||'',key=Object.keys(TV2_EXACT_BANK).find(function(k){return title.indexOf(k)>=0});
+ if(!key)return null;
+ var arr=TV2_EXACT_BANK[key][l]||[],z=arr[i%arr.length];
+ if(!z)return null;
+ return make(les.id,'lit',les.id,l,i,z[0],z[1],z[2],z[3],'tv2:'+key+':'+z[4])
+}
 function litQ(les,l,i){
  if(G===2){
+  var exq=exactTv2(les,l,i);if(exq)return exq;
   var title=les.title||'';
   if(title.indexOf('Cô giáo lớp em')>=0){
    if(l===1)return make(les.id,'lit',les.id,l,i,'Bài “Cô giáo lớp em” thuộc chủ điểm nào gần nhất?','Tình cảm với thầy cô, trường lớp',['Thiên nhiên hoang dã','Giao thông','Mua bán'],'Bài học hướng đến tình cảm trường lớp và cô giáo.');
@@ -327,11 +393,18 @@ function litQ(les,l,i){
 function sgkPool(s,ids,levels){
  var out=[];ids.forEach(function(id){var les=find(s,id);if(!les)return;levels.forEach(function(l){for(var i=0;i<8;i++){out.push(s==='math'?(G===2?math2(les,l,i):math6(les,l,i)):s==='eng'?engQ(les,l,i):litQ(les,l,i))}})});return out
 }
-window.startSgkLesson=function(s,id,l){items=sgkPool(s,[id],[l]).slice();qi=0;ctx={s:'sgkLesson',subject:s,sgkId:id,l:l};before=s;go('quiz');renderQuestion()};
+window.startSgkLesson=function(s,id,l){
+ var raw=sgkPool(s,[id],[l]),target=(s==='lit'?6:8);
+ items=qualityPick(raw,target,'lesson'+dateLabel()+document.getElementById('student').value+s+id+l,s==='lit'?1:2);
+ if(!items.length)return toast('Bài này chưa có đủ câu hỏi chất lượng.');
+ rememberPractice(items);qi=0;ctx={s:'sgkLesson',subject:s,sgkId:id,l:l};before=s;go('quiz');renderQuestion()
+};
 window.startSgkReview=function(s){
  var a=flat(s),ix=idxOf(s,currentId(s)),from=Math.max(0,ix-(G===2?(s==='math'?5:s==='lit'?5:3):(s==='math'?4:s==='lit'?1:2))),ids=a.slice(from,ix+1).map(function(x){return x.id});
- var pool=sgkPool(s,ids,[1,2,3]),n=G===2?12:15;items=stablePick(pool,n,'sgkreview'+dateLabel()+document.getElementById('student').value+s,{});
- qi=0;ctx={s:'sgkReview',subject:s};before=s;go('quiz');renderQuestion()
+ var pool=sgkPool(s,ids,[1,2,3]),n=G===2?12:15;
+ items=qualityPick(pool,n,'sgkreview'+dateLabel()+document.getElementById('student').value+s,s==='lit'?1:2);
+ if(!items.length)return toast('Chưa có đủ câu ôn tập chất lượng trong phạm vi này.');
+ rememberPractice(items);qi=0;ctx={s:'sgkReview',subject:s};before=s;go('quiz');renderQuestion()
 };
 
 function testWindow(s,type){
@@ -345,8 +418,42 @@ function testWindow(s,type){
  }
  return a.slice(from,ix+1).map(function(x){return x.id})
 }
+function qFamily(q){
+ if(q.family)return q.family;
+ var s=(q.q||'').toLowerCase().replace(/“[^”]*”/g,'#').replace(/"[^"]*"/g,'#').replace(/\d+[.,]?\d*/g,'#').replace(/\s+/g,' ').trim();
+ return (q.s||'')+'|'+(q.sgkId||q.t||'')+'|'+s
+}
 function uniqueQ(pool){
- var seen={},out=[];pool.forEach(function(q){var k=(q.q||'').toLowerCase().replace(/\d+/g,'#').replace(/\s+/g,' ');if(!seen[k]){seen[k]=1;out.push(q)}});return out
+ var seenId={},seenText={},out=[];
+ pool.forEach(function(q){
+   var text=(q.q||'').toLowerCase().replace(/\s+/g,' ').trim();
+   if(!seenId[q.id]&&!seenText[text]){seenId[q.id]=1;seenText[text]=1;out.push(q)}
+ });
+ return out
+}
+function recentPractice(){
+ var st=state();st.recentPractice=st.recentPractice||[];return st.recentPractice
+}
+function rememberPractice(qs){
+ var st=state(),arr=st.recentPractice||[];
+ qs.forEach(function(q){arr.unshift({id:q.id,f:qFamily(q),at:Date.now()})});
+ st.recentPractice=arr.slice(0,120);save(st)
+}
+function qualityPick(pool,n,seed,maxPerFamily){
+ var recent=recentPractice(),rid={},rf={};recent.slice(0,60).forEach(function(x){rid[x.id]=1;rf[x.f]=(rf[x.f]||0)+1});
+ var src=uniqueQ(pool).slice().sort(function(a,b){return hashStr(a.id+seed)-hashStr(b.id+seed)}),out=[],fam={};
+ function pass(avoidRecent,limit){
+   for(var i=0;i<src.length&&out.length<n;i++){
+     var q=src[i],f=qFamily(q);if(out.indexOf(q)>=0)continue;
+     if(!avoidRecent&&rid[q.id])continue;
+     if((fam[f]||0)>=limit)continue;
+     out.push(q);fam[f]=(fam[f]||0)+1
+   }
+ }
+ pass(false,maxPerFamily||1);
+ if(out.length<n)pass(true,maxPerFamily||1);
+ if(out.length<n&&(maxPerFamily||1)<2)pass(true,2);
+ return out.slice(0,n)
 }
 function sgkBuildTest(type){
  var cfg=testConfig[type],student=document.getElementById('student').value,st=state(),period=testPeriodKey(type),same=(st.tests||[]).filter(function(r){return r.type===type&&r.period===period}),attempt=same.length+1;
@@ -357,7 +464,7 @@ function sgkBuildTest(type){
    for(var l=1;l<=4;l++){
      var p=uniqueQ(sgkPool(s,ids,[l])).filter(function(q){return !recent[q.id]});
      if(p.length<cnt[l-1])p=uniqueQ(sgkPool(s,ids,[l]));
-     var picked=stablePick(p,cnt[l-1],type+period+student+attempt+s+l,{});
+     var picked=qualityPick(p,cnt[l-1],type+period+student+attempt+s+l,s==='lit'?1:2);
      picked.forEach(function(q){if(!used[q.id]){used[q.id]=1;out.push(q)}})
    }
  });
@@ -379,11 +486,12 @@ function overrideTests(){
  window.startDaily=function(){
   var subs=['math','lit','eng'],out=[],used={},student=document.getElementById('student').value,total=G===2?18:24;
   subs.forEach(function(s){
-    var ids=testWindow(s,'daily'),p=sgkPool(s,ids,[1,2,3]);
-    addPicked(out,p,G===2?5:7,'sgkdaily'+dateLabel()+student+s,used)
+    var ids=testWindow(s,'daily'),p=sgkPool(s,ids,[1,2,3]),part=qualityPick(p,G===2?5:7,'sgkdaily'+dateLabel()+student+s,s==='lit'?1:2);
+    part.forEach(function(q){if(!used[q.id]){used[q.id]=1;out.push(q)}})
   });
-  var hard=[];subs.forEach(function(s){hard=hard.concat(sgkPool(s,[currentId(s)],[4]))});addPicked(out,hard,total-out.length,'sgkhard'+dateLabel()+student,used);
-  items=out.slice(0,total);qi=0;ctx={s:'daily'};before='home';go('quiz');renderQuestion()
+  var hard=[];subs.forEach(function(s){hard=hard.concat(sgkPool(s,[currentId(s)],[4]))});
+  qualityPick(hard,total-out.length,'sgkhard'+dateLabel()+student,1).forEach(function(q){if(!used[q.id]){used[q.id]=1;out.push(q)}});
+  items=out.slice(0,total);rememberPractice(items);qi=0;ctx={s:'daily'};before='home';go('quiz');renderQuestion()
  }
 }
 function decorateExactHome(){
